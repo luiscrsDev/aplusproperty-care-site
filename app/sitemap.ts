@@ -1,0 +1,38 @@
+import type { MetadataRoute } from "next";
+import { BRAND, PLANS, SERVICES } from "@/lib/constants";
+
+const AREAS = ["doral"]; // expand as we ship geo pages
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: BRAND.url, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: `${BRAND.url}/maintenance-plans`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BRAND.url}/services`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BRAND.url}/parceria-construtoras`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+  ];
+
+  const planPages: MetadataRoute.Sitemap = PLANS.map((p) => ({
+    url: `${BRAND.url}/maintenance-plans/${p.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  const servicePages: MetadataRoute.Sitemap = SERVICES.map((s) => ({
+    url: `${BRAND.url}/services/${s.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: s.flagship ? 0.9 : 0.7,
+  }));
+
+  const areaPages: MetadataRoute.Sitemap = AREAS.map((a) => ({
+    url: `${BRAND.url}/areas/${a}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...planPages, ...servicePages, ...areaPages];
+}

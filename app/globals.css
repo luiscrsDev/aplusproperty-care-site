@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@theme {
+  /* === APLUS brand palette ============================================== */
+  /* Anchored on Navy + Red — same DNA as the logo and the GBP. */
+  --color-brand-navy: #163a6e;
+  --color-brand-navy-deep: #0b1a33;
+  --color-brand-navy-darker: #03080f;
+
+  /* Brand red — vibrant, warm, used for CTAs and "Most Popular" badges. */
+  --color-brand-red: #c8102e;
+  --color-brand-red-deep: #9b0e22;
+  --color-brand-red-soft: #fee7eb;
+  --color-brand-red-glow: #ef3b54;
+
+  /* Background warmth — a softer cream than before, less grey. */
+  --color-brand-cream: #fdf6ee;
+  --color-brand-cream-deep: #f6ecdc;
+
+  /* Supporting */
+  --color-brand-green: #15803d;
+  --color-brand-green-soft: #f0fdf4;
+  --color-brand-text: #1a1a1a;
+  --color-brand-muted: #5b5b5b;
+  --color-brand-line: rgba(22, 58, 110, 0.12);
+
+  /* Typography */
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  --font-display:
+    "Playfair Display", "Georgia", "Times New Roman", serif;
+
+  /* Radius */
+  --radius-card: 1rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-brand-cream);
+  color: var(--color-brand-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Brand gradient utilities ========================================= */
+/* Hero / feature backgrounds — navy bedrock with a warm red glow. */
+.bg-brand-gradient {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(200, 16, 46, 0.18), transparent 38%),
+    radial-gradient(circle at 92% 90%, rgba(200, 16, 46, 0.22), transparent 45%),
+    linear-gradient(135deg, #163a6e 0%, #0b1a33 60%, #03080f 100%);
+}
+
+.bg-brand-gradient-soft {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(200, 16, 46, 0.06), transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(22, 58, 110, 0.08), transparent 45%),
+    var(--color-brand-cream);
+}
+
+/* Hero card — for the price card / feature highlights. */
+.bg-plan-premium {
+  background:
+    linear-gradient(160deg, #c8102e 0%, #8b0e22 35%, #163a6e 70%, #0b1a33 100%);
+}
+
+/* === Helpers ========================================================== */
+:focus-visible {
+  outline: 2px solid var(--color-brand-red);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.section {
+  padding: 4rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 6rem 2rem;
+  }
+}
+
+.container-narrow {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+/* Decorative red underline used under H2s. */
+.brand-underline {
+  position: relative;
+  display: inline-block;
+}
+.brand-underline::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.6rem;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 3.5rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-brand-red), var(--color-brand-navy));
+}
