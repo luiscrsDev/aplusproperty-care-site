@@ -5,79 +5,54 @@ import { cn } from "@/lib/utils";
 
 type Plan = (typeof PLANS)[number];
 
+/**
+ * Plan card — replicates the Lovable-original style:
+ *  - Plain white card with subtle shadow.
+ *  - Featured ("Most Popular") plan gets a 2px brand-red border + red badge.
+ *  - Big red price, period in muted slate.
+ *  - Outline-red CTA on side cards, solid-red CTA on the featured one.
+ */
+
 export function PlanCard({ plan, asLink = true }: { plan: Plan; asLink?: boolean }) {
   return (
     <article
       className={cn(
-        "relative flex flex-col rounded-2xl border p-7 transition-all",
+        "relative flex flex-col rounded-2xl bg-white p-7 transition-all",
         plan.highlight
-          ? "bg-plan-premium text-white border-brand-red/40 shadow-2xl shadow-brand-red/25 md:scale-[1.03]"
-          : "border-brand-navy/15 bg-white hover:border-brand-navy/35",
+          ? "border-2 border-brand-red shadow-2xl shadow-brand-red/15 md:scale-[1.02]"
+          : "border border-brand-line shadow-sm hover:shadow-md",
       )}
     >
       {plan.highlight && plan.badge && (
-        <span className="absolute -top-3 left-7 rounded-full bg-brand-red px-3 py-1 text-xs font-semibold text-white shadow-md shadow-brand-red/40 uppercase tracking-wider">
+        <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-brand-red px-4 py-1.5 text-[11px] font-semibold tracking-wider text-white uppercase shadow-lg shadow-brand-red/30">
           {plan.badge}
         </span>
       )}
 
-      <h3
-        className={cn(
-          "font-display text-2xl",
-          plan.highlight ? "text-white" : "text-brand-navy",
-        )}
-      >
-        {plan.name}
-      </h3>
-      <p
-        className={cn(
-          "mt-1 text-sm",
-          plan.highlight ? "text-white/75" : "text-brand-muted",
-        )}
-      >
-        {plan.tagline}
-      </p>
+      <div className="text-center">
+        <h3 className="font-bold text-2xl text-brand-text">{plan.name}</h3>
 
-      <div className="mt-5 flex items-baseline gap-1">
-        <span
-          className={cn(
-            "font-display text-4xl",
-            plan.highlight ? "text-white" : "text-brand-navy",
-          )}
-        >
-          {plan.priceDisplay}
-        </span>
-        <span
-          className={cn(
-            "text-sm",
-            plan.highlight ? "text-white/70" : "text-brand-muted",
-          )}
-        >
-          {plan.period}
-        </span>
+        <div className="mt-4 flex items-baseline justify-center gap-1">
+          <span className="font-bold text-5xl text-brand-red">{plan.priceDisplay}</span>
+          <span className="text-sm text-brand-muted font-medium">{plan.period}</span>
+        </div>
+
+        <p className="mt-3 text-sm text-brand-muted">{plan.tagline}</p>
       </div>
-      <p
-        className={cn(
-          "mt-2 text-sm font-medium",
-          plan.highlight ? "text-white" : "text-brand-navy",
-        )}
-      >
-        {plan.visits}
-      </p>
 
-      <ul className="mt-6 space-y-3 text-sm flex-1">
-        {plan.features.map((f) => (
-          <li key={f} className="flex items-start gap-2">
-            <Check
-              className={cn(
-                "h-4 w-4 mt-0.5 flex-shrink-0",
-                plan.highlight ? "text-white" : "text-brand-red",
-              )}
-              aria-hidden
-            />
-            <span className={plan.highlight ? "text-white/90" : ""}>{f}</span>
-          </li>
-        ))}
+      <ul className="mt-7 space-y-3 text-sm flex-1">
+        <li className="flex items-start gap-3 font-medium">
+          <Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-brand-red" aria-hidden />
+          <span>{plan.visits}</span>
+        </li>
+        {plan.features
+          .filter((f) => !f.toLowerCase().includes("visit"))
+          .map((f) => (
+            <li key={f} className="flex items-start gap-3 text-brand-text/85">
+              <Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-brand-red" aria-hidden />
+              <span>{f}</span>
+            </li>
+          ))}
       </ul>
 
       <div className="mt-7">
@@ -87,11 +62,11 @@ export function PlanCard({ plan, asLink = true }: { plan: Plan; asLink?: boolean
             className={cn(
               "block w-full rounded-full px-5 py-3 text-center text-sm font-semibold transition-all",
               plan.highlight
-                ? "bg-white text-brand-red hover:bg-brand-cream"
-                : "bg-brand-red text-white hover:bg-brand-red-deep shadow-md shadow-brand-red/20",
+                ? "bg-brand-red text-white hover:bg-brand-red-hover shadow-md shadow-brand-red/20"
+                : "border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white",
             )}
           >
-            {plan.cta}
+            Choose Plan
           </Link>
         ) : (
           <a
@@ -99,11 +74,11 @@ export function PlanCard({ plan, asLink = true }: { plan: Plan; asLink?: boolean
             className={cn(
               "block w-full rounded-full px-5 py-3 text-center text-sm font-semibold transition-all",
               plan.highlight
-                ? "bg-white text-brand-red hover:bg-brand-cream"
-                : "bg-brand-red text-white hover:bg-brand-red-deep shadow-md shadow-brand-red/20",
+                ? "bg-brand-red text-white hover:bg-brand-red-hover shadow-md shadow-brand-red/20"
+                : "border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white",
             )}
           >
-            {plan.cta}
+            Choose Plan
           </a>
         )}
       </div>

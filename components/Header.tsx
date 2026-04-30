@@ -4,34 +4,36 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { BRAND } from "@/lib/constants";
-import { Button } from "@/components/ui/Button";
-import { PhoneLink } from "@/components/ContactLinks";
 
 const nav = [
-  { href: "/maintenance-plans", label: "Plans" },
-  { href: "/services/ev-charger-installation", label: "EV Charger" },
+  { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/areas/doral", label: "Service Area" },
-  { href: "/parceria-construtoras", label: "Builders" },
+  { href: "/maintenance-plans", label: "Plans" },
+  { href: "/areas", label: "Areas" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 bg-brand-cream/85 backdrop-blur supports-[backdrop-filter]:bg-brand-cream/65 border-b border-brand-navy/10">
-      <div className="container-narrow flex h-16 items-center justify-between px-5">
-        <Link href="/" className="flex items-center gap-2 font-display text-lg text-brand-navy">
-          <span aria-hidden className="inline-block h-7 w-7 rounded-full bg-brand-navy" />
-          <span className="font-semibold tracking-tight">{BRAND.name}</span>
+    <header className="bg-brand-navy text-white">
+      <div className="container-narrow flex h-28 items-center justify-between px-5">
+        <Link href="/" className="flex items-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/aplus-logo.png"
+            alt={`${BRAND.name} logo`}
+            className="h-20 w-auto"
+          />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-7 text-sm">
+        <nav className="hidden md:flex items-center gap-9 text-sm">
           {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-brand-navy/80 hover:text-brand-navy transition-colors"
+              className="text-white/85 hover:text-white transition-colors"
             >
               {item.label}
             </Link>
@@ -39,15 +41,23 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <PhoneLink className="text-sm" />
-          <Button as="a" href="/#contact" size="sm">
-            Free Assessment
-          </Button>
+          <Link
+            href="/#contact"
+            className="rounded-full bg-brand-red px-5 py-2 text-sm font-semibold text-white hover:bg-brand-red-hover shadow-md shadow-brand-red/20 transition-colors"
+          >
+            Get Quote
+          </Link>
+          <Link
+            href="/admin-login"
+            className="rounded-full border border-brand-red text-brand-red px-5 py-2 text-sm font-semibold hover:bg-brand-red hover:text-white transition-colors"
+          >
+            Login
+          </Link>
         </div>
 
         <button
           aria-label="Open menu"
-          className="md:hidden rounded-md p-2 text-brand-navy"
+          className="md:hidden rounded-md p-2 text-white"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -55,23 +65,33 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-brand-navy/10 bg-brand-cream">
+        <div className="md:hidden border-t border-white/10 bg-brand-navy">
           <nav className="flex flex-col px-5 py-4 gap-3 text-sm">
             {nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="py-1 text-brand-navy"
+                className="py-1 text-white/90"
               >
                 {item.label}
               </Link>
             ))}
-            <div className="pt-2 flex flex-col gap-3">
-              <PhoneLink />
-              <Button as="a" href="/#contact" size="sm" className="self-start">
-                Free Assessment
-              </Button>
+            <div className="pt-3 flex flex-col gap-2">
+              <Link
+                href="/#contact"
+                onClick={() => setOpen(false)}
+                className="rounded-full bg-brand-red text-white px-5 py-2.5 text-center text-sm font-semibold"
+              >
+                Get Quote
+              </Link>
+              <Link
+                href="/admin-login"
+                onClick={() => setOpen(false)}
+                className="rounded-full border border-brand-red text-brand-red px-5 py-2.5 text-center text-sm font-semibold"
+              >
+                Login
+              </Link>
             </div>
           </nav>
         </div>

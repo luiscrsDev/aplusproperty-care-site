@@ -38,7 +38,6 @@ npm run dev                   # http://localhost:3000
 | `/services/ev-charger-installation` | day 2 (flagship copy) |
 | `/services/[slug]` | day 2 (template + 7 stubs) |
 | `/areas/doral` | day 3 |
-| `/parceria-construtoras` | day 3 (port from Lovable, lang=pt-BR) |
 | `/sitemap.xml` | done (auto via `app/sitemap.ts`) |
 | `/robots.txt` | done (auto via `app/robots.ts`) |
 | `/api/contact` | done |

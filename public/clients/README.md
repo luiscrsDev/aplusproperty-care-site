@@ -6,7 +6,10 @@ back to a text label until each file is in place, so partial drops are fine.
 | Filename | Brand | Notes |
 |---|---|---|
 | `faena.png` | Faena | Red serif wordmark — Miami Beach hotel |
+| `fisher-island-club.png` | Fisher Island Club | Black ornate scroll-bordered wordmark |
 | `portobello-america.png` | Portobello America | Navy serif wordmark |
+| `luciana-brito-galeria.png` | Luciana Brito Galeria | Black sans-serif text logo |
+| `paulin-paulin-paulin.png` | Paulin, Paulin, Paulin | Black bold sans-serif (Pierre Paulin brand) |
 | `morgan-automotive.png` | Morgan Automotive Group | Red "MORGAN" + grey "AUTOMOTIVE GROUP" |
 | `fox-paine.png` | Fox Paine | Dark green serif |
 | `anc-america.png` | ANC America | White "ANC" + red "AMERICA" — keep dark BG transparent |

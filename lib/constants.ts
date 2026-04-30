@@ -41,8 +41,16 @@ export const HOURS = [
 export const HOURS_DISPLAY = "Mon–Fri 9am–5pm · Sat 9am–3pm";
 
 export const SERVICE_AREA = {
-  primary: "Miami, FL",
-  cities: ["Miami", "Doral", "Coral Gables", "Brickell", "Miami Beach", "Aventura", "Pinecrest"],
+  primary: "Miami Beach, FL",
+  /** Geo pages we build out. Doral is the warehouse base only — no clients there. */
+  cities: [
+    "Miami Beach",
+    "Sunny Isles Beach",
+    "Bal Harbour",
+    "Surfside",
+    "Brickell",
+    "Coral Gables",
+  ],
   county: "Miami-Dade County",
 } as const;
 
@@ -55,6 +63,14 @@ export const TEAM = [
   },
 ] as const;
 
+/** Hero / About section social-proof stats — kept in one place to avoid drift. */
+export const STATS = [
+  { value: "12+", label: "Years Experience" },
+  { value: "100%", label: "Guarantee" },
+  { value: "24/7", label: "Emergency" },
+  { value: "500+", label: "Clients" },
+] as const;
+
 /**
  * Clients & projects we've worked with — used in the "Trusted by" section.
  *
@@ -63,7 +79,10 @@ export const TEAM = [
  */
 export const CLIENTS = [
   { slug: "faena", name: "Faena", file: "faena.png" },
+  { slug: "fisher-island-club", name: "Fisher Island Club", file: "fisher-island-club.png" },
   { slug: "portobello-america", name: "Portobello America", file: "portobello-america.png" },
+  { slug: "luciana-brito-galeria", name: "Luciana Brito Galeria", file: "luciana-brito-galeria.png" },
+  { slug: "paulin-paulin-paulin", name: "Paulin, Paulin, Paulin", file: "paulin-paulin-paulin.png" },
   { slug: "morgan-automotive", name: "Morgan Automotive Group", file: "morgan-automotive.png" },
   { slug: "fox-paine", name: "Fox Paine", file: "fox-paine.png" },
   { slug: "anc-america", name: "ANC America", file: "anc-america.png" },

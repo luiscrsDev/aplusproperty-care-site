@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -25,6 +25,12 @@ const SERVICES_INTEREST = [
   "Not sure — need advice",
 ] as const;
 
+/**
+ * ContactForm has two visual modes:
+ *   - default (light) — for sections with white or near-white backgrounds.
+ *   - compact (glass) — for the hero glassmorphism card. Transparent inputs,
+ *     white text, white-tinted placeholders so they read against the photo.
+ */
 export function ContactForm({
   defaultService,
   compact = false,
@@ -62,7 +68,6 @@ export function ContactForm({
           const data = await res.json().catch(() => ({}));
           throw new Error(data?.error || "Could not submit");
         }
-        // GTM dataLayer event for conversion tracking
         if (typeof window !== "undefined") {
           // @ts-expect-error - dataLayer global
           window.dataLayer = window.dataLayer || [];
@@ -80,44 +85,66 @@ export function ContactForm({
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-brand-green/30 bg-brand-green-soft p-8 text-center">
-        <CheckCircle2 className="mx-auto h-10 w-10 text-brand-green" aria-hidden />
-        <h3 className="mt-4 font-display text-2xl text-brand-navy">Thanks — we got it.</h3>
-        <p className="mt-2 text-sm text-brand-muted">
-          Anderson or someone on our team will call you within one business day. For something
-          urgent, message us on WhatsApp.
+      <div
+        className={cn(
+          "rounded-2xl p-7 text-center",
+          compact
+            ? "bg-white/10 border border-white/20 text-white"
+            : "border border-brand-green/30 bg-brand-green-soft",
+        )}
+      >
+        <CheckCircle2
+          className={cn("mx-auto h-10 w-10", compact ? "text-white" : "text-brand-green")}
+          aria-hidden
+        />
+        <h3 className={cn("mt-3 font-bold text-2xl", compact ? "text-white" : "text-brand-text")}>
+          Thanks — we got it.
+        </h3>
+        <p className={cn("mt-2 text-sm", compact ? "text-white/80" : "text-brand-muted")}>
+          We&apos;ll call you within one business day. For something urgent, message us on
+          WhatsApp.
         </p>
       </div>
     );
   }
 
+  const inputCls = compact
+    ? "w-full rounded-xl border border-white/25 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-white/55 focus:border-white/60 focus:bg-white/15 focus:outline-none transition-colors"
+    : "w-full rounded-xl border border-brand-line bg-white px-4 py-2.5 text-sm text-brand-text placeholder:text-brand-muted/70 focus:border-brand-red focus:outline-none transition-colors";
+
+  const labelCls = compact
+    ? "text-xs font-medium uppercase tracking-wider text-white/85"
+    : "text-xs font-medium uppercase tracking-wider text-brand-muted";
+
   return (
-    <form onSubmit={onSubmit} className={compact ? "space-y-4" : "space-y-5"} noValidate>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field id="name" label="Full name" required>
+    <form onSubmit={onSubmit} className={compact ? "space-y-3.5" : "space-y-5"} noValidate>
+      <div className={compact ? "space-y-3.5" : "grid gap-4 sm:grid-cols-2"}>
+        <Field id="name" label="Full name" required labelCls={labelCls}>
           <input
             id="name"
             name="name"
             required
             autoComplete="name"
             className={inputCls}
-            placeholder="Anderson Moraes"
+            placeholder="Your full name"
           />
         </Field>
-        <Field id="phone" label="Phone" required>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            required
-            autoComplete="tel"
-            className={inputCls}
-            placeholder="(305) 555-0123"
-          />
-        </Field>
+        {!compact && (
+          <Field id="phone" label="Phone" required labelCls={labelCls}>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              autoComplete="tel"
+              className={inputCls}
+              placeholder="(305) 555-0123"
+            />
+          </Field>
+        )}
       </div>
 
-      <Field id="email" label="Email" required>
+      <Field id="email" label="Email" required labelCls={labelCls}>
         <input
           id="email"
           name="email"
@@ -125,82 +152,129 @@ export function ContactForm({
           required
           autoComplete="email"
           className={inputCls}
-          placeholder="you@example.com"
+          placeholder="your@email.com"
         />
       </Field>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field id="property" label="Property type">
-          <select id="property" name="property" className={inputCls} defaultValue="">
-            <option value="" disabled>
-              Select…
-            </option>
-            {PROPERTY_TYPES.map((p) => (
-              <option key={p} value={p}>
-                {p}
-              </option>
-            ))}
-          </select>
+      {compact && (
+        <Field id="phone" label="Phone" required labelCls={labelCls}>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            required
+            autoComplete="tel"
+            className={inputCls}
+            placeholder="Your phone number"
+          />
         </Field>
-        <Field id="service" label="Service of interest">
-          <select id="service" name="service" className={inputCls} defaultValue={defaultService ?? ""}>
+      )}
+
+      <div className={compact ? "space-y-3.5" : "grid gap-4 sm:grid-cols-2"}>
+        <Field id="service" label="Service of interest" labelCls={labelCls}>
+          <select
+            id="service"
+            name="service"
+            className={inputCls}
+            defaultValue={defaultService ?? ""}
+          >
             <option value="" disabled>
-              Select…
+              Type of service needed
             </option>
             {SERVICES_INTEREST.map((s) => (
-              <option key={s} value={s}>
+              <option key={s} value={s} className="text-brand-text">
                 {s}
               </option>
             ))}
           </select>
         </Field>
+        {!compact && (
+          <Field id="property" label="Property type" labelCls={labelCls}>
+            <select id="property" name="property" className={inputCls} defaultValue="">
+              <option value="" disabled>
+                Select…
+              </option>
+              {PROPERTY_TYPES.map((p) => (
+                <option key={p} value={p}>
+                  {p}
+                </option>
+              ))}
+            </select>
+          </Field>
+        )}
       </div>
 
-      <Field id="message" label="Anything else? (optional)">
-        <textarea
-          id="message"
-          name="message"
-          rows={3}
-          className={inputCls}
-          placeholder="Tell us about your home, your goals, or your timeline."
-        />
-      </Field>
+      {!compact && (
+        <Field id="message" label="Message (optional)" labelCls={labelCls}>
+          <textarea
+            id="message"
+            name="message"
+            rows={3}
+            className={inputCls}
+            placeholder="Tell us about your home, your goals, or your timeline."
+          />
+        </Field>
+      )}
 
       {status === "error" && (
-        <div className="flex items-start gap-2 rounded-xl border border-brand-red/30 bg-brand-red-soft p-3 text-sm text-brand-red">
+        <div
+          className={cn(
+            "flex items-start gap-2 rounded-xl p-3 text-sm",
+            compact
+              ? "border border-white/30 bg-white/10 text-white"
+              : "border border-brand-red/30 bg-brand-red-soft text-brand-red",
+          )}
+        >
           <AlertCircle className="h-4 w-4 mt-0.5" aria-hidden />
           <span>{errorMsg || "Something went wrong. Please try again or call us."}</span>
         </div>
       )}
 
-      <div className="flex items-center gap-3">
-        <Button type="submit" size="lg" disabled={isPending} className="flex-1 sm:flex-none">
-          {isPending ? "Sending…" : "Request Free Assessment"}
-          <Send className="h-4 w-4" aria-hidden />
-        </Button>
-        <p className="text-xs text-brand-muted">No spam · we&apos;ll call within 1 business day.</p>
-      </div>
+      <button
+        type="submit"
+        disabled={isPending}
+        className={cn(
+          "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-base font-semibold transition-all w-full",
+          compact
+            ? "bg-brand-red text-white hover:bg-brand-red-hover shadow-lg shadow-brand-red/30"
+            : "bg-brand-red text-white hover:bg-brand-red-hover shadow-md shadow-brand-red/20",
+        )}
+      >
+        {isPending ? (
+          "Sending…"
+        ) : (
+          <>
+            Request {compact ? "Free" : "Free"} Assessment
+            <Send className="h-4 w-4" aria-hidden />
+          </>
+        )}
+      </button>
+
+      {!compact && (
+        <p className="text-xs text-brand-muted text-center">
+          No spam · we&apos;ll call within 1 business day.
+        </p>
+      )}
     </form>
   );
 }
-
-const inputCls =
-  "w-full rounded-xl border border-brand-navy/20 bg-white px-4 py-2.5 text-sm text-brand-text placeholder:text-brand-muted/70 focus:border-brand-navy focus:outline-none transition-colors";
 
 function Field({
   id,
   label,
   required,
   children,
+  labelCls,
 }: {
   id: string;
   label: string;
   required?: boolean;
   children: React.ReactNode;
+  labelCls: string;
 }) {
   return (
     <label htmlFor={id} className="block">
-      <span className="text-xs font-medium uppercase tracking-wider text-brand-muted">
+      <span className={labelCls}>
         {label} {required && <span className="text-brand-red">*</span>}
       </span>
       <div className="mt-1.5">{children}</div>

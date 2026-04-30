@@ -15,17 +15,27 @@ import {
   HardHat,
   ShieldCheck,
   Heart,
-  Star,
-  ArrowRight,
+  Award,
+  Users,
+  Phone,
+  MessageCircle,
+  Mail,
+  MapPin,
+  CheckCircle2,
   type LucideIcon,
 } from "lucide-react";
 
-import { BRAND, PLANS, SERVICE_AREA, TEAM, ADDRESS, HOURS_DISPLAY } from "@/lib/constants";
+import {
+  ADDRESS,
+  BRAND,
+  CONTACT,
+  PLANS,
+  STATS,
+  TEAM,
+} from "@/lib/constants";
 import { PlanCard } from "@/components/PlanCard";
 import { ContactForm } from "@/components/ContactForm";
-import { ContactBar, PhoneLink, WhatsAppLink } from "@/components/ContactLinks";
 import { ClientsGrid } from "@/components/Clients";
-import { Button } from "@/components/ui/Button";
 
 const SERVICE_ICONS: Record<string, LucideIcon> = {
   "ev-charger-installation": Zap,
@@ -40,220 +50,231 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
 };
 
 const HOMEPAGE_SERVICES = [
-  { slug: "preventive-maintenance", name: "Preventive Maintenance", body: "Recurring inspections that catch small issues before they become emergencies." },
-  { slug: "ev-charger-installation", name: "EV Charger Installation", body: "Level 2 home charger install for Tesla, ChargePoint, Wallbox — Miami-Dade permitted." },
-  { slug: "plumbing", name: "Plumbing Services", body: "Leaks, fixtures, water heaters, drain cleaning by licensed plumbers." },
-  { slug: "electrical", name: "Electrical Services", body: "Panel upgrades, outlets, lighting, smart home wiring by licensed electricians." },
-  { slug: "hvac", name: "HVAC", body: "AC and heating maintenance, repairs, and installation for the Florida climate." },
-  { slug: "painting", name: "Painting & Finishes", body: "Interior and exterior painting, drywall repair, finishing carpentry." },
-  { slug: "landscaping", name: "Landscaping & Gardening", body: "Lawn, irrigation, plants, and outdoor maintenance." },
-  { slug: "furniture-transport", name: "Furniture & Art Transport", body: "Careful transport and placement of furniture and artwork." },
+  {
+    slug: "preventive-maintenance",
+    name: "Preventive Maintenance",
+    body: "Regular inspections and proactive maintenance to prevent problems before they happen.",
+    bullets: ["Monthly inspection", "Detailed reports", "Personalized plan"],
+  },
+  {
+    slug: "plumbing",
+    name: "Plumbing Services",
+    body: "From small leaks to complete installations, always with professional quality.",
+    bullets: ["Leak detection", "Fixture replacement", "System installation"],
+  },
+  {
+    slug: "electrical",
+    name: "Electrical Services",
+    body: "Safe and efficient electrical installations for your residence or business.",
+    bullets: ["Outlet installation", "Electrical panels", "LED lighting"],
+  },
+  {
+    slug: "hvac",
+    name: "HVAC",
+    body: "Air conditioning and ventilation maintenance to keep your home always comfortable.",
+    bullets: ["AC servicing", "Filter replacement", "System optimization"],
+  },
+  {
+    slug: "painting",
+    name: "Painting & Finishes",
+    body: "Interior and exterior painting that transforms and protects your property.",
+    bullets: ["Interior painting", "Exterior painting", "Drywall repair"],
+  },
+  {
+    slug: "landscaping",
+    name: "Landscaping & Gardening",
+    body: "Lawn, irrigation, plants, and outdoor maintenance for the Florida climate.",
+    bullets: ["Lawn care", "Irrigation systems", "Plant care"],
+  },
+  {
+    slug: "ev-charger-installation",
+    name: "EV Charger Installation",
+    body: "Level 2 home charger install for Tesla, ChargePoint, Wallbox — Miami-Dade permitted.",
+    bullets: ["EV charger setup", "Electrical safety", "Smart charging solutions"],
+  },
+  {
+    slug: "furniture-transport",
+    name: "Furniture & Art Transport",
+    body: "Specialized handling and transport of furniture and artwork.",
+    bullets: ["Specialized packing", "Insurance coverage", "White glove service"],
+  },
+  {
+    slug: "pest-control",
+    name: "Pest Control",
+    body: "Recurring pest treatment and prevention for Miami's climate.",
+    bullets: ["Insect and rodent control", "Eco-friendly treatments", "Prevention strategies"],
+  },
 ];
 
 const COMPARE_OLD = [
-  { icon: AlertTriangle, title: "Reactive and costly", body: "Waiting for problems then paying premium for emergency repairs." },
-  { icon: DollarSign, title: "Constant devaluation", body: "Small problems become big headaches and reduce property value." },
-  { icon: HardHat, title: "Unqualified pros", body: "Difficulty finding reliable workforce with quality guarantees." },
-  { icon: Clock, title: "Time and stress", body: "Spending weekends solving problems instead of enjoying life." },
+  {
+    icon: AlertTriangle,
+    title: "Reactive and costly maintenance",
+    body: "Waiting for problems to appear then spending much more on emergency repairs.",
+  },
+  {
+    icon: DollarSign,
+    title: "Constant devaluation",
+    body: "Small problems become big headaches and reduce property value.",
+  },
+  {
+    icon: HardHat,
+    title: "Unqualified professionals",
+    body: "Difficulty finding reliable workforce with guaranteed quality.",
+  },
+  {
+    icon: Clock,
+    title: "Time waste and stress",
+    body: "Spending weekends solving problems instead of enjoying life.",
+  },
 ];
 
 const COMPARE_APLUS = [
-  { icon: ShieldCheck, title: "Smart preventive maintenance", body: "We anticipate problems and solve them before they become expensive emergencies." },
-  { icon: Heart, title: "Long-term relationship", body: "One trusted company for all your property care needs." },
-  { icon: Star, title: "Specialized & certified", body: "Qualified professionals with quality guarantee on all services." },
-  { icon: DollarSign, title: "Property appreciation", body: "Investment that pays for itself: your property always valued and protected." },
+  {
+    icon: ShieldCheck,
+    title: "Smart preventive maintenance",
+    body: "We anticipate problems and solve them before they become expensive emergencies.",
+  },
+  {
+    icon: Heart,
+    title: "Long-term relationship",
+    body: "One trusted company for all your property care needs.",
+  },
+  {
+    icon: Award,
+    title: "Specialized and certified team",
+    body: "Qualified professionals with quality guarantee on all services.",
+  },
+  {
+    icon: DollarSign,
+    title: "Constant property appreciation",
+    body: "Investment that pays for itself: your property always valued and protected.",
+  },
 ];
 
-const VALUES = [
-  "Punctuality and respect for your home",
-  "Quality guarantee on every service",
-  "Transparent pricing — no surprises",
-  "Single point of contact for everything",
+const ABOUT_STATS = [
+  { icon: Users, value: "500+", label: "Clients Served" },
+  { icon: Clock, value: "12+", label: "Years Experience" },
+  { icon: Award, value: "100%", label: "Satisfaction Guaranteed" },
+];
+
+const WHY_US = [
+  "Free estimate with no commitment",
+  "Certified and insured professionals",
+  "Personalized service for each client",
+  "Quality guarantee on all services",
+  "Long-term relationship",
 ];
 
 export default function HomePage() {
   return (
     <>
-      {/* HERO — warm navy + red gradient */}
-      <section className="relative overflow-hidden bg-brand-gradient text-white">
-        {/* subtle decorative bars */}
-        <div
-          aria-hidden
-          className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-brand-red via-brand-red-deep to-transparent"
-        />
-        <div
-          aria-hidden
-          className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-brand-red/15 blur-3xl"
-        />
-
-        <div className="container-narrow relative px-5 pt-20 pb-24 md:pt-28 md:pb-32 grid gap-12 md:grid-cols-2 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-white/85 backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-red" aria-hidden />
-              Home Maintenance · {SERVICE_AREA.primary}
-            </div>
-            <h1 className="mt-5 font-display text-4xl md:text-6xl leading-[1.05] tracking-tight">
-              Your home cared,{" "}
-              <span className="italic text-brand-red-glow">your life free.</span>
+      {/* HERO — photo background + glassmorphic form */}
+      <section className="hero-bg relative">
+        <div className="container-narrow relative px-5 pt-20 pb-24 md:pt-28 md:pb-32 grid gap-12 md:grid-cols-[1.1fr_1fr] items-center">
+          <div className="text-white">
+            <h1 className="font-bold text-4xl md:text-6xl leading-[1.05] tracking-tight">
+              Your Home Cared,
+              <br />
+              <span className="text-brand-red">Your Life Free</span>
             </h1>
-            <p className="mt-5 text-lg text-white/80 max-w-xl leading-relaxed">
-              Preventive home maintenance and EV charger installation across Miami. Three
-              subscription plans, certified technicians, fast response — no more weekends lost to
-              surprise repairs.
+            <p className="mt-6 text-lg text-white/85 max-w-xl leading-relaxed">
+              {BRAND.name} is the residential care company that frees you from daily worries,
+              keeping your property always valued and protected in Miami.
             </p>
+
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button as="a" href="#contact" size="lg" variant="primary">
-                Request Free Assessment
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </Button>
-              <Button
-                as="a"
-                href="/maintenance-plans"
-                size="lg"
-                className="bg-white/10 hover:bg-white/20 border border-white/25 text-white shadow-none"
-              >
-                See Plans
-              </Button>
-            </div>
-            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-white/85">
-              <a
-                href="tel:+13054957980"
-                data-event="phone_click"
-                className="inline-flex items-center gap-2 hover:text-white transition-colors"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-red-glow" aria-hidden /> (305) 495-7980
-              </a>
-              <a
-                href="https://wa.me/13054957980?text=Hi%20APLUS"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-event="whatsapp_click"
-                className="inline-flex items-center gap-2 hover:text-white transition-colors"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-red-glow" aria-hidden /> WhatsApp
-              </a>
-              <span className="inline-flex items-center gap-2 text-white/60">
-                <span className="h-1.5 w-1.5 rounded-full bg-white/40" aria-hidden /> {HOURS_DISPLAY}
-              </span>
-            </div>
-          </div>
-
-          {/* Floating featured plan */}
-          <div className="relative md:justify-self-end">
-            <div
-              aria-hidden
-              className="absolute -top-6 -left-6 h-20 w-20 rounded-2xl bg-brand-red/20 blur-2xl"
-            />
-            <div className="relative w-full max-w-sm rounded-3xl border border-white/15 bg-white/[0.06] backdrop-blur-md p-7 shadow-2xl shadow-black/30">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-[0.18em] text-white/60">
-                  Most chosen
-                </span>
-                <span className="rounded-full bg-brand-red px-2.5 py-0.5 text-[10px] uppercase font-semibold tracking-wider">
-                  Premium
-                </span>
-              </div>
-              <div className="mt-3 font-display text-3xl">Premium Plan</div>
-              <div className="text-white/70 text-sm">For medium and large homes</div>
-              <div className="mt-7 flex items-baseline gap-1">
-                <span className="font-display text-5xl">$399</span>
-                <span className="text-white/65 text-sm">/month</span>
-              </div>
-              <p className="mt-1 text-white/80 text-sm">2 visits per month · 24/7 support</p>
-
-              <ul className="mt-6 space-y-2 text-sm text-white/85">
-                <li className="flex gap-2">
-                  <span className="text-brand-red-glow">✓</span> Complete preventive maintenance
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-brand-red-glow">✓</span> Detailed report each visit
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-brand-red-glow">✓</span> 3 emergency calls included
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-brand-red-glow">✓</span> Small repairs included
-                </li>
-              </ul>
-
               <a
                 href="#contact"
-                className="mt-7 block rounded-full bg-brand-red px-5 py-3 text-center text-sm font-semibold text-white hover:bg-brand-red-deep shadow-lg shadow-brand-red/30 transition-all"
+                className="rounded-full bg-brand-red px-6 py-3.5 text-base font-semibold text-white hover:bg-brand-red-hover shadow-lg shadow-brand-red/30 transition-all"
               >
-                Start Premium →
+                Schedule Free Consultation
+              </a>
+              <a
+                href="#services"
+                className="rounded-full border-2 border-white/80 px-6 py-3.5 text-base font-semibold text-white hover:bg-white hover:text-brand-navy transition-all"
+              >
+                Explore Services
               </a>
             </div>
-          </div>
-        </div>
+            <p className="mt-5 text-sm text-white/80">
+              Or call us now at{" "}
+              <a
+                href={`tel:${CONTACT.phone}`}
+                data-event="phone_click"
+                className="font-bold text-white underline underline-offset-4 decoration-brand-red decoration-2 hover:text-brand-red transition-colors"
+              >
+                {CONTACT.phoneDisplay}
+              </a>
+            </p>
 
-        {/* hero bottom bevel */}
-        <div className="h-px bg-gradient-to-r from-transparent via-brand-red/40 to-transparent" />
-      </section>
+            {/* Hero stats */}
+            <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-xl">
+              {STATS.map((s) => (
+                <div key={s.label} className="text-center sm:text-left">
+                  <div className="text-3xl font-bold text-white">{s.value}</div>
+                  <div className="text-xs uppercase tracking-wider text-white/70 mt-1">
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-      {/* TRUST BAR */}
-      <section className="bg-brand-navy-deep text-brand-cream/90 border-y border-brand-red/30">
-        <div className="container-narrow px-5 py-5 grid gap-3 md:grid-cols-4 text-center text-sm">
-          <div className="flex items-center justify-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-red-glow" aria-hidden /> Licensed
-            &amp; insured
-          </div>
-          <div className="flex items-center justify-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-red-glow" aria-hidden /> Miami-Dade
-            local team
-          </div>
-          <div className="flex items-center justify-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-red-glow" aria-hidden /> 15+ years
-            experience
-          </div>
-          <div className="flex items-center justify-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-red-glow" aria-hidden /> Certified
-            technicians
+          {/* Glassmorphic form floating on the photo */}
+          <div className="glass-card rounded-2xl p-7 md:p-8 text-white">
+            <h2 className="text-2xl font-bold">Request a Free Assessment</h2>
+            <p className="mt-1.5 text-sm text-white/75">
+              We&apos;ll call within 1 business day.
+            </p>
+            <div className="mt-6">
+              <ContactForm compact />
+            </div>
           </div>
         </div>
       </section>
 
       {/* COMPARE */}
-      <section className="section">
+      <section className="section bg-white">
         <div className="container-narrow">
           <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
-              The difference
-            </span>
-            <h2 className="mt-2 font-display text-3xl md:text-4xl text-brand-navy brand-underline">
-              Traditional way <span className="text-brand-red">vs</span> APLUS
+            <h2 className="font-bold text-3xl md:text-5xl text-brand-text">
+              Compare: Traditional Way vs <span className="text-brand-red">APLUS</span>
             </h2>
-            <p className="mt-8 text-brand-muted">
+            <p className="mt-4 text-brand-muted">
               See the difference between constantly worrying about your home and living peacefully.
             </p>
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-brand-red/15 bg-brand-red-soft p-7">
-              <h3 className="font-display text-2xl text-brand-red text-center">The Old Way</h3>
+            <div className="rounded-2xl bg-brand-red-soft p-7">
+              <h3 className="font-bold text-2xl text-brand-red text-center">The Old Way</h3>
               <ul className="mt-6 space-y-5">
                 {COMPARE_OLD.map(({ icon: Icon, title, body }) => (
                   <li key={title} className="flex items-start gap-3">
-                    <Icon className="h-5 w-5 text-brand-red flex-shrink-0 mt-0.5" aria-hidden />
+                    <span className="inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-brand-red-tint">
+                      <Icon className="h-4 w-4 text-brand-red" aria-hidden />
+                    </span>
                     <div>
                       <div className="font-semibold text-brand-text">{title}</div>
-                      <div className="text-sm text-brand-muted">{body}</div>
+                      <div className="text-sm text-brand-red/85">{body}</div>
                     </div>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-2xl bg-brand-navy text-white p-7 shadow-xl shadow-brand-navy/20">
-              <h3 className="font-display text-2xl text-center">
-                The <span className="text-brand-red-glow">APLUS</span> Way
-              </h3>
+            <div className="rounded-2xl bg-brand-green-soft p-7">
+              <h3 className="font-bold text-2xl text-brand-green text-center">The APLUS Way</h3>
               <ul className="mt-6 space-y-5">
                 {COMPARE_APLUS.map(({ icon: Icon, title, body }) => (
                   <li key={title} className="flex items-start gap-3">
-                    <Icon className="h-5 w-5 text-brand-red-glow flex-shrink-0 mt-0.5" aria-hidden />
+                    <span className="inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-brand-green-tint">
+                      <Icon className="h-4 w-4 text-brand-green" aria-hidden />
+                    </span>
                     <div>
-                      <div className="font-semibold">{title}</div>
-                      <div className="text-sm text-white/75">{body}</div>
+                      <div className="font-semibold text-brand-text">{title}</div>
+                      <div className="text-sm text-brand-green/85">{body}</div>
                     </div>
                   </li>
                 ))}
@@ -264,41 +285,40 @@ export default function HomePage() {
       </section>
 
       {/* SERVICES */}
-      <section id="services" className="section bg-white border-y border-brand-line">
+      <section id="services" className="section bg-brand-bg-cool">
         <div className="container-narrow">
           <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
-              What we do
-            </span>
-            <h2 className="mt-2 font-display text-3xl md:text-4xl text-brand-navy brand-underline">
+            <h2 className="font-bold text-3xl md:text-5xl text-brand-text">
               Our <span className="text-brand-red">Services</span>
             </h2>
-            <p className="mt-8 text-brand-muted">
-              A complete range of services to keep your property always in perfect condition.
+            <p className="mt-4 text-brand-muted">
+              We offer a complete range of services to keep your property always in perfect
+              condition.
             </p>
           </div>
 
-          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {HOMEPAGE_SERVICES.map((s) => {
               const Icon = SERVICE_ICONS[s.slug] || Wrench;
               return (
                 <Link
                   key={s.slug}
                   href={`/services/${s.slug}`}
-                  className="group relative rounded-2xl border border-brand-line bg-white p-6 hover:border-brand-red/30 hover:shadow-lg hover:shadow-brand-red/5 hover:-translate-y-0.5 transition-all"
+                  className="group rounded-2xl bg-white p-7 shadow-sm hover:shadow-lg transition-shadow text-center"
                 >
-                  <span
-                    aria-hidden
-                    className="absolute top-0 left-6 h-0.5 w-10 bg-brand-red rounded-b opacity-0 group-hover:opacity-100 transition-opacity"
-                  />
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand-navy/5 text-brand-navy group-hover:bg-brand-red/10 group-hover:text-brand-red transition-colors">
-                    <Icon className="h-5 w-5" aria-hidden />
+                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20 group-hover:scale-105 transition-transform">
+                    <Icon className="h-6 w-6" aria-hidden />
                   </div>
-                  <h3 className="mt-4 font-display text-lg text-brand-navy">{s.name}</h3>
+                  <h3 className="mt-5 font-bold text-lg text-brand-text">{s.name}</h3>
                   <p className="mt-2 text-sm text-brand-muted leading-relaxed">{s.body}</p>
-                  <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-brand-red opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more <ArrowRight className="h-3 w-3" aria-hidden />
-                  </span>
+                  <ul className="mt-5 space-y-2 text-sm text-left">
+                    {s.bullets.map((b) => (
+                      <li key={b} className="flex items-center gap-2 text-brand-text/80">
+                        <CheckCircle2 className="h-4 w-4 text-brand-red flex-shrink-0" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
                 </Link>
               );
             })}
@@ -307,106 +327,111 @@ export default function HomePage() {
       </section>
 
       {/* PLANS */}
-      <section id="plans" className="section bg-brand-gradient-soft">
+      <section id="plans" className="section bg-white">
         <div className="container-narrow">
           <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
-              Plans
-            </span>
-            <h2 className="mt-2 font-display text-3xl md:text-4xl text-brand-navy brand-underline">
+            <h2 className="font-bold text-3xl md:text-5xl text-brand-text">
               Subscription <span className="text-brand-red">Plans</span>
             </h2>
-            <p className="mt-8 text-brand-muted">
-              Three plans engineered for Miami homes — from apartments to luxury estates.
+            <p className="mt-4 text-brand-muted">
+              Choose the plan that best fits your property&apos;s needs.
             </p>
           </div>
 
-          <div className="mt-16 grid gap-7 md:grid-cols-3 items-stretch">
+          <div className="mt-16 grid gap-8 md:grid-cols-3 items-stretch">
             {PLANS.map((plan) => (
               <PlanCard key={plan.slug} plan={plan} />
             ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link
-              href="/maintenance-plans"
-              className="inline-flex items-center gap-1 text-sm font-semibold text-brand-navy hover:text-brand-red transition-colors"
-            >
-              Compare plans in detail <ArrowRight className="h-3 w-3" aria-hidden />
-            </Link>
           </div>
         </div>
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="section bg-white border-y border-brand-line">
-        <div className="container-narrow grid gap-8 md:grid-cols-5 items-stretch">
-          {/* Story — flex column so the closing quote sits at the bottom */}
-          <div className="md:col-span-2 flex flex-col">
-            <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
-              Our story
-            </span>
-            <h2 className="mt-2 font-display text-3xl md:text-4xl text-brand-navy">About APLUS</h2>
-            <p className="mt-4 text-brand-muted leading-relaxed">
-              We started APLUS Property Care because we kept seeing the same pattern in Miami: home
-              owners stressed by surprise repairs, calling new contractors every time, never knowing
-              who to trust. So we built a single team you can rely on year after year.
-            </p>
-            <ul className="mt-6 space-y-2 text-sm text-brand-text">
-              {VALUES.map((v) => (
-                <li key={v} className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-brand-red" aria-hidden />
-                  {v}
-                </li>
-              ))}
-            </ul>
-            <blockquote className="mt-auto pt-8">
-              <div className="rounded-2xl border-l-4 border-brand-red bg-brand-cream/60 px-5 py-4">
-                <p className="font-display italic text-brand-navy leading-snug">
-                  &ldquo;One team that already knows your home — instead of calling a new
-                  contractor every time something goes wrong.&rdquo;
-                </p>
-              </div>
-            </blockquote>
+      <section id="about" className="section bg-brand-bg-cool">
+        <div className="container-narrow">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-bold text-3xl md:text-5xl text-brand-text">
+              About <span className="text-brand-red">APLUS</span>
+            </h2>
           </div>
 
-          {/* Anderson — card stretches the full row height */}
-          <div className="md:col-span-1 flex">
-            {TEAM.map((t) => (
-              <div
-                key={t.slug}
-                className="flex flex-col w-full rounded-2xl border border-brand-line bg-brand-cream p-5 hover:border-brand-red/30 transition-colors"
-              >
+          <div className="mt-12 grid gap-12 md:grid-cols-2 items-center">
+            <div className="space-y-5 text-brand-text/85 leading-relaxed">
+              <p>
+                APLUS Property Care was born from the real need of Miami property owners seeking a
+                reliable and complete solution for maintaining their properties.
+              </p>
+              <p>
+                Founded in Miami, we grew understanding the particularities of the Florida market
+                and the specific needs of owners who value quality and peace of mind.
+              </p>
+              <p>
+                Today, we are a reference in residential care, offering everything from preventive
+                maintenance to specialized services, always committed to preserving and enhancing
+                your asset value.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              {ABOUT_STATS.map(({ icon: Icon, value, label }) => (
                 <div
-                  className="aspect-square rounded-xl bg-gradient-to-br from-brand-navy/15 via-brand-navy/8 to-brand-red/15"
-                  aria-hidden
-                />
-                <div className="mt-4 font-display text-lg text-brand-navy">{t.name}</div>
-                <div className="text-xs uppercase tracking-wider text-brand-red font-semibold">
-                  {t.role}
+                  key={label}
+                  className="rounded-2xl bg-white border border-brand-line p-5 text-center shadow-sm"
+                >
+                  <Icon className="mx-auto h-6 w-6 text-brand-red" aria-hidden />
+                  <div className="mt-3 text-2xl md:text-3xl font-bold text-brand-text">{value}</div>
+                  <div className="mt-1 text-xs text-brand-muted">{label}</div>
                 </div>
-                <p className="mt-2 text-sm text-brand-muted">{t.bio}</p>
-                <div className="mt-auto pt-4 border-t border-brand-line/60 text-[11px] uppercase tracking-wider text-brand-muted">
-                  Licensed · Insured · Florida
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          {/* Trusted by — flex column so the logo card grows to match */}
-          <div className="md:col-span-2 flex flex-col">
-            <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
-              Trusted by
-            </span>
-            <h3 className="mt-2 font-display text-xl text-brand-navy">
-              Some of Miami&apos;s most demanding clients
-            </h3>
-            <p className="mt-2 text-sm text-brand-muted">
-              From luxury hospitality to nationwide automotive groups.
-            </p>
-            <div className="mt-6 flex-1 rounded-2xl border border-brand-line bg-white p-5 shadow-sm flex items-center">
-              <div className="w-full">
-                <ClientsGrid columns={2} />
+          {/* Anderson + Trusted by */}
+          <div className="mt-16">
+            <h3 className="font-bold text-2xl text-center text-brand-text">Our Team</h3>
+
+            <div className="mt-10 grid gap-8 md:grid-cols-3 items-stretch">
+              {/* Anderson card */}
+              {TEAM.map((t) => {
+                const initials = t.name
+                  .split(" ")
+                  .map((p) => p[0])
+                  .join("")
+                  .slice(0, 2);
+                return (
+                  <div
+                    key={t.slug}
+                    className="rounded-2xl bg-white border border-brand-line p-7 text-center shadow-sm flex flex-col"
+                  >
+                    <div className="mx-auto inline-flex h-24 w-24 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20">
+                      <span className="font-bold text-2xl">{initials}</span>
+                    </div>
+                    <div className="mt-5 font-bold text-lg text-brand-text">{t.name}</div>
+                    <div className="text-xs uppercase tracking-wider text-brand-red font-semibold mt-1">
+                      {t.role}
+                    </div>
+                    <p className="mt-3 text-sm text-brand-muted leading-relaxed flex-1">
+                      {t.bio}
+                    </p>
+                  </div>
+                );
+              })}
+
+              {/* Trusted by — fills the 2 missing team columns */}
+              <div className="md:col-span-2 rounded-2xl bg-white border border-brand-line p-7 shadow-sm flex flex-col">
+                <div className="text-center">
+                  <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
+                    Trusted by
+                  </span>
+                  <h4 className="mt-2 font-bold text-xl text-brand-text">
+                    Some of Miami&apos;s most demanding clients
+                  </h4>
+                </div>
+                <div className="mt-6 flex-1 flex items-center">
+                  <div className="w-full">
+                    <ClientsGrid columns={4} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -414,48 +439,106 @@ export default function HomePage() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="section bg-brand-gradient-soft">
-        <div className="container-narrow grid gap-10 md:grid-cols-2 items-start">
-          <div>
-            <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
-              Talk to us
-            </span>
-            <h2 className="mt-2 font-display text-3xl md:text-4xl text-brand-navy">
+      <section id="contact" className="section bg-white">
+        <div className="container-narrow">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-bold text-3xl md:text-5xl text-brand-text">
               Get in <span className="text-brand-red">Touch</span>
             </h2>
-            <p className="mt-3 text-brand-muted max-w-md leading-relaxed">
-              Tell us about your home and we&apos;ll send a free assessment. No pressure, no spam —
-              just a real conversation about whether APLUS is right for you.
+            <p className="mt-4 text-brand-muted">
+              Ready to have more free time and a home that&apos;s always cared for? Contact us and
+              discover how we can help you.
             </p>
-
-            <div className="mt-8 space-y-5">
-              <div>
-                <div className="text-xs uppercase tracking-wider text-brand-muted">Phone</div>
-                <PhoneLink className="mt-1 text-lg font-semibold !text-brand-navy hover:!text-brand-red" />
-              </div>
-              <div>
-                <div className="text-xs uppercase tracking-wider text-brand-muted">WhatsApp</div>
-                <WhatsAppLink
-                  className="mt-1 text-lg font-semibold !text-brand-navy hover:!text-brand-red"
-                  label="Chat with us"
-                />
-              </div>
-              <div>
-                <div className="text-xs uppercase tracking-wider text-brand-muted">Location</div>
-                <div className="mt-1 text-base">{ADDRESS.formatted}</div>
-              </div>
-              <div>
-                <div className="text-xs uppercase tracking-wider text-brand-muted">Hours</div>
-                <div className="mt-1 text-base">{HOURS_DISPLAY}</div>
-              </div>
-            </div>
           </div>
 
-          <div className="rounded-2xl border border-brand-line bg-white p-7 shadow-lg shadow-brand-navy/5">
-            <h3 className="font-display text-xl text-brand-navy">Request a Free Assessment</h3>
-            <p className="mt-1 text-sm text-brand-muted">We&apos;ll call within 1 business day.</p>
-            <div className="mt-6">
-              <ContactForm />
+          <div className="mt-12 grid gap-8 md:grid-cols-2 items-start">
+            <div className="rounded-2xl bg-white border border-brand-line p-7 shadow-sm">
+              <h3 className="font-bold text-xl text-brand-text">Request a Free Assessment</h3>
+              <p className="mt-1 text-sm text-brand-muted">
+                Fill out the form and our team will contact you to schedule a visit.
+              </p>
+              <div className="mt-6">
+                <ContactForm />
+              </div>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <a
+                href={`tel:${CONTACT.phone}`}
+                data-event="phone_click"
+                className="rounded-2xl bg-white border border-brand-line p-6 shadow-sm hover:shadow-md transition-shadow text-center"
+              >
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20">
+                  <Phone className="h-5 w-5" aria-hidden />
+                </span>
+                <div className="mt-4 font-bold text-lg text-brand-text">Phone</div>
+                <div className="mt-3 font-semibold text-brand-red">{CONTACT.phoneDisplay}</div>
+                <div className="mt-1 text-xs text-brand-muted">Mon–Fri 9am–5pm</div>
+              </a>
+
+              <a
+                href={`https://wa.me/${CONTACT.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-event="whatsapp_click"
+                className="rounded-2xl bg-white border border-brand-line p-6 shadow-sm hover:shadow-md transition-shadow text-center"
+              >
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20">
+                  <MessageCircle className="h-5 w-5" aria-hidden />
+                </span>
+                <div className="mt-4 font-bold text-lg text-brand-text">WhatsApp</div>
+                <div className="mt-3 font-semibold text-brand-red">{CONTACT.phoneDisplay}</div>
+                <div className="mt-1 text-xs text-brand-muted">Quick and direct service</div>
+              </a>
+
+              <a
+                href={`mailto:${CONTACT.email}`}
+                data-event="email_click"
+                className="rounded-2xl bg-white border border-brand-line p-6 shadow-sm hover:shadow-md transition-shadow text-center"
+              >
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20">
+                  <Mail className="h-5 w-5" aria-hidden />
+                </span>
+                <div className="mt-4 font-bold text-lg text-brand-text">Email</div>
+                <div className="mt-3 font-semibold text-brand-red text-sm break-all">
+                  {CONTACT.email}
+                </div>
+                <div className="mt-1 text-xs text-brand-muted">Response within 24h</div>
+              </a>
+
+              <div className="rounded-2xl bg-white border border-brand-line p-6 shadow-sm text-center">
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20">
+                  <MapPin className="h-5 w-5" aria-hidden />
+                </span>
+                <div className="mt-4 font-bold text-lg text-brand-text">Location</div>
+                <div className="mt-3 font-semibold text-brand-red">
+                  {ADDRESS.locality}, {ADDRESS.region}
+                </div>
+                <div className="mt-1 text-xs text-brand-muted">We serve all Miami-Dade</div>
+              </div>
+
+              {/* Business Hours card — navy accent */}
+              <div className="rounded-2xl bg-brand-navy text-white p-6 shadow-md sm:col-span-2 text-center">
+                <Clock className="mx-auto h-6 w-6 text-white/85" aria-hidden />
+                <div className="mt-3 font-bold text-lg">Business Hours</div>
+                <div className="mt-3 text-sm text-white/85">
+                  Monday – Friday · 9:00 AM – 5:00 PM
+                </div>
+                <div className="text-sm text-white/85">Saturday · 9:00 AM – 3:00 PM</div>
+              </div>
+
+              {/* Why choose us */}
+              <div className="rounded-2xl bg-white border border-brand-line p-6 shadow-sm sm:col-span-2">
+                <h3 className="font-bold text-lg text-brand-text">Why choose us?</h3>
+                <ul className="mt-4 space-y-2 text-sm text-brand-text/85">
+                  {WHY_US.map((w) => (
+                    <li key={w} className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-brand-red flex-shrink-0" />
+                      {w}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

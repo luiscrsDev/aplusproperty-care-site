@@ -7,9 +7,9 @@ type Size = "sm" | "md" | "lg";
 const variantStyles: Record<Variant, string> = {
   // Default CTA — bold APLUS red, the warmest call-to-action surface on the page.
   primary:
-    "bg-brand-red text-white hover:bg-brand-red-deep shadow-md shadow-brand-red/25 hover:shadow-lg transition-all",
+    "bg-brand-red text-white hover:bg-brand-red-hover shadow-md shadow-brand-red/25 hover:shadow-lg transition-all",
   // Navy alt — for secondary CTAs (e.g. "See Plans") on warm cream backgrounds.
-  navy: "bg-brand-navy text-white hover:bg-brand-navy-deep shadow-sm shadow-black/10 transition-colors",
+  navy: "bg-brand-navy text-white hover:bg-brand-navy-hover shadow-sm shadow-black/10 transition-colors",
   secondary:
     "bg-white text-brand-navy border border-brand-navy/20 hover:border-brand-navy/40 transition-colors",
   ghost: "bg-transparent text-brand-navy hover:bg-brand-navy/5 transition-colors",

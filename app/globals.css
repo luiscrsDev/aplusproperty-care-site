@@ -2,36 +2,36 @@
 
 @theme {
   /* === APLUS brand palette ============================================== */
-  /* Anchored on Navy + Red — same DNA as the logo and the GBP. */
-  --color-brand-navy: #163a6e;
-  --color-brand-navy-deep: #0b1a33;
-  --color-brand-navy-darker: #03080f;
+  /* Anchored on the exact colors of the live Lovable site (extracted via DevTools). */
 
-  /* Brand red — vibrant, warm, used for CTAs and "Most Popular" badges. */
-  --color-brand-red: #c8102e;
-  --color-brand-red-deep: #9b0e22;
-  --color-brand-red-soft: #fee7eb;
-  --color-brand-red-glow: #ef3b54;
+  /* Navy — header, footer, hero overlay. Very dark, almost black. */
+  --color-brand-navy: #040e3f;
+  --color-brand-navy-hover: #082259;
+  --color-brand-navy-light: #163a6e;
 
-  /* Background warmth — a softer cream than before, less grey. */
-  --color-brand-cream: #fdf6ee;
-  --color-brand-cream-deep: #f6ecdc;
+  /* Red — primary CTA, accents, prices, "Most Popular" badge. */
+  --color-brand-red: #c81423;
+  --color-brand-red-hover: #991b1b;
+  --color-brand-red-soft: #fef2f2; /* "The Old Way" comparison panel */
+  --color-brand-red-tint: #fee2e2;
 
-  /* Supporting */
-  --color-brand-green: #15803d;
+  /* Green — used only on the "The APLUS Way" panel for visual contrast. */
+  --color-brand-green: #16a34a;
   --color-brand-green-soft: #f0fdf4;
-  --color-brand-text: #1a1a1a;
-  --color-brand-muted: #5b5b5b;
-  --color-brand-line: rgba(22, 58, 110, 0.12);
+  --color-brand-green-tint: #dcfce7;
 
-  /* Typography */
+  /* Neutrals */
+  --color-brand-text: #020817;        /* slate-950 — body text */
+  --color-brand-muted: #64748b;       /* slate-500 — secondary text */
+  --color-brand-line: #e2e8f0;        /* slate-200 — dividers, borders */
+  --color-brand-bg-soft: #faf9f5;     /* very subtle off-white for alternate sections */
+  --color-brand-bg-cool: #f8fafc;     /* slate-50 — services section */
+
+  /* Typography — system stack (matches Lovable). No custom Google Fonts. */
   --font-sans:
     "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
     sans-serif;
-  --font-display:
-    "Playfair Display", "Georgia", "Times New Roman", serif;
 
-  /* Radius */
   --radius-card: 1rem;
 }
 
@@ -40,36 +40,13 @@ html {
 }
 
 body {
-  background: var(--color-brand-cream);
+  background: #ffffff;
   color: var(--color-brand-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* === Brand gradient utilities ========================================= */
-/* Hero / feature backgrounds — navy bedrock with a warm red glow. */
-.bg-brand-gradient {
-  background:
-    radial-gradient(circle at 12% 10%, rgba(200, 16, 46, 0.18), transparent 38%),
-    radial-gradient(circle at 92% 90%, rgba(200, 16, 46, 0.22), transparent 45%),
-    linear-gradient(135deg, #163a6e 0%, #0b1a33 60%, #03080f 100%);
-}
-
-.bg-brand-gradient-soft {
-  background:
-    radial-gradient(circle at 0% 0%, rgba(200, 16, 46, 0.06), transparent 40%),
-    radial-gradient(circle at 100% 100%, rgba(22, 58, 110, 0.08), transparent 45%),
-    var(--color-brand-cream);
-}
-
-/* Hero card — for the price card / feature highlights. */
-.bg-plan-premium {
-  background:
-    linear-gradient(160deg, #c8102e 0%, #8b0e22 35%, #163a6e 70%, #0b1a33 100%);
-}
-
-/* === Helpers ========================================================== */
 :focus-visible {
   outline: 2px solid var(--color-brand-red);
   outline-offset: 2px;
@@ -82,28 +59,28 @@ body {
 
 @media (min-width: 768px) {
   .section {
-    padding: 6rem 2rem;
+    padding: 5rem 2rem;
   }
 }
 
 .container-narrow {
-  max-width: 72rem;
+  max-width: 80rem;
   margin-inline: auto;
 }
 
-/* Decorative red underline used under H2s. */
-.brand-underline {
-  position: relative;
-  display: inline-block;
+/* Hero background image with darkening overlay so the form & headline read clearly. */
+.hero-bg {
+  background-image:
+    linear-gradient(to right, rgba(4, 14, 63, 0.55) 0%, rgba(4, 14, 63, 0.35) 50%, rgba(4, 14, 63, 0.15) 100%),
+    url("/hero-home.jpg");
+  background-size: cover;
+  background-position: center;
 }
-.brand-underline::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -0.6rem;
-  transform: translateX(-50%);
-  height: 3px;
-  width: 3.5rem;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-brand-red), var(--color-brand-navy));
+
+/* Glassmorphism card used by the hero contact form (sits over the photo). */
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }

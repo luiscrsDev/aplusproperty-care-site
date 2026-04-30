@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 type Variant = "inline" | "stacked" | "card";
 
 const baseLink =
-  "inline-flex items-center gap-2 text-brand-navy hover:text-brand-navy-deep transition-colors";
+  "inline-flex items-center gap-2 text-brand-navy hover:text-brand-navy-hover transition-colors";
 
 export function PhoneLink({ className, label }: { className?: string; label?: string }) {
   return (
