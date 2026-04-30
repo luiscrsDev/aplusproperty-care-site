@@ -4,63 +4,75 @@ import "./globals.css";
 
 import { BRAND, TRACKING } from "@/lib/constants";
 import { localBusinessSchema } from "@/lib/schema";
+import { absoluteUrl } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
+/**
+ * Indexability gate: defaults to indexable. Set the env var
+ * `NEXT_PUBLIC_INDEXABLE=false` on the Vercel preview deployments to keep them
+ * out of Google's index. Flip back to true (or unset) for production.
+ */
+const indexable = process.env.NEXT_PUBLIC_INDEXABLE !== "false";
+
+const siteUrl = absoluteUrl("");
+
 export const metadata: Metadata = {
-  metadataBase: new URL(BRAND.url),
+  metadataBase: new URL(siteUrl),
   title: {
     default: `${BRAND.name} | Home Maintenance & EV Charger Miami`,
     template: `%s | ${BRAND.name}`,
   },
   description: BRAND.description,
   applicationName: BRAND.name,
-  authors: [{ name: BRAND.name, url: BRAND.url }],
+  authors: [{ name: BRAND.name, url: siteUrl }],
   keywords: [
     "home maintenance Miami",
     "EV charger installation Miami",
     "preventive maintenance plan",
     "Miami handyman",
-    "Doral home maintenance",
     "luxury home concierge Miami",
   ],
-  alternates: { canonical: BRAND.url },
+  alternates: { canonical: siteUrl },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: BRAND.url,
+    url: siteUrl,
     siteName: BRAND.name,
     title: `${BRAND.name} | Home Maintenance & EV Charger Miami`,
     description: BRAND.description,
-    images: [
-      {
-        url: "/og-cover.png",
-        width: 1200,
-        height: 630,
-        alt: `${BRAND.name} — Home maintenance and EV charger installation in Miami`,
-      },
-    ],
+    /**
+     * Next will auto-pick up `app/opengraph-image.tsx` (dynamic 1200×630 OG image)
+     * and serve it at `/opengraph-image`. We also fall back to a static path so
+     * existing canonical URLs in schema markup keep resolving.
+     */
   },
   twitter: {
     card: "summary_large_image",
     title: `${BRAND.name} | Home Maintenance & EV Charger Miami`,
     description: BRAND.description,
-    images: ["/og-cover.png"],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: indexable
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      }
+    : {
+        index: false,
+        follow: false,
+        nocache: true,
+        googleBot: { index: false, follow: false, noimageindex: true },
+      },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#163a6e",
+  themeColor: "#040e3f",
   width: "device-width",
   initialScale: 1,
 };

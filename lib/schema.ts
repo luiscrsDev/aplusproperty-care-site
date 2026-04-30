@@ -25,8 +25,8 @@ export function localBusinessSchema() {
     email: CONTACT.email,
     description: BRAND.description,
     priceRange: PRICE_RANGE,
-    image: absoluteUrl("/og-cover.png"),
-    logo: absoluteUrl("/logo.png"),
+    image: absoluteUrl("/opengraph-image"),
+    logo: absoluteUrl("/aplus-logo.png"),
     address: {
       "@type": "PostalAddress",
       streetAddress: ADDRESS.street,

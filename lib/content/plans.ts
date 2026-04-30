@@ -27,7 +27,7 @@ export type PlanContent = {
 export const PLAN_CONTENT: Record<PlanSlug, PlanContent> = {
   essential: {
     slug: "essential",
-    metaTitle: "Essential Plan — Monthly Home Maintenance Miami | $199/mo",
+    metaTitle: "Essential Plan — Home Maintenance $199/mo",
     metaDescription:
       "$199/month home maintenance plan for Miami apartments and small homes. One monthly visit, photo report, WhatsApp support. Cancel anytime.",
     headline: "Essential — Monthly Home Care",
@@ -75,7 +75,7 @@ export const PLAN_CONTENT: Record<PlanSlug, PlanContent> = {
 
   premium: {
     slug: "premium",
-    metaTitle: "Premium Plan — Complete Home Maintenance Miami | $399/mo",
+    metaTitle: "Premium Plan — Home Maintenance $399/mo",
     metaDescription:
       "$399/month home maintenance plan for medium-to-large Miami homes. Twice-monthly visits, 24/7 support, 3 emergency calls, small repairs included. Cancel anytime.",
     headline: "Premium — Complete Home Care",
@@ -123,7 +123,7 @@ export const PLAN_CONTENT: Record<PlanSlug, PlanContent> = {
 
   vip: {
     slug: "vip",
-    metaTitle: "VIP Plan — Luxury Home Concierge Miami | $699/mo",
+    metaTitle: "VIP Plan — Concierge Property Care $699/mo",
     metaDescription:
       "$699/month concierge home care for Miami luxury properties. Weekly visits, dedicated property manager, all repairs included, landscaping. Cancel anytime.",
     headline: "VIP — Concierge Property Care",

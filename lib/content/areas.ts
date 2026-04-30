@@ -36,7 +36,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "miami-beach",
     name: "Miami Beach",
-    metaTitle: "Home Maintenance Miami Beach | Hospitality-Grade Property Care",
+    metaTitle: "Home Maintenance Miami Beach",
     metaDescription:
       "APLUS Property Care services Miami Beach condos, beachfront homes, and hospitality properties. Trusted by Faena, Broken Shaker, and luxury homeowners.",
     headline: "Home Maintenance & Property Care in Miami Beach",
@@ -86,7 +86,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "sunny-isles-beach",
     name: "Sunny Isles Beach",
-    metaTitle: "Home Maintenance Sunny Isles Beach | Snowbird & Luxury Condo Care",
+    metaTitle: "Home Maintenance Sunny Isles Beach",
     metaDescription:
       "APLUS Property Care for Sunny Isles Beach condos and snowbird homes. Year-round absentee-owner care, VIP concierge, hurricane prep. Trump Tower-area service.",
     headline: "Home Maintenance & Property Care in Sunny Isles Beach",
@@ -123,7 +123,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "bal-harbour",
     name: "Bal Harbour",
-    metaTitle: "Home Maintenance Bal Harbour | Ultra-Luxury Property Care",
+    metaTitle: "Home Maintenance Bal Harbour | Luxury",
     metaDescription:
       "APLUS Property Care for Bal Harbour ultra-luxury homes and condos. Discreet, white-glove maintenance with a dedicated property manager. VIP-only level service.",
     headline: "Ultra-Luxury Home Care in Bal Harbour",
@@ -156,7 +156,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "surfside",
     name: "Surfside",
-    metaTitle: "Home Maintenance Surfside FL | Family Homes & Condos",
+    metaTitle: "Home Maintenance Surfside FL",
     metaDescription:
       "APLUS Property Care for Surfside homes and condos. Preventive maintenance, structural inspections, and family-focused property care.",
     headline: "Home Maintenance & Property Care in Surfside",
@@ -189,7 +189,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "brickell",
     name: "Brickell",
-    metaTitle: "Home Maintenance Brickell Miami | Luxury Condo Care",
+    metaTitle: "Home Maintenance Brickell | Condos",
     metaDescription:
       "APLUS Property Care for Brickell luxury condos. Preventive maintenance, plumbing, electrical, and EV charger installation for high-rise residences.",
     headline: "Home Maintenance & Property Care in Brickell",
@@ -222,7 +222,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "coral-gables",
     name: "Coral Gables",
-    metaTitle: "Home Maintenance Coral Gables | Estate & Residential Care",
+    metaTitle: "Home Maintenance Coral Gables",
     metaDescription:
       "APLUS Property Care for Coral Gables homes and estates. Preventive maintenance, restoration-aware care for historic properties, and concierge service.",
     headline: "Home Maintenance & Property Care in Coral Gables",

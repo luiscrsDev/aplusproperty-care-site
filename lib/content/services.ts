@@ -33,7 +33,7 @@ export type ServiceContent = {
 export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
   "ev-charger-installation": {
     slug: "ev-charger-installation",
-    metaTitle: "EV Charger Installation Miami | Tesla, ChargePoint, Wallbox",
+    metaTitle: "EV Charger Installation Miami",
     metaDescription:
       "Licensed Level 2 EV charger installation across Miami-Dade. Tesla Wall Connector, ChargePoint, Wallbox. Permits handled, transparent pricing.",
     headline: "EV Charger Installation in Miami",
@@ -103,7 +103,7 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   "preventive-maintenance": {
     slug: "preventive-maintenance",
-    metaTitle: "Preventive Home Maintenance Miami | Monthly Care Plans",
+    metaTitle: "Preventive Home Maintenance Miami",
     metaDescription:
       "Recurring preventive home maintenance in Miami. Monthly inspections, photo reports, and emergency response — small issues fixed before they become big.",
     headline: "Preventive Home Maintenance in Miami",
@@ -150,7 +150,7 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   plumbing: {
     slug: "plumbing",
-    metaTitle: "Plumbing Services Miami | Licensed Plumbers",
+    metaTitle: "Plumbing Services Miami | Licensed",
     metaDescription:
       "Licensed plumbers serving all of Miami-Dade. Leak detection, fixture replacement, water heater repair, drain cleaning. Fast response.",
     headline: "Plumbing Services in Miami",
@@ -187,7 +187,7 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   electrical: {
     slug: "electrical",
-    metaTitle: "Electrical Services Miami | Licensed Electricians",
+    metaTitle: "Electrical Services Miami | Licensed",
     metaDescription:
       "Licensed electricians in Miami. Panel upgrades, outlets, lighting, smart home wiring, EV chargers. Code-compliant work with permits.",
     headline: "Electrical Services in Miami",
@@ -220,7 +220,7 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   hvac: {
     slug: "hvac",
-    metaTitle: "HVAC Services Miami | AC Maintenance, Repair, Installation",
+    metaTitle: "HVAC Services Miami | AC & Heating",
     metaDescription:
       "Miami HVAC services — AC and heating maintenance, repairs, and installation tuned for Florida's climate. Recurring filter and coil care included in plans.",
     headline: "HVAC Services in Miami",
@@ -251,7 +251,7 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   painting: {
     slug: "painting",
-    metaTitle: "Painting & Finishes Miami | Interior & Exterior",
+    metaTitle: "Painting & Finishes Miami",
     metaDescription:
       "Interior and exterior painting in Miami, plus drywall repair and finishing carpentry. Quality finishes that hold up to Florida humidity.",
     headline: "Painting & Finishes",
@@ -282,7 +282,7 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   landscaping: {
     slug: "landscaping",
-    metaTitle: "Landscaping & Gardening Miami | Lawn, Irrigation, Plants",
+    metaTitle: "Landscaping & Gardening Miami",
     metaDescription:
       "Recurring lawn care, irrigation, plant care, and outdoor maintenance for Miami homes. Florida-native expertise.",
     headline: "Landscaping & Gardening",
@@ -312,7 +312,7 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   "furniture-transport": {
     slug: "furniture-transport",
-    metaTitle: "Furniture & Art Transport Miami | White-Glove Service",
+    metaTitle: "Furniture & Art Transport Miami",
     metaDescription:
       "Specialized furniture and artwork transport in Miami. White-glove service for high-value pieces — packing, transport, placement.",
     headline: "Furniture & Art Transport",
@@ -343,7 +343,7 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   "pest-control": {
     slug: "pest-control",
-    metaTitle: "Pest Control Miami | Recurring Treatment & Prevention",
+    metaTitle: "Pest Control Miami | Eco-Friendly",
     metaDescription:
       "Eco-friendly pest control in Miami — insect and rodent treatment, prevention strategies, and recurring service plans.",
     headline: "Pest Control",

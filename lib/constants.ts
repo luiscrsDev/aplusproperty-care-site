@@ -8,7 +8,7 @@ export const BRAND = {
   legalName: "APLUS Property Care LLC",
   tagline: "Your home cared, your life free.",
   description:
-    "APLUS Property Care delivers preventive home maintenance and EV charger installation in Miami. Three subscription plans plus on-demand services, with certified technicians and 24/7 support.",
+    "Preventive home maintenance and EV charger installation in Miami. Three subscription plans, certified technicians, 24/7 support. Cancel anytime.",
   url: "https://aplusproperty.care",
 } as const;
 

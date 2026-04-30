@@ -174,7 +174,7 @@ export default function HomePage() {
         <div className="container-narrow relative px-5 pt-20 pb-24 md:pt-28 md:pb-32 grid gap-12 md:grid-cols-[1.1fr_1fr] items-center">
           <div className="text-white">
             <h1 className="font-bold text-4xl md:text-6xl leading-[1.05] tracking-tight">
-              Your Home Cared,
+              Your Home Cared,{" "}
               <br />
               <span className="text-brand-red">Your Life Free</span>
             </h1>
