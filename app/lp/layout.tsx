@@ -1,12 +1,28 @@
 /**
- * Override the root layout for `/lp` so the conversion-focused landing page
- * gets its own slim header & footer (defined inside `page.tsx`) instead of
- * the site-wide nav. Fewer escape hatches = higher conversion.
+ * Landing-page layout.
  *
- * Note: the GTM snippet, JSON-LD, and html/body wrappers still come from
- * `app/layout.tsx` — this layout only replaces the visible chrome.
+ * Loads Playfair Display (used in the warm v1 visual the partner approved
+ * before we pivoted the main site to the Lovable look) and tags the body
+ * with `lp-warm` so the cream background and warm utilities in globals.css
+ * activate only on this route — the rest of the site keeps the Lovable look.
  */
 
+import { Playfair_Display } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-playfair",
+  weight: ["400", "600", "700", "800"],
+  style: ["normal", "italic"],
+});
+
 export default function LandingLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <div className={`${playfair.variable} lp-warm min-h-screen`}>
+      {/* Override the global font-display variable with the loaded Playfair. */}
+      <style>{`:root { --font-display: var(--font-playfair); }`}</style>
+      {children}
+    </div>
+  );
 }

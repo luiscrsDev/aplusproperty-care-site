@@ -1,13 +1,12 @@
 /**
- * Landing page — `/lp` — focused entirely on plan conversion.
+ * Landing page — `/lp` (also served at v2.aplusproperty.care/ via middleware).
  *
- * Designed to be the destination for paid ads (Google Ads, social) and the
- * future v2.aplusproperty.care redirect. Strips out site-wide nav distractions
- * and pushes a single CTA: start a plan today, cancel anytime, 20% off first
- * 3 months.
+ * Visual: the warm v1 treatment (cream + Playfair + navy/red gradient hero with
+ * red blur halos) — distinct from the main site's Lovable layout, so paid ads
+ * landing here feel like a dedicated promo destination.
  *
- * Tracks form_submit + phone_click events through GTM same as the rest of the
- * site — so attribution works when ads send traffic here.
+ * Goal: single conversion action (start a plan), 20% off first 3 months, cancel
+ * anytime. No site-wide nav, no service browsing, no escape hatches.
  */
 
 import type { Metadata } from "next";
@@ -22,6 +21,7 @@ import {
   ArrowRight,
   Phone,
   Tag,
+  Sparkles,
 } from "lucide-react";
 
 import { CONTACT, PLANS, STATS } from "@/lib/constants";
@@ -29,7 +29,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { absoluteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Start Your Home Maintenance Plan Today — 20% Off First 3 Months",
+  title: "Start Your Home Maintenance Plan — 20% Off First 3 Months",
   description:
     "Stop calling a new contractor every emergency. Start with one trusted Miami team. Plans from $199/mo, 20% off first 3 months. Cancel anytime.",
   alternates: { canonical: absoluteUrl("/lp") },
@@ -39,13 +39,11 @@ export const metadata: Metadata = {
       "Stop calling a new contractor every emergency. One Miami team for everything. Plans from $199/mo. Cancel anytime.",
     url: absoluteUrl("/lp"),
   },
-  /** Landing pages with promo offers shouldn't compete with the main site for the same SERPs. */
+  /** Don't compete with the main site for the same keywords — landing is for paid traffic. */
   robots: { index: false, follow: true },
 };
 
 const PROMO_DISCOUNT = 0.2;
-
-/** Pre-compute promo prices so they appear consistently across hero + cards + table. */
 const PROMO_PLANS = PLANS.map((p) => ({
   ...p,
   promoPrice: Math.round(p.price * (1 - PROMO_DISCOUNT)),
@@ -65,7 +63,7 @@ const APLUS_PROMISE = [
   "Cancel anytime — no contract, no fee",
 ];
 
-const SOCIAL_PROOF_LOGOS = [
+const SOCIAL_PROOF = [
   "Faena",
   "Fisher Island Club",
   "Portobello America",
@@ -120,15 +118,15 @@ const COMPARISON_ROWS: Array<{
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white text-brand-text">
+    <div className="min-h-screen text-[#1a1a1a]" style={{ background: "var(--color-warm-cream)" }}>
       {/* Promo bar */}
-      <div className="bg-brand-red text-white text-center text-sm py-2.5 px-4 font-semibold">
+      <div className="bg-[#c8102e] text-white text-center text-sm py-2.5 px-4 font-semibold">
         <Tag className="inline h-3.5 w-3.5 mr-1.5 -mt-0.5" />
         20% OFF first 3 months · Cancel anytime · Limited spots in May
       </div>
 
-      {/* Slim header — just logo + phone, no nav */}
-      <header className="bg-brand-navy text-white">
+      {/* Slim warm header — logo + phone, no nav */}
+      <header className="border-b border-[var(--color-warm-line)]" style={{ background: "var(--color-warm-cream)" }}>
         <div className="container-narrow flex items-center justify-between px-5 py-3.5">
           <Link href="/" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -137,23 +135,36 @@ export default function LandingPage() {
           <a
             href={`tel:${CONTACT.phone}`}
             data-event="phone_click"
-            className="inline-flex items-center gap-2 rounded-full bg-brand-red px-5 py-2 text-sm font-semibold text-white hover:bg-brand-red-hover shadow-md shadow-brand-red/25 transition-colors"
+            className="inline-flex items-center gap-2 rounded-full bg-[#c8102e] px-5 py-2 text-sm font-semibold text-white hover:bg-[#9b0e22] shadow-md shadow-[#c8102e]/25 transition-colors"
           >
             <Phone className="h-3.5 w-3.5" /> {CONTACT.phoneDisplay}
           </a>
         </div>
       </header>
 
-      {/* HERO — pain → solution → single CTA */}
-      <section className="hero-bg relative">
-        <div className="container-narrow relative px-5 pt-16 pb-20 md:pt-20 md:pb-24 grid gap-12 md:grid-cols-[1.1fr_1fr] items-center">
+      {/* HERO — warm v1 gradient + halos */}
+      <section className="lp-hero-gradient relative overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-[#c8102e] via-[#9b0e22] to-transparent"
+        />
+        <div
+          aria-hidden
+          className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[#c8102e]/20 blur-3xl"
+        />
+
+        <div className="container-narrow relative px-5 pt-20 pb-24 md:pt-24 md:pb-28 grid gap-12 md:grid-cols-[1.1fr_1fr] items-center">
           <div className="text-white">
-            <span className="inline-block rounded-full bg-brand-red/20 border border-brand-red/40 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white font-semibold backdrop-blur">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-white/85 backdrop-blur">
+              <Sparkles className="h-3 w-3 text-[#ef3b54]" aria-hidden />
               For Miami homeowners who are tired
-            </span>
-            <h1 className="mt-5 font-bold text-4xl md:text-6xl leading-[1.05] tracking-tight">
-              Stop calling a new contractor <span className="text-brand-red">every emergency.</span>
+            </div>
+
+            <h1 className="font-display mt-5 text-4xl md:text-6xl leading-[1.05] tracking-tight">
+              Stop calling a new contractor{" "}
+              <span className="italic text-[#ef3b54]">every emergency.</span>
             </h1>
+
             <p className="mt-6 text-lg text-white/85 max-w-xl leading-relaxed">
               Start with one trusted Miami team that already knows your home. Preventive care,
               repairs, EV chargers — all on a flat monthly plan. From $199/mo. Cancel anytime.
@@ -162,14 +173,14 @@ export default function LandingPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="#start"
-                className="rounded-full bg-brand-red px-6 py-3.5 text-base font-semibold text-white hover:bg-brand-red-hover shadow-lg shadow-brand-red/30 transition-all inline-flex items-center gap-2"
+                className="rounded-full bg-[#c8102e] px-7 py-3.5 text-base font-semibold text-white hover:bg-[#9b0e22] shadow-lg shadow-[#c8102e]/30 transition-all inline-flex items-center gap-2"
               >
                 Start Your Plan — 20% Off <ArrowRight className="h-4 w-4" />
               </a>
               <a
                 href={`tel:${CONTACT.phone}`}
                 data-event="phone_click"
-                className="rounded-full border-2 border-white/80 px-6 py-3.5 text-base font-semibold text-white hover:bg-white hover:text-brand-navy transition-all inline-flex items-center gap-2"
+                className="rounded-full border-2 border-white/70 px-6 py-3.5 text-base font-semibold text-white hover:bg-white hover:text-[#163a6e] transition-all inline-flex items-center gap-2"
               >
                 <Phone className="h-4 w-4" /> {CONTACT.phoneDisplay}
               </a>
@@ -178,7 +189,7 @@ export default function LandingPage() {
             <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-xl">
               {STATS.map((s) => (
                 <div key={s.label}>
-                  <div className="text-3xl font-bold text-white">{s.value}</div>
+                  <div className="font-display text-3xl font-bold text-white">{s.value}</div>
                   <div className="text-xs uppercase tracking-wider text-white/70 mt-1">
                     {s.label}
                   </div>
@@ -186,60 +197,70 @@ export default function LandingPage() {
               ))}
             </div>
 
-            <p className="mt-10 text-xs uppercase tracking-[0.18em] text-white/55">Trusted by</p>
-            <p className="mt-2 text-sm text-white/85">{SOCIAL_PROOF_LOGOS.join(" · ")}</p>
+            <p className="mt-10 text-xs uppercase tracking-[0.2em] text-white/55">Trusted by</p>
+            <p className="mt-2 text-sm text-white/85">{SOCIAL_PROOF.join(" · ")}</p>
           </div>
 
           {/* Glass form */}
-          <div id="start" className="glass-card rounded-2xl p-7 md:p-8 text-white scroll-mt-24">
-            <div className="flex items-center gap-2 text-brand-red-glow text-xs uppercase tracking-wider font-semibold">
-              <Tag className="h-3.5 w-3.5" /> 20% off first 3 months
-            </div>
-            <h2 className="mt-2 text-2xl font-bold">Start your plan today</h2>
-            <p className="mt-1.5 text-sm text-white/75">
-              Tell us about your home — we&apos;ll call within 1 business day to confirm details
-              and start the plan.
-            </p>
-            <div className="mt-6">
-              <ContactForm compact defaultService="Premium plan ($399/mo)" />
+          <div id="start" className="scroll-mt-24">
+            <div
+              aria-hidden
+              className="absolute -mt-6 -ml-6 h-20 w-20 rounded-2xl bg-[#c8102e]/20 blur-2xl"
+            />
+            <div className="relative glass-card rounded-3xl p-7 md:p-8 text-white shadow-2xl shadow-black/30">
+              <div className="flex items-center gap-2 text-[#ef3b54] text-xs uppercase tracking-wider font-semibold">
+                <Tag className="h-3.5 w-3.5" /> 20% off first 3 months
+              </div>
+              <h2 className="font-display mt-2 text-2xl font-bold">Start your plan today</h2>
+              <p className="mt-1.5 text-sm text-white/75">
+                Tell us about your home — we&apos;ll call within 1 business day to confirm and
+                start the plan.
+              </p>
+              <div className="mt-6">
+                <ContactForm compact defaultService="Premium plan ($399/mo)" />
+              </div>
             </div>
           </div>
         </div>
+
+        <div className="h-px bg-gradient-to-r from-transparent via-[#c8102e]/40 to-transparent" />
       </section>
 
       {/* PAIN vs PROMISE */}
-      <section className="section bg-white">
+      <section className="section">
         <div className="container-narrow">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-bold text-3xl md:text-5xl">
-              The home maintenance you have <br className="hidden sm:block" />
-              <span className="text-brand-red">vs the one you actually want</span>
+            <span className="text-xs uppercase tracking-[0.2em] text-[#c8102e] font-semibold">
+              Why APLUS exists
+            </span>
+            <h2 className="font-display mt-2 text-3xl md:text-5xl text-[#163a6e] lp-underline">
+              The maintenance you have <span className="text-[#c8102e]">vs</span> the one you want
             </h2>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl bg-brand-red-soft p-7">
-              <div className="flex items-center gap-2 text-brand-red font-semibold text-sm uppercase tracking-wider">
+          <div className="mt-14 grid gap-6 md:grid-cols-2">
+            <div className="rounded-2xl border border-[#c8102e]/15 bg-[#fef2f2] p-7">
+              <div className="flex items-center gap-2 text-[#c8102e] font-semibold text-sm uppercase tracking-wider">
                 <XCircle className="h-4 w-4" /> Without APLUS
               </div>
               <ul className="mt-5 space-y-4">
                 {PAIN_POINTS.map((p) => (
                   <li key={p} className="flex items-start gap-3">
-                    <XCircle className="h-5 w-5 text-brand-red flex-shrink-0 mt-0.5" />
-                    <span className="text-brand-text/85">{p}</span>
+                    <XCircle className="h-5 w-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <span className="text-[#1a1a1a]/85">{p}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-2xl bg-brand-navy text-white p-7">
-              <div className="flex items-center gap-2 text-brand-red-glow font-semibold text-sm uppercase tracking-wider">
+            <div className="rounded-2xl bg-[#163a6e] text-white p-7 shadow-xl shadow-[#163a6e]/20">
+              <div className="flex items-center gap-2 text-[#ef3b54] font-semibold text-sm uppercase tracking-wider">
                 <CheckCircle2 className="h-4 w-4" /> With APLUS
               </div>
               <ul className="mt-5 space-y-4">
                 {APLUS_PROMISE.map((p) => (
                   <li key={p} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-brand-red-glow flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="h-5 w-5 text-[#ef3b54] flex-shrink-0 mt-0.5" />
                     <span>{p}</span>
                   </li>
                 ))}
@@ -250,76 +271,98 @@ export default function LandingPage() {
       </section>
 
       {/* PRICING — promo prices vs standard */}
-      <section className="section bg-brand-bg-cool">
+      <section className="section lp-soft-gradient">
         <div className="container-narrow">
           <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
+            <span className="text-xs uppercase tracking-[0.2em] text-[#c8102e] font-semibold">
               Limited-time pricing
             </span>
-            <h2 className="mt-2 font-bold text-3xl md:text-5xl">
-              Pick your plan. <span className="text-brand-red">Save 20%</span> for 3 months.
+            <h2 className="font-display mt-2 text-3xl md:text-5xl text-[#163a6e] lp-underline">
+              Pick a plan. <span className="text-[#c8102e]">Save 20%</span> for 3 months.
             </h2>
-            <p className="mt-4 text-brand-muted">
+            <p className="mt-8 text-[#5b5b5b]">
               No contract. No setup fee. Cancel any month. Standard pricing kicks in on month 4.
             </p>
           </div>
 
-          <div className="mt-14 grid gap-7 md:grid-cols-3 items-stretch">
+          <div className="mt-16 grid gap-7 md:grid-cols-3 items-stretch">
             {PROMO_PLANS.map((plan) => (
               <article
                 key={plan.slug}
-                className={`relative flex flex-col rounded-2xl bg-white p-7 transition-all ${
+                className={`relative flex flex-col rounded-2xl p-7 transition-all ${
                   plan.highlight
-                    ? "border-2 border-brand-red shadow-2xl shadow-brand-red/15 md:scale-[1.02]"
-                    : "border border-brand-line shadow-sm hover:shadow-md"
+                    ? "lp-plan-premium text-white shadow-2xl shadow-[#c8102e]/25 md:scale-[1.03] border border-[#c8102e]/40"
+                    : "border border-[var(--color-warm-line)] bg-white shadow-sm"
                 }`}
               >
                 {plan.highlight && (
-                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-brand-red px-4 py-1.5 text-[11px] font-semibold tracking-wider text-white uppercase shadow-lg shadow-brand-red/30">
+                  <span className="absolute -top-3 left-7 rounded-full bg-[#c8102e] px-3 py-1 text-[11px] font-semibold tracking-wider text-white shadow-md shadow-[#c8102e]/40 uppercase">
                     Most Popular
                   </span>
                 )}
 
-                <div className="text-center">
-                  <h3 className="font-bold text-2xl">{plan.name}</h3>
-                  <div className="mt-3">
-                    <span className="text-sm text-brand-muted line-through">
-                      {plan.priceDisplay}
+                <h3
+                  className={`font-display text-2xl ${plan.highlight ? "text-white" : "text-[#163a6e]"}`}
+                >
+                  {plan.name}
+                </h3>
+                <p
+                  className={`mt-1 text-sm ${plan.highlight ? "text-white/75" : "text-[#5b5b5b]"}`}
+                >
+                  {plan.tagline}
+                </p>
+
+                <div className="mt-5">
+                  <div
+                    className={`text-sm line-through ${plan.highlight ? "text-white/60" : "text-[#5b5b5b]"}`}
+                  >
+                    {plan.priceDisplay}
+                    {plan.period}
+                  </div>
+                  <div className="mt-1 flex items-baseline gap-1">
+                    <span
+                      className={`font-display text-5xl font-bold ${plan.highlight ? "text-white" : "text-[#c8102e]"}`}
+                    >
+                      ${plan.promoPrice}
+                    </span>
+                    <span
+                      className={`text-sm ${plan.highlight ? "text-white/70" : "text-[#5b5b5b]"}`}
+                    >
                       {plan.period}
                     </span>
                   </div>
-                  <div className="mt-1 flex items-baseline justify-center gap-1">
-                    <span className="font-bold text-5xl text-brand-red">${plan.promoPrice}</span>
-                    <span className="text-sm text-brand-muted font-medium">{plan.period}</span>
-                  </div>
-                  <p className="mt-2 text-xs text-brand-red font-semibold uppercase tracking-wider">
+                  <p
+                    className={`mt-1 text-xs uppercase tracking-wider font-semibold ${
+                      plan.highlight ? "text-[#ef3b54]" : "text-[#c8102e]"
+                    }`}
+                  >
                     First 3 months
                   </p>
-                  <p className="mt-3 text-sm text-brand-muted">{plan.tagline}</p>
                 </div>
 
-                <ul className="mt-7 space-y-3 text-sm flex-1">
-                  <li className="flex items-start gap-3 font-semibold">
-                    <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-brand-red" />
-                    <span>{plan.visits}</span>
-                  </li>
-                  {plan.features
-                    .filter((f) => !f.toLowerCase().includes("visit"))
-                    .slice(0, 5)
-                    .map((f) => (
-                      <li key={f} className="flex items-start gap-3 text-brand-text/85">
-                        <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-brand-red" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
+                <p
+                  className={`mt-4 text-sm font-medium ${plan.highlight ? "text-white" : "text-[#163a6e]"}`}
+                >
+                  {plan.visits}
+                </p>
+
+                <ul className="mt-6 space-y-3 text-sm flex-1">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2">
+                      <CheckCircle2
+                        className={`h-4 w-4 mt-0.5 flex-shrink-0 ${plan.highlight ? "text-white" : "text-[#c8102e]"}`}
+                      />
+                      <span className={plan.highlight ? "text-white/90" : ""}>{f}</span>
+                    </li>
+                  ))}
                 </ul>
 
                 <a
                   href="#start"
                   className={`mt-7 block w-full rounded-full px-5 py-3 text-center text-sm font-semibold transition-all ${
                     plan.highlight
-                      ? "bg-brand-red text-white hover:bg-brand-red-hover shadow-md shadow-brand-red/20"
-                      : "border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white"
+                      ? "bg-white text-[#c8102e] hover:bg-[#fef2f2]"
+                      : "bg-[#c8102e] text-white hover:bg-[#9b0e22] shadow-md shadow-[#c8102e]/20"
                   }`}
                 >
                   Start {plan.name}
@@ -328,14 +371,14 @@ export default function LandingPage() {
             ))}
           </div>
 
-          <p className="mt-8 text-center text-xs text-brand-muted">
+          <p className="mt-8 text-center text-xs text-[#5b5b5b]">
             Standard pricing applies from month 4 onwards. Cancel anytime — no fee.
           </p>
         </div>
       </section>
 
       {/* TRUST GRID */}
-      <section className="section bg-white">
+      <section className="section">
         <div className="container-narrow">
           <div className="grid gap-6 md:grid-cols-4 text-center">
             {[
@@ -361,11 +404,11 @@ export default function LandingPage() {
               },
             ].map(({ icon: Icon, title, body }) => (
               <div key={title} className="flex flex-col items-center">
-                <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20">
+                <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#c8102e] text-white shadow-md shadow-[#c8102e]/20">
                   <Icon className="h-6 w-6" aria-hidden />
                 </span>
-                <h3 className="mt-4 font-bold text-lg">{title}</h3>
-                <p className="mt-2 text-sm text-brand-muted leading-relaxed">{body}</p>
+                <h3 className="font-display mt-4 text-lg text-[#163a6e]">{title}</h3>
+                <p className="mt-2 text-sm text-[#5b5b5b] leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
@@ -373,33 +416,33 @@ export default function LandingPage() {
       </section>
 
       {/* COMPARISON */}
-      <section className="section bg-brand-bg-cool border-y border-brand-line">
+      <section className="section lp-soft-gradient border-y border-[var(--color-warm-line)]">
         <div className="container-narrow">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-bold text-3xl md:text-4xl">
+            <h2 className="font-display text-3xl md:text-4xl text-[#163a6e] lp-underline">
               Compare side by side
             </h2>
-            <p className="mt-4 text-brand-muted">Pick the plan that fits. Upgrade any month.</p>
+            <p className="mt-8 text-[#5b5b5b]">Pick the plan that fits. Upgrade any month.</p>
           </div>
 
-          <div className="mt-12 rounded-2xl bg-white border border-brand-line shadow-sm overflow-x-auto">
+          <div className="mt-12 rounded-2xl bg-white border border-[var(--color-warm-line)] shadow-sm overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-brand-bg-cool">
-                  <th className="text-left py-4 px-5 font-semibold text-brand-muted text-xs uppercase tracking-wider">
+                <tr style={{ background: "var(--color-warm-cream-deep)" }}>
+                  <th className="text-left py-4 px-5 font-semibold text-[#5b5b5b] text-xs uppercase tracking-wider">
                     Feature
                   </th>
                   {PROMO_PLANS.map((plan) => (
                     <th
                       key={plan.slug}
                       className={`text-center py-4 px-5 font-bold ${
-                        plan.highlight ? "bg-brand-red/5 text-brand-red" : "text-brand-text"
+                        plan.highlight ? "bg-[#c8102e]/5 text-[#c8102e]" : "text-[#163a6e]"
                       }`}
                     >
-                      <div>{plan.name}</div>
-                      <div className="text-xs font-medium text-brand-muted mt-0.5">
+                      <div className="font-display">{plan.name}</div>
+                      <div className="text-xs font-medium text-[#5b5b5b] mt-0.5">
                         <span className="line-through">${plan.price}</span>{" "}
-                        <span className="text-brand-red font-bold">${plan.promoPrice}</span>
+                        <span className="text-[#c8102e] font-bold">${plan.promoPrice}</span>
                         {plan.period}
                       </div>
                     </th>
@@ -408,23 +451,21 @@ export default function LandingPage() {
               </thead>
               <tbody>
                 {COMPARISON_ROWS.map((row, i) => (
-                  <tr key={row.feature} className={i % 2 === 0 ? "bg-white" : "bg-brand-bg-cool/40"}>
-                    <td className="py-3.5 px-5 font-medium">{row.feature}</td>
+                  <tr key={row.feature} className={i % 2 === 0 ? "bg-white" : "bg-[#fdf6ee]"}>
+                    <td className="py-3.5 px-5 text-[#163a6e] font-medium">{row.feature}</td>
                     {(["essential", "premium", "vip"] as const).map((col) => {
                       const v = row[col];
                       const highlight = col === "premium";
                       return (
                         <td
                           key={col}
-                          className={`text-center py-3.5 px-5 ${
-                            highlight ? "bg-brand-red/5" : ""
-                          }`}
+                          className={`text-center py-3.5 px-5 ${highlight ? "bg-[#c8102e]/5" : ""}`}
                         >
                           {typeof v === "boolean" ? (
                             v ? (
-                              <CheckCircle2 className="inline h-5 w-5 text-brand-red" />
+                              <CheckCircle2 className="inline h-5 w-5 text-[#c8102e]" />
                             ) : (
-                              <XCircle className="inline h-4 w-4 text-brand-muted/40" />
+                              <XCircle className="inline h-4 w-4 text-[#5b5b5b]/40" />
                             )
                           ) : (
                             <span className="font-medium">{v}</span>
@@ -441,24 +482,24 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ */}
-      <section className="section bg-white">
+      <section className="section">
         <div className="container-narrow max-w-3xl">
-          <h2 className="font-bold text-3xl md:text-4xl text-center">
-            Common questions
+          <h2 className="font-display text-3xl md:text-4xl text-center text-[#163a6e] lp-underline">
+            Common <span className="text-[#c8102e]">questions</span>
           </h2>
-          <div className="mt-10 space-y-4">
+          <div className="mt-14 space-y-4">
             {FAQ.map((item) => (
               <details
                 key={item.q}
-                className="group rounded-2xl border border-brand-line bg-white p-6 shadow-sm"
+                className="group rounded-2xl border border-[var(--color-warm-line)] bg-white p-6 shadow-sm"
               >
-                <summary className="flex items-center justify-between cursor-pointer list-none font-semibold">
+                <summary className="flex items-center justify-between cursor-pointer list-none font-semibold text-[#163a6e]">
                   <span>{item.q}</span>
-                  <span className="ml-4 text-brand-red text-xl group-open:rotate-45 transition-transform">
+                  <span className="ml-4 text-[#c8102e] text-xl group-open:rotate-45 transition-transform">
                     +
                   </span>
                 </summary>
-                <p className="mt-4 text-brand-text/85 leading-relaxed">{item.a}</p>
+                <p className="mt-4 text-[#1a1a1a]/85 leading-relaxed">{item.a}</p>
               </details>
             ))}
           </div>
@@ -466,10 +507,14 @@ export default function LandingPage() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="section bg-brand-gradient text-white">
-        <div className="container-narrow max-w-3xl text-center">
-          <h2 className="font-bold text-3xl md:text-5xl">
-            Your home. <span className="text-brand-red-glow">One trusted team.</span>
+      <section className="section lp-hero-gradient text-white relative overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[#c8102e]/20 blur-3xl"
+        />
+        <div className="container-narrow max-w-3xl text-center relative">
+          <h2 className="font-display text-3xl md:text-5xl">
+            Your home. <span className="italic text-[#ef3b54]">One trusted team.</span>
           </h2>
           <p className="mt-5 text-lg text-white/85">
             20% off first 3 months. No contract. Cancel anytime. Limited spots.
@@ -477,14 +522,14 @@ export default function LandingPage() {
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
               href="#start"
-              className="rounded-full bg-brand-red px-7 py-3.5 text-base font-semibold text-white hover:bg-brand-red-hover shadow-lg shadow-brand-red/30"
+              className="rounded-full bg-[#c8102e] px-7 py-3.5 text-base font-semibold text-white hover:bg-[#9b0e22] shadow-lg shadow-[#c8102e]/30"
             >
               Start Your Plan
             </a>
             <a
               href={`tel:${CONTACT.phone}`}
               data-event="phone_click"
-              className="rounded-full border-2 border-white/80 px-7 py-3.5 text-base font-semibold text-white hover:bg-white hover:text-brand-navy"
+              className="rounded-full border-2 border-white/80 px-7 py-3.5 text-base font-semibold text-white hover:bg-white hover:text-[#163a6e]"
             >
               <Phone className="inline h-4 w-4 mr-2" /> {CONTACT.phoneDisplay}
             </a>
@@ -492,24 +537,27 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Slim footer — no link explosion */}
-      <footer className="bg-brand-navy text-white/65 text-center py-6 text-xs">
+      {/* Slim warm footer */}
+      <footer
+        className="text-[#5b5b5b]/80 text-center py-6 text-xs border-t border-[var(--color-warm-line)]"
+        style={{ background: "var(--color-warm-cream)" }}
+      >
         © {new Date().getFullYear()} APLUS Property Care LLC · Licensed &amp; insured · Miami-Dade
         County
       </footer>
 
       {/* Mobile sticky CTA */}
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-brand-line p-3 flex gap-2 shadow-lg">
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[var(--color-warm-line)] p-3 flex gap-2 shadow-lg">
         <a
           href={`tel:${CONTACT.phone}`}
           data-event="phone_click"
-          className="flex-1 rounded-full border-2 border-brand-navy text-brand-navy px-4 py-2.5 text-sm font-semibold text-center"
+          className="flex-1 rounded-full border-2 border-[#163a6e] text-[#163a6e] px-4 py-2.5 text-sm font-semibold text-center"
         >
           <Phone className="inline h-3.5 w-3.5 mr-1.5" /> Call
         </a>
         <a
           href="#start"
-          className="flex-1 rounded-full bg-brand-red text-white px-4 py-2.5 text-sm font-semibold text-center shadow-md shadow-brand-red/25"
+          className="flex-1 rounded-full bg-[#c8102e] text-white px-4 py-2.5 text-sm font-semibold text-center shadow-md shadow-[#c8102e]/25"
         >
           Start Plan — 20% off
         </a>
