@@ -24,8 +24,9 @@ import {
   Sparkles,
 } from "lucide-react";
 
-import { CONTACT, PLANS, STATS } from "@/lib/constants";
+import { CONTACT, PLANS, STATS, TEAM } from "@/lib/constants";
 import { ContactForm } from "@/components/ContactForm";
+import { ClientsGrid } from "@/components/Clients";
 import { absoluteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -481,8 +482,75 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* SOCIAL PROOF — Anderson + Trusted by */}
       <section className="section">
+        <div className="container-narrow">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs uppercase tracking-[0.2em] text-[#c8102e] font-semibold">
+              Real team. Real reputation.
+            </span>
+            <h2 className="font-display mt-2 text-3xl md:text-5xl text-[#163a6e] lp-underline">
+              Built by Miami homeowners, <span className="text-[#c8102e]">for Miami homes.</span>
+            </h2>
+          </div>
+
+          <div className="mt-14 grid gap-7 md:grid-cols-5 items-stretch">
+            {/* Anderson card */}
+            {TEAM.map((t) => {
+              const initials = t.name
+                .split(" ")
+                .map((p) => p[0])
+                .join("")
+                .slice(0, 2);
+              return (
+                <div
+                  key={t.slug}
+                  className="md:col-span-2 flex flex-col rounded-2xl border border-[var(--color-warm-line)] bg-white p-7 shadow-sm"
+                >
+                  <div className="flex items-center gap-5">
+                    <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-[#c8102e] text-white shadow-md shadow-[#c8102e]/20 flex-shrink-0">
+                      <span className="font-display font-bold text-2xl">{initials}</span>
+                    </div>
+                    <div>
+                      <div className="font-display text-2xl text-[#163a6e]">{t.name}</div>
+                      <div className="mt-0.5 text-xs uppercase tracking-wider text-[#c8102e] font-semibold">
+                        {t.role}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="mt-5 text-sm text-[#5b5b5b] leading-relaxed flex-1">{t.bio}</p>
+                  <div className="mt-5 pt-4 border-t border-[var(--color-warm-line)] text-[11px] uppercase tracking-wider text-[#5b5b5b]">
+                    Licensed · Insured · Florida
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Trusted by */}
+            <div className="md:col-span-3 flex flex-col rounded-2xl border border-[var(--color-warm-line)] bg-white p-7 shadow-sm">
+              <div className="text-center">
+                <span className="text-xs uppercase tracking-[0.2em] text-[#c8102e] font-semibold">
+                  Trusted by
+                </span>
+                <h3 className="font-display mt-2 text-xl text-[#163a6e]">
+                  Some of Miami&apos;s most demanding clients
+                </h3>
+                <p className="mt-2 text-sm text-[#5b5b5b]">
+                  From luxury hospitality to nationwide automotive groups.
+                </p>
+              </div>
+              <div className="mt-6 flex-1 flex items-center">
+                <div className="w-full">
+                  <ClientsGrid columns={4} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section lp-soft-gradient border-t border-[var(--color-warm-line)]">
         <div className="container-narrow max-w-3xl">
           <h2 className="font-display text-3xl md:text-4xl text-center text-[#163a6e] lp-underline">
             Common <span className="text-[#c8102e]">questions</span>
