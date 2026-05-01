@@ -6,7 +6,7 @@ import { BRAND, TRACKING } from "@/lib/constants";
 import { localBusinessSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { FooterGate } from "@/components/FooterGate";
 
 /**
  * Indexability gate: defaults to indexable. Set the env var
@@ -112,7 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Header />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <FooterGate />
       </body>
     </html>
   );

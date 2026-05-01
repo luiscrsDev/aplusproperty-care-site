@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { BRAND, PLANS, SERVICES } from "@/lib/constants";
 import { AREA_CONTENT } from "@/lib/content/areas";
+import { POSTS } from "@/lib/content/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -20,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     { url: `${BRAND.url}/areas`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BRAND.url}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
   ];
 
   const planPages: MetadataRoute.Sitemap = PLANS.map((p) => ({
@@ -43,5 +45,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...planPages, ...servicePages, ...areaPages];
+  const blogPages: MetadataRoute.Sitemap = POSTS.map((p) => ({
+    url: `${BRAND.url}/blog/${p.slug}`,
+    lastModified: new Date(p.date),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...planPages, ...servicePages, ...areaPages, ...blogPages];
 }

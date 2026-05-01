@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { BRAND } from "@/lib/constants";
@@ -10,11 +11,16 @@ const nav = [
   { href: "/services", label: "Services" },
   { href: "/maintenance-plans", label: "Plans" },
   { href: "/areas", label: "Areas" },
+  { href: "/blog", label: "Blog" },
   { href: "/#contact", label: "Contact" },
 ];
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Landing page (/lp) renders its own slim header — skip the site-wide one.
+  if (pathname?.startsWith("/lp")) return null;
 
   return (
     <header className="bg-brand-navy text-white">
