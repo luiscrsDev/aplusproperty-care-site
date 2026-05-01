@@ -2,9 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { BRAND } from "@/lib/constants";
+
+/**
+ * Returns true when the current visit is the conversion-focused landing —
+ * either the path is `/lp` or the visible hostname is the dedicated landing
+ * subdomain (the middleware rewrites v2.aplusproperty.care/ → /lp, but the
+ * client-side `usePathname()` still reports `/`).
+ */
+function useIsLanding() {
+  const pathname = usePathname();
+  const [host, setHost] = useState<string | null>(null);
+  useEffect(() => {
+    if (typeof window !== "undefined") setHost(window.location.hostname);
+  }, []);
+  if (pathname?.startsWith("/lp")) return true;
+  if (host && host.startsWith("v2.")) return true;
+  return false;
+}
 
 const nav = [
   { href: "/", label: "Home" },
@@ -17,10 +34,10 @@ const nav = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  const isLanding = useIsLanding();
 
-  // Landing page (/lp) renders its own slim header — skip the site-wide one.
-  if (pathname?.startsWith("/lp")) return null;
+  // Landing page renders its own slim header — skip the site-wide one.
+  if (isLanding) return null;
 
   return (
     <header className="bg-brand-navy text-white">
