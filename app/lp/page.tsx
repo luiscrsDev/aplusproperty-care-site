@@ -5,7 +5,7 @@
  * red blur halos) — distinct from the main site's Lovable layout, so paid ads
  * landing here feel like a dedicated promo destination.
  *
- * Goal: single conversion action (start a plan), 20% off first 3 months, cancel
+ * Goal: single conversion action (start a plan), 50% off your first month, cancel
  * anytime. No site-wide nav, no service browsing, no escape hatches.
  */
 
@@ -30,12 +30,12 @@ import { ClientsGrid } from "@/components/Clients";
 import { absoluteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Start Your Home Maintenance Plan — 20% Off First 3 Months",
+  title: "Start Your Home Maintenance Plan — 50% Off First Month",
   description:
-    "Stop calling a new contractor every emergency. Start with one trusted Miami team. Plans from $199/mo, 20% off first 3 months. Cancel anytime.",
+    "Stop calling a new contractor every emergency. Start with one trusted Miami team. Plans from $199/mo, 50% off your first month. Cancel anytime.",
   alternates: { canonical: absoluteUrl("/lp") },
   openGraph: {
-    title: "Start Your APLUS Plan — 20% Off First 3 Months",
+    title: "Start Your APLUS Plan — 50% Off First Month",
     description:
       "Stop calling a new contractor every emergency. One Miami team for everything. Plans from $199/mo. Cancel anytime.",
     url: absoluteUrl("/lp"),
@@ -44,10 +44,11 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-const PROMO_DISCOUNT = 0.2;
+/** Limited-time offer: 50% off the first month only. From month 2 onwards: standard price. */
+const FIRST_MONTH_DISCOUNT = 0.5;
 const PROMO_PLANS = PLANS.map((p) => ({
   ...p,
-  promoPrice: Math.round(p.price * (1 - PROMO_DISCOUNT)),
+  firstMonthPrice: Math.round(p.price * (1 - FIRST_MONTH_DISCOUNT)),
 }));
 
 const PAIN_POINTS = [
@@ -78,8 +79,8 @@ const FAQ = [
     a: "Correct. All plans are month-to-month. Cancel any time with no fee. We earn the next month every month.",
   },
   {
-    q: "How does the 20% off work?",
-    a: "Apply this offer to any plan and your first 3 months come at 20% off the standard rate. After month 3, the plan continues at standard pricing — and you can cancel any time.",
+    q: "How does the 50% off first month work?",
+    a: "Apply this offer to any plan and you get 50% off your first month — Essential at $99 instead of $199, Premium at $200 instead of $399, VIP at $349 instead of $699. From month 2 onwards, you pay standard price. Cancel any time, no fee.",
   },
   {
     q: "What if I need to upgrade or downgrade?",
@@ -123,7 +124,7 @@ export default function LandingPage() {
       {/* Promo bar */}
       <div className="bg-[#c8102e] text-white text-center text-sm py-2.5 px-4 font-semibold">
         <Tag className="inline h-3.5 w-3.5 mr-1.5 -mt-0.5" />
-        20% OFF first 3 months · Cancel anytime · Limited spots in May
+        50% OFF first month · Cancel anytime · Limited spots in May
       </div>
 
       {/* Slim warm header — logo + phone, no nav */}
@@ -176,7 +177,7 @@ export default function LandingPage() {
                 href="#start"
                 className="rounded-full bg-[#c8102e] px-7 py-3.5 text-base font-semibold text-white hover:bg-[#9b0e22] shadow-lg shadow-[#c8102e]/30 transition-all inline-flex items-center gap-2"
               >
-                Start Your Plan — 20% Off <ArrowRight className="h-4 w-4" />
+                Start Your Plan — 50% Off Month 1 <ArrowRight className="h-4 w-4" />
               </a>
               <a
                 href={`tel:${CONTACT.phone}`}
@@ -210,7 +211,7 @@ export default function LandingPage() {
             />
             <div className="relative glass-card rounded-3xl p-7 md:p-8 text-white shadow-2xl shadow-black/30">
               <div className="flex items-center gap-2 text-[#ef3b54] text-xs uppercase tracking-wider font-semibold">
-                <Tag className="h-3.5 w-3.5" /> 20% off first 3 months
+                <Tag className="h-3.5 w-3.5" /> 50% off your first month
               </div>
               <h2 className="font-display mt-2 text-2xl font-bold">Start your plan today</h2>
               <p className="mt-1.5 text-sm text-white/75">
@@ -279,10 +280,10 @@ export default function LandingPage() {
               Limited-time pricing
             </span>
             <h2 className="font-display mt-2 text-3xl md:text-5xl text-[#163a6e] lp-underline">
-              Pick a plan. <span className="text-[#c8102e]">Save 20%</span> for 3 months.
+              Pick a plan. <span className="text-[#c8102e]">First month half off.</span>
             </h2>
             <p className="mt-8 text-[#5b5b5b]">
-              No contract. No setup fee. Cancel any month. Standard pricing kicks in on month 4.
+              No contract. No setup fee. Cancel any month. Standard pricing applies from month 2.
             </p>
           </div>
 
@@ -314,22 +315,16 @@ export default function LandingPage() {
                 </p>
 
                 <div className="mt-5">
-                  <div
-                    className={`text-sm line-through ${plan.highlight ? "text-white/60" : "text-[#5b5b5b]"}`}
-                  >
-                    {plan.priceDisplay}
-                    {plan.period}
-                  </div>
-                  <div className="mt-1 flex items-baseline gap-1">
+                  <div className="flex items-baseline gap-1">
                     <span
                       className={`font-display text-5xl font-bold ${plan.highlight ? "text-white" : "text-[#c8102e]"}`}
                     >
-                      ${plan.promoPrice}
+                      ${plan.firstMonthPrice}
                     </span>
                     <span
                       className={`text-sm ${plan.highlight ? "text-white/70" : "text-[#5b5b5b]"}`}
                     >
-                      {plan.period}
+                      first month
                     </span>
                   </div>
                   <p
@@ -337,7 +332,7 @@ export default function LandingPage() {
                       plan.highlight ? "text-[#ef3b54]" : "text-[#c8102e]"
                     }`}
                   >
-                    First 3 months
+                    50% off · then ${plan.price}/month
                   </p>
                 </div>
 
@@ -373,7 +368,7 @@ export default function LandingPage() {
           </div>
 
           <p className="mt-8 text-center text-xs text-[#5b5b5b]">
-            Standard pricing applies from month 4 onwards. Cancel anytime — no fee.
+            Standard pricing applies from month 2 onwards. Cancel anytime — no fee.
           </p>
         </div>
       </section>
@@ -416,12 +411,110 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* NOT JUST FILTER SWAPS — anti-commodity positioning */}
+      <section className="section">
+        <div className="container-narrow">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs uppercase tracking-[0.2em] text-[#c8102e] font-semibold">
+              Not all "home maintenance plans" are equal
+            </span>
+            <h2 className="font-display mt-2 text-3xl md:text-5xl text-[#163a6e] lp-underline">
+              We don&apos;t just <span className="text-[#c8102e]">swap filters.</span>
+            </h2>
+            <p className="mt-8 text-[#5b5b5b] leading-relaxed">
+              Big-box "home upkeep" subscriptions visit your home twice a year and change a few
+              consumables. We catch the $5,000 leak when it&apos;s still a $150 fix.
+            </p>
+          </div>
+
+          <div className="mt-14 rounded-2xl bg-white border border-[var(--color-warm-line)] shadow-sm overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr style={{ background: "var(--color-warm-cream-deep)" }}>
+                  <th className="text-left py-4 px-5 font-semibold text-[#5b5b5b] text-xs uppercase tracking-wider">
+                    What you actually get
+                  </th>
+                  <th className="text-center py-4 px-5 font-bold text-[#5b5b5b] text-xs uppercase tracking-wider">
+                    Big-box "home upkeep"
+                  </th>
+                  <th className="text-center py-4 px-5 font-bold text-[#c8102e] bg-[#c8102e]/5 text-xs uppercase tracking-wider">
+                    APLUS Premium
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    feature: "Visits per year",
+                    them: "2",
+                    us: "24 (twice a month)",
+                  },
+                  {
+                    feature: "Preventive inspection (plumbing, roof, caulking)",
+                    them: "❌",
+                    us: "✓ every visit",
+                  },
+                  {
+                    feature: "Photo report after each visit",
+                    them: "❌",
+                    us: "✓ detailed",
+                  },
+                  {
+                    feature: "Emergency response",
+                    them: "❌",
+                    us: "✓ 24/7 — 3 calls/mo",
+                  },
+                  {
+                    feature: "Hurricane prep",
+                    them: "❌",
+                    us: "✓ before each named storm",
+                  },
+                  {
+                    feature: "Small repairs included",
+                    them: "❌",
+                    us: "✓",
+                  },
+                  {
+                    feature: "Same crew that knows your home",
+                    them: "❌",
+                    us: "✓",
+                  },
+                  {
+                    feature: "Forced product purchase",
+                    them: "✓ required",
+                    us: "❌ never",
+                  },
+                  {
+                    feature: "Cancel anytime",
+                    them: "Nonrefundable fee",
+                    us: "✓ no fee",
+                  },
+                ].map((row, i) => (
+                  <tr key={row.feature} className={i % 2 === 0 ? "bg-white" : "bg-[#fdf6ee]"}>
+                    <td className="py-3.5 px-5 text-[#163a6e] font-medium">{row.feature}</td>
+                    <td className="text-center py-3.5 px-5 text-[#5b5b5b]">{row.them}</td>
+                    <td className="text-center py-3.5 px-5 bg-[#c8102e]/5 text-[#163a6e] font-medium">
+                      {row.us}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="mt-6 text-center text-xs text-[#5b5b5b] italic">
+            Comparison based on publicly available terms of national big-box subscription plans.
+            Most charge $99–$200/year for 2 annual visits and require ongoing product purchases.
+          </p>
+        </div>
+      </section>
+
       {/* COMPARISON */}
       <section className="section lp-soft-gradient border-y border-[var(--color-warm-line)]">
         <div className="container-narrow">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="font-display text-3xl md:text-4xl text-[#163a6e] lp-underline">
-              Compare side by side
+              Compare APLUS plans side by side
             </h2>
             <p className="mt-8 text-[#5b5b5b]">Pick the plan that fits. Upgrade any month.</p>
           </div>
@@ -442,9 +535,8 @@ export default function LandingPage() {
                     >
                       <div className="font-display">{plan.name}</div>
                       <div className="text-xs font-medium text-[#5b5b5b] mt-0.5">
-                        <span className="line-through">${plan.price}</span>{" "}
-                        <span className="text-[#c8102e] font-bold">${plan.promoPrice}</span>
-                        {plan.period}
+                        <span className="text-[#c8102e] font-bold">${plan.firstMonthPrice}</span>{" "}
+                        first mo · then ${plan.price}{plan.period}
                       </div>
                     </th>
                   ))}
@@ -585,7 +677,7 @@ export default function LandingPage() {
             Your home. <span className="italic text-[#ef3b54]">One trusted team.</span>
           </h2>
           <p className="mt-5 text-lg text-white/85">
-            20% off first 3 months. No contract. Cancel anytime. Limited spots.
+            50% off your first month. No contract. Cancel anytime. Limited spots.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
@@ -627,7 +719,7 @@ export default function LandingPage() {
           href="#start"
           className="flex-1 rounded-full bg-[#c8102e] text-white px-4 py-2.5 text-sm font-semibold text-center shadow-md shadow-[#c8102e]/25"
         >
-          Start Plan — 20% off
+          Start — 50% Off Mo 1
         </a>
       </div>
     </div>
