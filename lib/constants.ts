@@ -238,6 +238,27 @@ export const SERVICES = [
     icon: "Bug",
     flagship: false,
   },
+  {
+    slug: "moving-storage",
+    name: "Moving & Storage",
+    short: "Local moves, climate-controlled storage, and white-glove handling for high-value items.",
+    icon: "Boxes",
+    flagship: false,
+  },
+  {
+    slug: "interior-stylist",
+    name: "Interior Stylist",
+    short: "On-demand styling for staging, seasonal refreshes, and post-renovation finishing.",
+    icon: "Sofa",
+    flagship: false,
+  },
+  {
+    slug: "room-fragrance",
+    name: "Room Fragrance",
+    short: "Hospitality-grade scenting — diffusers, refills, and signature scent design for residences.",
+    icon: "Sparkles",
+    flagship: false,
+  },
 ] as const;
 
 export type ServiceSlug = (typeof SERVICES)[number]["slug"];

@@ -10,6 +10,9 @@ import {
   Trees,
   Truck,
   Bug,
+  Boxes,
+  Sofa,
+  Sparkles,
   ArrowRight,
   type LucideIcon,
 } from "lucide-react";
@@ -21,7 +24,7 @@ import { absoluteUrl } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Services | Home Maintenance & Specialty Services in Miami",
   description:
-    "Full-service home care in Miami: preventive maintenance, EV charger installation, plumbing, electrical, HVAC, painting, landscaping, and more. Licensed Miami-Dade team.",
+    "Full-service home care in Miami: preventive maintenance, EV charger installation, plumbing, electrical, HVAC, painting, landscaping, moving & storage, interior styling, and more. Licensed Miami-Dade team.",
   alternates: { canonical: absoluteUrl("/services") },
 };
 
@@ -35,6 +38,9 @@ const ICONS: Record<string, LucideIcon> = {
   landscaping: Trees,
   "furniture-transport": Truck,
   "pest-control": Bug,
+  "moving-storage": Boxes,
+  "interior-stylist": Sofa,
+  "room-fragrance": Sparkles,
 };
 
 export default function ServicesIndexPage() {

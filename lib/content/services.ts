@@ -371,4 +371,145 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
       },
     ],
   },
+
+  "moving-storage": {
+    slug: "moving-storage",
+    metaTitle: "Moving & Storage Miami | White-Glove Service",
+    metaDescription:
+      "Local Miami moving and climate-controlled storage with white-glove handling for furniture, art, and high-value items.",
+    headline: "Moving & Storage in Miami",
+    subheadline:
+      "Local moves and climate-controlled storage with the same hospitality-grade care we bring to every APLUS service.",
+    sections: [
+      {
+        title: "What we handle",
+        body: "Local Miami-Dade moves, climate-controlled storage at our Doral warehouse, white-glove furniture and art handling, custom crating for fine pieces, packing and unpacking, and inventory documentation. Insured, scheduled, predictable.",
+      },
+      {
+        title: "Why APLUS for moving",
+        body: "Most movers are subcontractors with no relationship to your property. We're the same team that maintains it. We know which pieces are fragile, which doorways are tight, which floors need protection. The move becomes a continuation of the care, not a disruption.",
+      },
+    ],
+    included: [
+      "Local moves within Miami-Dade",
+      "Climate-controlled warehouse storage (short or long term)",
+      "Custom crating for fine art and antiques",
+      "Packing materials at cost",
+      "Inventory documentation with photos",
+      "Insurance on declared value",
+    ],
+    whyUs: [
+      "Same crew that knows your home — no strangers on moving day",
+      "Climate-controlled storage at our Doral facility",
+      "Discreet handling — no advertised brand on trucks for high-value moves",
+      "Coordinated with your concierge or property manager",
+    ],
+    faq: [
+      {
+        q: "Do you store items long-term?",
+        a: "Yes. Our Doral warehouse offers climate-controlled storage by the month. No minimum commitment beyond the first month.",
+      },
+      {
+        q: "Are you insured for moves?",
+        a: "Yes — general liability plus cargo coverage on declared value.",
+      },
+      {
+        q: "Do you handle out-of-state moves?",
+        a: "Local Miami-Dade and South Florida by default. We can coordinate longer routes through trusted partners.",
+      },
+    ],
+  },
+
+  "interior-stylist": {
+    slug: "interior-stylist",
+    metaTitle: "Interior Stylist Miami | On-Demand Home Styling",
+    metaDescription:
+      "On-demand interior styling in Miami — staging, seasonal refreshes, post-renovation finishing, and styling for short-term rental properties.",
+    headline: "Interior Stylist Service",
+    subheadline:
+      "On-demand styling that turns a finished space into a designed one — without committing to a full interior design project.",
+    sections: [
+      {
+        title: "When to bring in a stylist",
+        body: "After a renovation when the rooms feel empty. Before a sale or rental to maximize perceived value. Twice a year for a seasonal refresh. After a move-in to make the home feel like yours quickly. Before guests arrive to a vacation property.",
+      },
+      {
+        title: "What we do",
+        body: "Walk-through assessment, layout adjustments using existing pieces, art and accessory placement, seasonal scent and texture refreshes, sourcing of small accent pieces (within budget you set), light styling for photography and listings.",
+      },
+    ],
+    included: [
+      "On-site styling visit (~3-4 hours)",
+      "Photo documentation of before/after",
+      "Sourcing list with prices for any new pieces",
+      "Coordination with our team for any installs needed (lighting, art hanging, etc.)",
+    ],
+    whyUs: [
+      "Stylist visits within days, not weeks",
+      "Works with what you have — no forced redesign",
+      "Same APLUS team handles any installation that comes from the styling",
+      "Discreet — popular for short-term rental owners and snowbird homes",
+    ],
+    faq: [
+      {
+        q: "Is this a full interior design service?",
+        a: "No — it's lighter and faster. Full interior design takes months and a 5-figure budget. Styling is on-demand: a stylist visits for a few hours, refreshes the space using what you have plus small accents, and leaves the home looking intentional.",
+      },
+      {
+        q: "Do you source furniture?",
+        a: "We source small accent pieces (lamps, art, textiles, vases) within whatever budget you set. For larger furniture purchases we recommend going through a full interior designer.",
+      },
+      {
+        q: "Can you style for short-term rental photography?",
+        a: "Yes — that's one of our most popular requests. Listings with proper styling rent at higher nightly rates and get more bookings.",
+      },
+    ],
+  },
+
+  "room-fragrance": {
+    slug: "room-fragrance",
+    metaTitle: "Room Fragrance Service Miami | Signature Scenting",
+    metaDescription:
+      "Hospitality-grade room fragrance for Miami residences — diffusers, refills, and signature scent design. The detail luxury hotels never skip.",
+    headline: "Room Fragrance & Signature Scenting",
+    subheadline:
+      "The detail luxury hotels never skip. Diffusers, refills, and signature scent design — installed and maintained for your home.",
+    sections: [
+      {
+        title: "Why scent matters in a luxury home",
+        body: "Walk into any 5-star hotel and the first impression is always olfactory before visual. Faena, the Setai, Acqualina — every premium property invests in signature scent because it sets the emotional tone of the space. Most residences ignore this and lose the same advantage.",
+      },
+      {
+        title: "What we offer",
+        body: "Professional-grade nebulizing diffusers (the kind used in luxury hotels — not retail plug-ins), curated scent library, signature scent design if you want something custom-blended for your home, scheduled refills, seasonal scent rotation, and discreet placement integrated into your existing decor.",
+      },
+    ],
+    included: [
+      "Initial scent consultation",
+      "Diffuser installation (one or multiple zones)",
+      "Curated starter scent or custom blend",
+      "Monthly refills delivered and installed",
+      "Seasonal scent rotation if desired",
+    ],
+    whyUs: [
+      "Hospitality-grade equipment, not consumer plug-ins",
+      "Same standards as Faena, Fisher Island Club residences",
+      "Scheduled service — never run out, never re-think it",
+      "Integrated into our preventive maintenance plans (VIP includes refills)",
+    ],
+    faq: [
+      {
+        q: "What's the difference vs candles or plug-in diffusers?",
+        a: "Professional nebulizing diffusers atomize fragrance oils without heat, dispersing scent more evenly through HVAC airflow. The result is a consistent, building-wide scent presence — the same technology used at Aman, Faena, and Four Seasons. Plug-ins are localized and obvious.",
+      },
+      {
+        q: "Can you create a custom scent?",
+        a: "Yes. We work with a Miami-based perfumer to develop signature blends for residences that want a one-of-a-kind scent. Most clients start with a curated scent from our library and customize over time.",
+      },
+      {
+        q: "Is this included in any maintenance plan?",
+        a: "VIP plans include refills and seasonal rotation as part of the property concierge service. Premium and Essential plans get a 15–30% discount on the standalone service.",
+      },
+    ],
+  },
 };

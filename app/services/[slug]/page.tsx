@@ -14,6 +14,9 @@ import {
   Trees,
   Truck,
   Bug,
+  Boxes,
+  Sofa,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 
@@ -33,6 +36,9 @@ const ICONS: Record<string, LucideIcon> = {
   landscaping: Trees,
   "furniture-transport": Truck,
   "pest-control": Bug,
+  "moving-storage": Boxes,
+  "interior-stylist": Sofa,
+  "room-fragrance": Sparkles,
 };
 
 export function generateStaticParams() {
