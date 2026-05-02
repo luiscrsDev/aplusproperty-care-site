@@ -108,6 +108,32 @@ export default function ServicesIndexPage() {
         </div>
       </section>
 
+      {/* PER-VISIT — entry point for non-subscribers */}
+      <section className="section bg-white border-t border-brand-line">
+        <div className="container-narrow max-w-4xl">
+          <div className="rounded-2xl border-2 border-brand-line bg-brand-bg-cool p-7 md:p-10 grid gap-6 md:grid-cols-[1fr_auto] items-center">
+            <div>
+              <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
+                Don&apos;t need a plan?
+              </span>
+              <h2 className="mt-2 font-bold text-2xl md:text-3xl text-brand-text">
+                Pay per visit instead.
+              </h2>
+              <p className="mt-3 text-brand-muted leading-relaxed">
+                Transparent labor pricing, materials at cost, no subscription required. From $95
+                for a diagnostic to $850 for full-day projects.
+              </p>
+            </div>
+            <Link
+              href="/services/per-visit"
+              className="rounded-full border-2 border-brand-navy text-brand-navy px-6 py-3 text-base font-semibold hover:bg-brand-navy hover:text-white transition-colors inline-flex items-center gap-2 whitespace-nowrap"
+            >
+              See Per-Visit Pricing <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA — bundle into plan */}
       <section className="section bg-brand-bg-cool border-t border-brand-line">
         <div className="container-narrow max-w-3xl text-center">

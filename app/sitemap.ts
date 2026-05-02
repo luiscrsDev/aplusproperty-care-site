@@ -22,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     { url: `${BRAND.url}/areas`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BRAND.url}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
+    {
+      url: `${BRAND.url}/services/per-visit`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 
   const planPages: MetadataRoute.Sitemap = PLANS.map((p) => ({
