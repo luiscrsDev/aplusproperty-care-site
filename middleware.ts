@@ -16,9 +16,15 @@ export function middleware(req: NextRequest) {
   if (host.startsWith("v2.")) {
     const url = req.nextUrl.clone();
 
-    // Root or /lp on v2 → serve landing transparently.
+    // Root or /lp on v2 → serve plans landing transparently.
     if (url.pathname === "/" || url.pathname === "/lp") {
       url.pathname = "/lp";
+      return NextResponse.rewrite(url);
+    }
+
+    // /ev or /lp/ev on v2 → serve EV charger landing transparently.
+    if (url.pathname === "/ev" || url.pathname === "/lp/ev") {
+      url.pathname = "/lp/ev";
       return NextResponse.rewrite(url);
     }
 
