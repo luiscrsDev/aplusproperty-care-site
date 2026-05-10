@@ -33,7 +33,9 @@ export default function EVChargerCostMiamiPost() {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    dateModified: post.date,
+    // Bumped on 2026-05-10 alongside title/description optimization to signal
+    // Google that the post is fresh (15 GSC impressions, 0 clicks — needs ranking boost).
+    dateModified: "2026-05-10",
     author: { "@type": "Organization", name: post.author, url: absoluteUrl("/") },
     publisher: {
       "@type": "Organization",

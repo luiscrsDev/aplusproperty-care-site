@@ -28,14 +28,14 @@ export type BlogPostMeta = {
 export const POSTS: BlogPostMeta[] = [
   {
     slug: "ev-charger-installation-cost-miami-2026",
-    title: "How Much Does EV Charger Installation Cost in Miami in 2026?",
+    title: "EV Charger Installation Cost in Miami 2026: $650–$6,500 [Real Numbers]",
     shortTitle: "EV Charger Installation Cost Miami 2026",
     description:
-      "Realistic Level 2 EV charger installation costs in Miami in 2026 — including labor, permits, panel upgrades, and the federal tax credit. Written by APLUS, a licensed Miami electrician.",
+      "EV charger installation in Miami costs $650–$6,500 in 2026. Real breakdown: labor, Miami-Dade permit, panel upgrades, plus the federal $1,000 tax credit. Written by a licensed Miami electrician.",
     date: "2026-04-30",
     author: "APLUS Property Care",
     wordCount: 1900,
-    tags: ["EV Charger", "Miami", "Installation Cost", "Electrical"],
+    tags: ["EV Charger", "Miami", "Installation Cost", "Electrical", "Tesla", "ChargePoint"],
     faq: [
       {
         q: "How much does Level 2 EV charger installation cost in Miami?",
