@@ -10,6 +10,7 @@
  */
 
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ShieldCheck,
@@ -140,8 +141,14 @@ export default function LandingPage() {
       <header className="border-b border-[var(--color-warm-line)]" style={{ background: "var(--color-warm-cream)" }}>
         <div className="container-narrow flex items-center justify-between px-5 py-3.5">
           <Link href="/" className="flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/aplus-logo.png" alt="APLUS Property Care" className="h-12 w-auto" />
+            <Image
+              src="/aplus-logo.png"
+              alt="APLUS Property Care"
+              width={128}
+              height={72}
+              priority
+              className="h-12 w-auto"
+            />
           </Link>
           <a
             href={`tel:${CONTACT.phone}`}
