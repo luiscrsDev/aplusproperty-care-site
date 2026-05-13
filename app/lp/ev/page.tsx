@@ -8,9 +8,13 @@
  * No site-wide nav, no service browsing, no escape hatches.
  *
  * Promo angle (no $$ discount — we don't have margin on EV installs):
- *  1. Federal $1,000 tax credit deadline (Jun 30, 2026) — real urgency
- *  2. Free $150 site assessment
- *  3. Same-week install availability
+ *  1. Free $150 site assessment
+ *  2. Same-week install availability
+ *  3. Florida-licensed electricians + permits handled (billed at cost)
+ *
+ * Note on the federal tax credit: we DO NOT promise or pre-qualify the credit
+ * on the LP. Customers are pointed to their CPA — we just install. Avoids
+ * cross-jurisdiction tax claims and audit risk on our end.
  */
 
 import type { Metadata } from "next";
@@ -38,14 +42,14 @@ import { ClientsGrid } from "@/components/Clients";
 import { absoluteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Level 2 EV Charger Installation Miami — Permits & Same-Week Install",
+  title: "Level 2 EV Charger Installation Miami — Same-Week Install",
   description:
-    "Licensed Level 2 EV charger installation in Miami. Tesla, ChargePoint, Wallbox. Permits handled, fixed quote, federal $1,000 credit before Jun 30. Free assessment.",
+    "Licensed Level 2 EV charger installation in Miami. Tesla, ChargePoint, Wallbox. Permits handled (at cost), fixed labor quote, same-week install. Free site assessment.",
   alternates: { canonical: absoluteUrl("/lp/ev") },
   openGraph: {
-    title: "Level 2 EV Charger Installation Miami — Permits & Same-Week Install",
+    title: "Level 2 EV Charger Installation Miami — Same-Week Install",
     description:
-      "Licensed Level 2 EV charger install. Tesla, ChargePoint, Wallbox. Permits handled, fixed quote. Free assessment.",
+      "Licensed Level 2 EV charger install. Tesla, ChargePoint, Wallbox. Permits handled at cost. Fixed labor quote. Free assessment.",
     url: absoluteUrl("/lp/ev"),
   },
   /** Don't compete with the main site's /services/ev-charger-installation for organic. */
@@ -68,9 +72,9 @@ const PAIN_POINTS = [
 ];
 
 const APLUS_PROMISE = [
-  "Fixed quote up front — permit, panel, install, all in",
+  "Fixed labor quote up front — no surprise change orders",
   "Florida-licensed electricians (not handymen)",
-  "We pull the permit in your name and stay through inspection",
+  "We pull the Miami-Dade permit in your name — billed at cost, no markup",
   "Same-week install when your panel's ready",
 ];
 
@@ -89,7 +93,7 @@ const PRICING_SCENARIOS = [
     price: "$650–$900",
     bullets: [
       "Charger mount + 240V/40A circuit",
-      "Permit + Miami-Dade inspection",
+      "Permit pulled & inspection coordinated",
       "1-year workmanship warranty",
     ],
     badge: null,
@@ -101,7 +105,7 @@ const PRICING_SCENARIOS = [
     bullets: [
       "Outdoor-rated wire + conduit run",
       "Weatherproof outlet & enclosure",
-      "Permit + inspection coordination",
+      "Permit pulled & inspection coordinated",
       "1-year workmanship warranty",
     ],
     badge: "Most common",
@@ -114,7 +118,7 @@ const PRICING_SCENARIOS = [
       "Panel upgrade to 200A (HVHZ-compliant)",
       "Coordinated FPL meter swap",
       "Full charger install on top",
-      "Permit + inspection coordination",
+      "Permit pulled & inspection coordinated",
     ],
     badge: null,
   },
@@ -129,7 +133,7 @@ const PROCESS_STEPS = [
   {
     icon: Tag,
     title: "Fixed quote in writing",
-    body: "Includes labor, materials, permit, and inspection. No hidden trip fees. No mid-job upsells.",
+    body: "Labor + materials locked in writing. Permit and Miami-Dade fees ($100–$250) billed at cost — no markup. No hidden trip fees, no mid-job upsells.",
   },
   {
     icon: Wrench,
@@ -152,12 +156,12 @@ const WHY_VS_OTHERS = [
   {
     feature: "Permit pulled in your name",
     them: "Frequently skipped to lower price",
-    us: "Always — Miami-Dade permit included",
+    us: "Always — billed at cost, no markup",
   },
   {
-    feature: "Fixed-price quote",
+    feature: "Fixed-price labor quote",
     them: '"Time and materials" — surprise charges',
-    us: "Written, all-in, before we start",
+    us: "Written in advance — only permit/fees pass through",
   },
   {
     feature: "Panel upgrade if needed",
@@ -184,15 +188,15 @@ const WHY_VS_OTHERS = [
 const FAQ = [
   {
     q: "How much does EV charger installation cost in Miami?",
-    a: "A simple Level 2 install (garage near panel) typically runs $650–$900 all-in including permit. A standard outdoor install is $1,000–$1,500. If your panel needs upgrading to 200A (common in homes built before 1995), add $2,500–$5,000. We give you a fixed written quote after the free site visit so you know the full number before we start.",
+    a: "A simple Level 2 install (garage near panel) typically runs $650–$900 in labor + materials. A standard outdoor install is $1,000–$1,500. If your panel needs upgrading to 200A (common in homes built before 1995), add $2,500–$5,000. Permit and Miami-Dade fees run an additional $100–$250 and are billed at cost (no markup) on top of the labor quote. We give you a fixed written quote after the free site visit so you know the full number before we start.",
   },
   {
-    q: "Do I qualify for the federal $1,000 EV charger tax credit?",
-    a: "Most residential installs in Miami-Dade qualify under the federal Alternative Fuel Vehicle Refueling Property Credit (30% of installed cost up to $1,000). To claim it, the install must complete by June 30, 2026 and meet IRS Form 8911 requirements. We provide the documentation; you (or your CPA) claim it on next year's return.",
+    q: "Are permits and inspection fees included in the price?",
+    a: "No — we bill the Miami-Dade permit and inspection fees separately at cost (typically $100–$250 total), with no markup. The labor quote is fixed in writing; only the government fee passes through to you. This keeps the labor price honest and avoids the common contractor trick of marking up permits to pad margin.",
   },
   {
     q: "Do I need a permit for a Level 2 EV charger?",
-    a: "Yes — Miami-Dade requires an electrical permit for any new 240V circuit, which is what a Level 2 charger needs. We pull the permit in your name and stay through inspection sign-off. Skipping the permit risks insurance denial if anything goes wrong, and resale issues. Level 1 chargers (the regular 120V outlet trickle charge) do not require a permit.",
+    a: "Yes — Miami-Dade requires an electrical permit for any new 240V circuit, which is what a Level 2 charger needs. We pull the permit in your name and stay through inspection sign-off (fee billed at cost). Skipping the permit risks insurance denial if anything goes wrong, and resale issues. Level 1 chargers (the regular 120V outlet trickle charge) do not require a permit.",
   },
   {
     q: "How fast can you install?",
@@ -214,7 +218,7 @@ export default function EvLandingPage() {
       {/* Promo bar */}
       <div className="bg-[#c8102e] text-white text-center text-sm py-2.5 px-4 font-semibold">
         <Tag className="inline h-3.5 w-3.5 mr-1.5 -mt-0.5" />
-        Federal $1,000 EV credit · Claim before June 30, 2026 · Same-week install
+        Free site assessment ($150 value) · Same-week install · Florida-licensed electricians
       </div>
 
       {/* Slim warm header — logo + phone, no nav */}
@@ -262,8 +266,8 @@ export default function EvLandingPage() {
 
             <p className="mt-6 text-lg text-white/85 max-w-xl leading-relaxed">
               Florida-licensed electricians install your Tesla, ChargePoint, Wallbox, Enphase or
-              Grizzl-E charger end-to-end. Fixed quote up front. Permit and inspection handled.
-              Same-week install when your panel&apos;s ready.
+              Grizzl-E charger end-to-end. Fixed labor quote up front. Permits pulled in your name
+              and billed at cost. Same-week install when your panel&apos;s ready.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -412,8 +416,9 @@ export default function EvLandingPage() {
               What it actually costs in <span className="text-[#c8102e]">Miami.</span>
             </h2>
             <p className="mt-8 text-[#5b5b5b]">
-              All ranges include labor, code-compliant materials, Miami-Dade permit, and final
-              inspection. Fixed quote in writing after the free site visit.
+              Ranges cover labor and code-compliant materials. Miami-Dade permit and inspection
+              fees ($100–$250) are billed separately at cost — no markup. Fixed quote in writing
+              after the free site visit.
             </p>
           </div>
 
@@ -450,7 +455,7 @@ export default function EvLandingPage() {
                       {s.price}
                     </span>
                     <span className={`text-sm ${s.badge ? "text-white/70" : "text-[#5b5b5b]"}`}>
-                      all-in
+                      labor + materials
                     </span>
                   </div>
                 </div>
@@ -481,7 +486,8 @@ export default function EvLandingPage() {
           </div>
 
           <p className="mt-8 text-center text-xs text-[#5b5b5b]">
-            Final price confirmed in writing after the free 30-min site visit. No mid-job upsells.
+            Final price confirmed in writing after the free 30-min site visit. Permit + Miami-Dade
+            fees ($100–$250) pass through at cost. No mid-job upsells.
           </p>
         </div>
       </section>
@@ -514,31 +520,6 @@ export default function EvLandingPage() {
                 <p className="mt-2 text-sm text-[#5b5b5b] leading-relaxed">{s.body}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FEDERAL CREDIT CALLOUT */}
-      <section className="section">
-        <div className="container-narrow max-w-4xl">
-          <div className="rounded-2xl bg-[#163a6e] text-white p-8 md:p-10 grid gap-6 md:grid-cols-[auto_1fr] items-center shadow-xl shadow-[#163a6e]/20">
-            <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-[#c8102e] text-white shadow-md shadow-[#c8102e]/30 flex-shrink-0">
-              <Tag className="h-9 w-9" aria-hidden />
-            </div>
-            <div>
-              <span className="text-xs uppercase tracking-[0.2em] text-[#ef3b54] font-semibold">
-                Federal tax credit · Window closing
-              </span>
-              <h3 className="font-display mt-2 text-2xl md:text-3xl">
-                Get 30% back, up to <span className="italic text-[#ef3b54]">$1,000.</span>
-              </h3>
-              <p className="mt-3 text-white/85 leading-relaxed">
-                The federal Alternative Fuel Vehicle Refueling Property Credit covers 30% of EV
-                charger installation costs (up to $1,000) for installs completed by{" "}
-                <strong className="text-white">June 30, 2026</strong>. We provide every document
-                you need on IRS Form 8911 — your CPA does the rest.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -731,8 +712,8 @@ export default function EvLandingPage() {
             Your charger. <span className="italic text-[#ef3b54]">Done right.</span>
           </h2>
           <p className="mt-5 text-lg text-white/85">
-            Free site assessment ($150 value). Fixed quote in writing. Permits handled. Same-week
-            install.
+            Free site assessment ($150 value). Fixed labor quote in writing. Permits pulled at cost.
+            Same-week install.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
