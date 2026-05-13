@@ -52,6 +52,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
+/**
+ * Force static generation at build time so Vercel serves from Edge cache with
+ * zero cold-start latency. No per-request data — pricing, scenarios, and copy
+ * are all static.
+ */
+export const dynamic = "force-static";
+export const revalidate = false;
+
 const PAIN_POINTS = [
   "Three contractors gave you three different prices",
   "Nobody mentioned the Miami-Dade permit (until inspection failed)",

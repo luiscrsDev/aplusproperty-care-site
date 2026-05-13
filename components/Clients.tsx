@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { CLIENTS } from "@/lib/constants";
 
 /**
@@ -11,8 +12,9 @@ import { CLIENTS } from "@/lib/constants";
  * is exactly what makes a "trusted by" section work as social proof. A subtle
  * lift on hover gives polish without dampening the colors.
  *
- * Falls back gracefully to a text pill if the image asset hasn't been added yet,
- * so the section never looks broken during the asset-collection phase.
+ * Uses `next/image` so Vercel serves WebP/AVIF with width hints + lazy loading
+ * out of the box. Falls back gracefully to a text pill if the image asset
+ * hasn't been added yet.
  */
 export function ClientsGrid({ columns = 4 }: { columns?: 2 | 3 | 4 }) {
   const colClass = columns === 2 ? "sm:grid-cols-2" : columns === 3 ? "sm:grid-cols-3" : "sm:grid-cols-4";
@@ -40,12 +42,17 @@ function ClientLogo({ name, file }: { name: string; file: string }) {
 
   return (
     <div className="flex items-center justify-center h-12 px-2">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={`/clients/${file}`}
         alt={`${name} — APLUS Property Care client`}
+        // Width/height are aspect-ratio hints to prevent CLS — actual size is
+        // controlled by `max-h-10 w-auto` Tailwind classes. Most logos are
+        // wider than tall (~4:1) so 160×40 covers the common case.
+        width={160}
+        height={40}
         className="max-h-10 w-auto object-contain hover:scale-105 transition-transform duration-300"
         loading="lazy"
+        sizes="(max-width: 640px) 50vw, 160px"
         onError={() => setErrored(true)}
       />
     </div>

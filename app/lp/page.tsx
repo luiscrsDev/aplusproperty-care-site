@@ -44,6 +44,15 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
+/**
+ * Force static generation at build time so Vercel serves from Edge cache with
+ * zero cold-start latency. The page has no per-request data — pricing, plans,
+ * and copy are all static. This eliminates the ~2s TTFB cold start that was
+ * hurting paid engagement (28.6% paid vs 70.8% organic).
+ */
+export const dynamic = "force-static";
+export const revalidate = false;
+
 /** Limited-time offer: 50% off the first month only. From month 2 onwards: standard price. */
 const FIRST_MONTH_DISCOUNT = 0.5;
 const PROMO_PLANS = PLANS.map((p) => ({
