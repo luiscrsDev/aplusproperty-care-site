@@ -17,7 +17,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { SERVICES } from "@/lib/constants";
+import { SERVICES, type ServiceSlug } from "@/lib/constants";
 import { breadcrumbSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 
@@ -43,7 +43,158 @@ const ICONS: Record<string, LucideIcon> = {
   "room-fragrance": Sparkles,
 };
 
+/**
+ * Service grouping for visual hierarchy on the index page.
+ *
+ * Categorization rationale:
+ * - "Featured" surfaces the flagship EV install (highest paid-traffic intent)
+ *   on its own, with stronger visual treatment.
+ * - "Home Maintenance" is the recurring/subscription core — what the plan pages sell.
+ * - "Projects & Specialty" is reactive/one-off work that drives single-visit calls.
+ * - "Concierge & Lifestyle" is the high-touch hospitality-grade work for luxury clients.
+ *
+ * Each entry references service slugs from `SERVICES`. If you add a service to
+ * `SERVICES` and forget to assign it a category, it shows up in a fallback "More
+ * services" section so it never disappears silently.
+ */
+type Category = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  services: ServiceSlug[];
+};
+
+const CATEGORIES: Category[] = [
+  {
+    eyebrow: "Most-requested install",
+    title: "Featured",
+    subtitle: "Our flagship project — Level 2 EV charging done right the first time.",
+    services: ["ev-charger-installation"],
+  },
+  {
+    eyebrow: "Subscription core",
+    title: "Home maintenance",
+    subtitle: "Recurring care that prevents most home emergencies before they start.",
+    services: ["preventive-maintenance", "plumbing", "electrical", "hvac"],
+  },
+  {
+    eyebrow: "One-off & project work",
+    title: "Projects & specialty",
+    subtitle: "Reactive trades and seasonal projects — call us when you need them.",
+    services: ["painting", "landscaping", "pest-control"],
+  },
+  {
+    eyebrow: "Hospitality-grade extras",
+    title: "Concierge & lifestyle",
+    subtitle: "White-glove services for high-value homes and discerning clients.",
+    services: ["furniture-transport", "moving-storage", "interior-stylist", "room-fragrance"],
+  },
+];
+
+/** Helper: any service not assigned to a category falls into a fallback group at the bottom. */
+function uncategorizedServices() {
+  const categorized = new Set(CATEGORIES.flatMap((c) => c.services));
+  return SERVICES.filter((s) => !categorized.has(s.slug as ServiceSlug));
+}
+
+/** Look up a service by slug. */
+function serviceBySlug(slug: ServiceSlug) {
+  return SERVICES.find((s) => s.slug === slug);
+}
+
+function ServiceCard({ slug, featured = false }: { slug: ServiceSlug; featured?: boolean }) {
+  const s = serviceBySlug(slug);
+  if (!s) return null;
+  const Icon = ICONS[s.slug] || Wrench;
+
+  // Featured card: bigger padding, navy gradient background, larger headline.
+  if (featured) {
+    return (
+      <Link
+        href={`/services/${s.slug}`}
+        className="group relative block rounded-2xl bg-brand-navy text-white p-8 md:p-10 shadow-lg shadow-brand-navy/20 hover:shadow-xl hover:-translate-y-0.5 transition-all overflow-hidden"
+      >
+        <div
+          aria-hidden
+          className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-brand-red/30 blur-3xl"
+        />
+        <div className="relative grid gap-6 md:grid-cols-[auto_1fr] items-center">
+          <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/30 group-hover:scale-105 transition-transform">
+            <Icon className="h-9 w-9" aria-hidden />
+          </span>
+          <div>
+            <span className="inline-block rounded-full bg-brand-red/20 border border-brand-red/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur">
+              Flagship
+            </span>
+            <h3 className="mt-3 font-bold text-2xl md:text-3xl text-white">{s.name}</h3>
+            <p className="mt-2 text-white/85 leading-relaxed max-w-2xl">{s.short}</p>
+            <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+              Learn more <ArrowRight className="h-4 w-4" />
+            </span>
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
+  // Standard card.
+  return (
+    <Link
+      href={`/services/${s.slug}`}
+      className="group relative rounded-2xl bg-white border border-brand-line p-7 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all"
+    >
+      {s.flagship && (
+        <span className="absolute top-5 right-5 rounded-full bg-brand-red px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+          Flagship
+        </span>
+      )}
+      <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20 group-hover:scale-105 transition-transform">
+        <Icon className="h-6 w-6" aria-hidden />
+      </span>
+      <h3 className="mt-5 font-bold text-lg text-brand-text">{s.name}</h3>
+      <p className="mt-2 text-sm text-brand-muted leading-relaxed">{s.short}</p>
+      <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand-red">
+        Learn more <ArrowRight className="h-3.5 w-3.5" />
+      </span>
+    </Link>
+  );
+}
+
+function CategorySection({ category }: { category: Category }) {
+  const isFeatured = category.title === "Featured";
+  return (
+    <section className={`section ${isFeatured ? "bg-white" : "bg-white border-t border-brand-line"}`}>
+      <div className="container-narrow">
+        <div className="max-w-2xl mb-10">
+          <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
+            {category.eyebrow}
+          </span>
+          <h2 className="mt-2 font-bold text-2xl md:text-3xl text-brand-text">{category.title}</h2>
+          <p className="mt-3 text-brand-muted leading-relaxed">{category.subtitle}</p>
+        </div>
+
+        {/* Featured renders one wide card; others render the standard grid. */}
+        {isFeatured ? (
+          <div className="grid gap-6">
+            {category.services.map((slug) => (
+              <ServiceCard key={slug} slug={slug} featured />
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {category.services.map((slug) => (
+              <ServiceCard key={slug} slug={slug} />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function ServicesIndexPage() {
+  const orphans = uncategorizedServices();
+
   return (
     <>
       <script
@@ -82,37 +233,31 @@ export default function ServicesIndexPage() {
         </div>
       </section>
 
-      {/* GRID */}
-      <section className="section bg-white">
-        <div className="container-narrow">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map((s) => {
-              const Icon = ICONS[s.slug] || Wrench;
-              return (
-                <Link
-                  key={s.slug}
-                  href={`/services/${s.slug}`}
-                  className="group relative rounded-2xl bg-white border border-brand-line p-7 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all"
-                >
-                  {s.flagship && (
-                    <span className="absolute top-5 right-5 rounded-full bg-brand-red px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
-                      Flagship
-                    </span>
-                  )}
-                  <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20 group-hover:scale-105 transition-transform">
-                    <Icon className="h-6 w-6" aria-hidden />
-                  </span>
-                  <h2 className="mt-5 font-bold text-lg text-brand-text">{s.name}</h2>
-                  <p className="mt-2 text-sm text-brand-muted leading-relaxed">{s.short}</p>
-                  <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand-red">
-                    Learn more <ArrowRight className="h-3.5 w-3.5" />
-                  </span>
-                </Link>
-              );
-            })}
+      {/* CATEGORY SECTIONS — each group has its own visual rhythm. */}
+      {CATEGORIES.map((category) => (
+        <CategorySection key={category.title} category={category} />
+      ))}
+
+      {/* FALLBACK — anything not yet categorized. Should normally be empty. */}
+      {orphans.length > 0 && (
+        <section className="section bg-white border-t border-brand-line">
+          <div className="container-narrow">
+            <div className="max-w-2xl mb-10">
+              <span className="text-xs uppercase tracking-[0.2em] text-brand-muted font-semibold">
+                More
+              </span>
+              <h2 className="mt-2 font-bold text-2xl md:text-3xl text-brand-text">
+                Other services
+              </h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {orphans.map((s) => (
+                <ServiceCard key={s.slug} slug={s.slug as ServiceSlug} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* PER-VISIT — entry point for non-subscribers */}
       <section className="section bg-white border-t border-brand-line">

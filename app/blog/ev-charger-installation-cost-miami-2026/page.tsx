@@ -33,9 +33,9 @@ export default function EVChargerCostMiamiPost() {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    // Bumped on 2026-05-10 alongside title/description optimization to signal
-    // Google that the post is fresh (15 GSC impressions, 0 clicks — needs ranking boost).
-    dateModified: "2026-05-10",
+    // Bumped on 2026-05-15: added cost comparison table (Featured Snippet bait),
+    // 4 new long-tail FAQs, and cross-links to /lp/ev for Ads-ready conversion path.
+    dateModified: "2026-05-15",
     author: { "@type": "Organization", name: post.author, url: absoluteUrl("/") },
     publisher: {
       "@type": "Organization",
@@ -107,6 +107,7 @@ export default function EVChargerCostMiamiPost() {
                 {readingMinutes(post.wordCount)} min read
               </span>
               <span>· By {post.author}</span>
+              <span className="text-white/55">· Updated May 15, 2026</span>
             </div>
           </div>
         </div>
@@ -155,6 +156,87 @@ export default function EVChargerCostMiamiPost() {
                 </span>
               </li>
             </ul>
+
+            {/*
+              Cost comparison table — built specifically as Featured Snippet bait
+              for "ev charger installation cost miami" queries. Tables with clear
+              comparisons + Miami-specific numbers are what Google promotes to position 0.
+            */}
+            <h2 className="font-bold text-2xl md:text-3xl text-brand-text mt-12">
+              EV charger installation cost in Miami — by scenario
+            </h2>
+            <p>
+              Below is the actual cost range for the four most common Miami install scenarios in
+              2026. All numbers include charger + labor + materials + permit. Add taxes (6.5%–7%
+              Miami-Dade) and the federal credit refund separately.
+            </p>
+            <div className="not-prose overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0">
+              <table className="w-full text-sm border-collapse my-6 bg-white">
+                <thead>
+                  <tr className="bg-brand-bg-cool border-y-2 border-brand-line">
+                    <th className="text-left py-3 px-4 font-semibold text-brand-text">
+                      Install scenario
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-brand-text">
+                      Total cost (2026)
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-brand-text">
+                      Typical timeline
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-brand-line">
+                    <td className="py-3 px-4">
+                      <strong className="text-brand-text">Garage near panel</strong>
+                      <br />
+                      <span className="text-brand-muted text-xs">
+                        200A panel · &lt;15 ft from charger
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 font-semibold text-brand-text">$800–$1,200</td>
+                    <td className="py-3 px-4">3–5 hours, single day</td>
+                  </tr>
+                  <tr className="border-b border-brand-line bg-brand-bg-soft">
+                    <td className="py-3 px-4">
+                      <strong className="text-brand-text">Standard outdoor</strong>
+                      <br />
+                      <span className="text-brand-muted text-xs">
+                        Driveway/exterior · weatherproof · longer run
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 font-semibold text-brand-text">$1,200–$2,000</td>
+                    <td className="py-3 px-4">1 day</td>
+                  </tr>
+                  <tr className="border-b border-brand-line">
+                    <td className="py-3 px-4">
+                      <strong className="text-brand-text">HVHZ outdoor + long run</strong>
+                      <br />
+                      <span className="text-brand-muted text-xs">
+                        Storm-zone exterior · 30–60 ft conduit
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 font-semibold text-brand-text">$2,000–$3,500</td>
+                    <td className="py-3 px-4">1–2 days</td>
+                  </tr>
+                  <tr className="bg-brand-bg-soft">
+                    <td className="py-3 px-4">
+                      <strong className="text-brand-text">Older home + panel upgrade</strong>
+                      <br />
+                      <span className="text-brand-muted text-xs">
+                        100A→200A upgrade + FPL meter swap + full install
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 font-semibold text-brand-text">$4,000–$6,500</td>
+                    <td className="py-3 px-4">2–3 days + 5–7 days FPL coordination</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm text-brand-muted">
+              Numbers based on 50+ residential installs APLUS completed across Miami-Dade in 2025–
+              2026. Apply the 30% federal credit (up to $1,000) on top to get your effective cost.
+            </p>
 
             <h2 className="font-bold text-2xl md:text-3xl text-brand-text mt-12">
               The charger itself: $400–$700

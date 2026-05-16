@@ -34,7 +34,7 @@ export const POSTS: BlogPostMeta[] = [
       "EV charger installation in Miami costs $650–$6,500 in 2026. Real breakdown: labor, Miami-Dade permit, panel upgrades, plus the federal $1,000 tax credit. Written by a licensed Miami electrician.",
     date: "2026-04-30",
     author: "APLUS Property Care",
-    wordCount: 1900,
+    wordCount: 2350,
     tags: ["EV Charger", "Miami", "Installation Cost", "Electrical", "Tesla", "ChargePoint"],
     faq: [
       {
@@ -52,6 +52,22 @@ export const POSTS: BlogPostMeta[] = [
       {
         q: "Should I get a Tesla Wall Connector or a ChargePoint?",
         a: "If you only own a Tesla, the Wall Connector is purpose-built and clean. If you have a non-Tesla EV or expect to switch brands, ChargePoint Home Flex is more versatile (works with any J1772/SAE plug + has a great app).",
+      },
+      {
+        q: "How long does an EV charger installation take in Miami?",
+        a: "A simple install (garage near panel, no upgrade) is typically a 3–5 hour job done in a single day. Outdoor installs with longer wire runs add 1–3 hours. If a panel upgrade is needed, plan on 1–2 days plus 1–2 days of FPL coordination for the meter swap. Permit inspection is scheduled separately and usually happens within 5–7 business days after the install.",
+      },
+      {
+        q: "Can I install an EV charger in a Miami condo or HOA building?",
+        a: "Single-family and townhouses are straightforward. Multi-unit buildings (condos, apartments) require HOA or board approval and access to a dedicated meter or sub-meter. Florida law (Statute 718.113) protects condo owners' right to install at their own expense, but you'll still need board sign-off on the install location and electrical plan. We can help draft the proposal.",
+      },
+      {
+        q: "Is it cheaper to use FPL EVolution Home or buy outright?",
+        a: "FPL EVolution Home runs $31–$38/month for 5 years (~$1,860–$2,280 total) with no upfront cost. Buying outright averages $1,200–$2,000 for a typical Miami install. So buying is usually cheaper long-term — but FPL wins if you can't outlay the lump sum or expect to move within 3–4 years and don't want a fixed asset on the wall.",
+      },
+      {
+        q: "What's the difference between Level 1 and Level 2 EV charging?",
+        a: "Level 1 uses a standard 120V outlet — adds 3–5 miles of range per hour. Fine for plug-in hybrids or if you only drive 20–30 mi/day. Level 2 uses a 240V circuit (like a dryer outlet) — adds 25–40 miles of range per hour, full charge overnight. For any modern EV with 250+ mile range, Level 2 is the right answer for daily use.",
       },
     ],
   },
