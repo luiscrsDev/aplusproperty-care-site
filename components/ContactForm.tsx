@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { readAttribution } from "@/lib/utm";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -47,6 +48,7 @@ export function ContactForm({
     setStatus("sending");
     setErrorMsg("");
     const fd = new FormData(e.currentTarget);
+    const attribution = readAttribution();
     const payload = {
       name: String(fd.get("name") || "").trim(),
       email: String(fd.get("email") || "").trim(),
@@ -55,6 +57,9 @@ export function ContactForm({
       service: String(fd.get("service") || ""),
       message: String(fd.get("message") || ""),
       page: typeof window !== "undefined" ? window.location.pathname : "",
+      // Attribution snapshot — see lib/utm.ts. May be undefined for direct
+      // visits or visitors with sessionStorage disabled.
+      ...(attribution ?? {}),
     };
 
     startTransition(async () => {

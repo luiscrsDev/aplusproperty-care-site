@@ -19,12 +19,30 @@ create table if not exists marketing_leads (
   converted_user_id uuid references users(id) on delete set null,
   converted_request_id uuid references service_requests(id) on delete set null,
   notes text,
+
+  -- Attribution (populated from sessionStorage by lib/utm.ts on the marketing
+  -- site). Lets us trace each lead back to the Google Ads campaign / keyword
+  -- that brought them in — vs. relying only on Ads-side modeled attribution
+  -- which doesn't tell us *which* form submission came from *which* ad click.
+  utm_source text,
+  utm_medium text,
+  utm_campaign text,
+  utm_term text,
+  utm_content text,
+  gclid text,
+  landing_page text,
+  referrer text,
+
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
 create index if not exists idx_marketing_leads_status on marketing_leads(status);
 create index if not exists idx_marketing_leads_created on marketing_leads(created_at desc);
+create index if not exists idx_marketing_leads_utm_campaign on marketing_leads(utm_campaign)
+  where utm_campaign is not null;
+create index if not exists idx_marketing_leads_gclid on marketing_leads(gclid)
+  where gclid is not null;
 
 -- RLS — only admins read/write
 alter table marketing_leads enable row level security;

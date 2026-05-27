@@ -11,6 +11,19 @@ const schema = z.object({
   service: z.string().max(120).optional().default(""),
   message: z.string().max(2000).optional().default(""),
   page: z.string().max(120).optional().default("/"),
+
+  // Attribution fields — populated client-side from sessionStorage via
+  // lib/utm.ts. All optional so direct visits without UTMs still validate.
+  // Lets us trace each lead back to the Google Ads campaign / keyword that
+  // brought them in (vs. relying only on Ads-side modeled attribution).
+  utm_source: z.string().max(200).optional(),
+  utm_medium: z.string().max(200).optional(),
+  utm_campaign: z.string().max(200).optional(),
+  utm_term: z.string().max(200).optional(),
+  utm_content: z.string().max(200).optional(),
+  gclid: z.string().max(200).optional(),
+  landing_page: z.string().max(400).optional(),
+  referrer: z.string().max(400).optional(),
 });
 
 /**
@@ -40,6 +53,9 @@ export async function POST(req: Request) {
   // Persist to the `marketing_leads` table (separate from service_requests so we
   // don't have to fabricate a client_id / category_id for an anonymous prospect).
   // Admin converts qualified leads into real users + service_requests inside Aplus PRO.
+  //
+  // Attribution fields (utm_*, gclid, landing_page, referrer) come from the
+  // sessionStorage snapshot stored by lib/utm.ts — see schema above.
   if (supabaseUrl && serviceKey) {
     const supabase = createClient(supabaseUrl, serviceKey, {
       auth: { persistSession: false },
@@ -54,6 +70,14 @@ export async function POST(req: Request) {
       service_interest: lead.service || null,
       description: lead.message || null,
       status: "new",
+      utm_source: lead.utm_source || null,
+      utm_medium: lead.utm_medium || null,
+      utm_campaign: lead.utm_campaign || null,
+      utm_term: lead.utm_term || null,
+      utm_content: lead.utm_content || null,
+      gclid: lead.gclid || null,
+      landing_page: lead.landing_page || null,
+      referrer: lead.referrer || null,
     });
     if (error) {
       // Log but do not block the user — they expect immediate confirmation.
@@ -83,6 +107,37 @@ export async function POST(req: Request) {
 }
 
 function leadEmailHtml(lead: z.infer<typeof schema>) {
+  // Build the attribution block only if at least one signal is present.
+  const hasAttribution =
+    lead.utm_source ||
+    lead.utm_medium ||
+    lead.utm_campaign ||
+    lead.utm_term ||
+    lead.utm_content ||
+    lead.gclid ||
+    lead.landing_page ||
+    lead.referrer;
+
+  const attributionBlock = hasAttribution
+    ? `
+      <hr style="margin:20px 0;border:none;border-top:1px solid #e5e5e5">
+      <h3 style="margin:0 0 8px 0;font-size:14px;color:#666">Attribution</h3>
+      ${row("Source", lead.utm_source)}
+      ${row("Medium", lead.utm_medium)}
+      ${row("Campaign", lead.utm_campaign)}
+      ${row("Keyword (utm_term)", lead.utm_term)}
+      ${row("Ad content", lead.utm_content)}
+      ${row("Google Click ID", lead.gclid)}
+      ${row("Landing page", lead.landing_page)}
+      ${row("Referrer", lead.referrer)}
+    `
+    : `
+      <hr style="margin:20px 0;border:none;border-top:1px solid #e5e5e5">
+      <p style="color:#999;font-size:13px">
+        <em>No attribution data — visitor came direct or with sessionStorage disabled.</em>
+      </p>
+    `;
+
   return `
     <h2>New lead from aplusproperty.care</h2>
     <p><strong>Name:</strong> ${escapeHtml(lead.name)}</p>
@@ -90,10 +145,16 @@ function leadEmailHtml(lead: z.infer<typeof schema>) {
     <p><strong>Email:</strong> ${escapeHtml(lead.email)}</p>
     <p><strong>Property:</strong> ${escapeHtml(lead.property || "—")}</p>
     <p><strong>Service:</strong> ${escapeHtml(lead.service || "—")}</p>
-    <p><strong>Page:</strong> ${escapeHtml(lead.page)}</p>
+    <p><strong>Submitted from page:</strong> ${escapeHtml(lead.page)}</p>
     <p><strong>Message:</strong></p>
     <pre style="white-space:pre-wrap;font-family:inherit">${escapeHtml(lead.message || "—")}</pre>
+    ${attributionBlock}
   `;
+}
+
+function row(label: string, value?: string) {
+  if (!value) return "";
+  return `<p style="margin:4px 0;font-size:13px"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</p>`;
 }
 
 function escapeHtml(s: string) {

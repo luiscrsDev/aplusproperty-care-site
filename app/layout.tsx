@@ -7,6 +7,7 @@ import { localBusinessSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { FooterGate } from "@/components/FooterGate";
+import { UtmCapture } from "@/components/UtmCapture";
 
 /**
  * Indexability gate: defaults to indexable. Set the env var
@@ -109,6 +110,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+
+        {/* Captures UTMs / gclid / landing page once per session. */}
+        <UtmCapture />
 
         <Header />
         <main className="flex-1">{children}</main>
