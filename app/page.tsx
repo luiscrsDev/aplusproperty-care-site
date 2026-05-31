@@ -33,6 +33,7 @@ import {
   STATS,
   TEAM,
 } from "@/lib/constants";
+import { AREA_CONTENT } from "@/lib/content/areas";
 import { PlanCard } from "@/components/PlanCard";
 import { ContactForm } from "@/components/ContactForm";
 import { ClientsGrid } from "@/components/Clients";
@@ -434,6 +435,56 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICE AREAS — geo SEO + topical relevance */}
+      <section id="areas" className="section bg-white border-t border-brand-line">
+        <div className="container-narrow">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs uppercase tracking-[0.2em] text-brand-red font-semibold">
+              Service Areas
+            </span>
+            <h2 className="mt-3 font-bold text-3xl md:text-4xl text-brand-text">
+              We care for homes across <span className="text-brand-red">Miami-Dade</span>
+            </h2>
+            <p className="mt-4 text-brand-muted leading-relaxed">
+              Daily coverage in the neighborhoods we know best — barrier islands, condos,
+              luxury estates, and historic residences. Click your area to see what we do there.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {AREA_CONTENT.map((a) => (
+              <Link
+                key={a.slug}
+                href={`/areas/${a.slug}`}
+                className="group rounded-2xl bg-white border border-brand-line p-6 shadow-sm hover:shadow-md hover:border-brand-red/40 transition-all"
+              >
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-red text-white shadow-md shadow-brand-red/20 group-hover:scale-105 transition-transform">
+                  <MapPin className="h-5 w-5" aria-hidden />
+                </span>
+                <h3 className="mt-5 font-bold text-lg text-brand-text">
+                  Home Maintenance {a.name}
+                </h3>
+                <p className="mt-2 text-sm text-brand-muted leading-relaxed line-clamp-3">
+                  {a.subheadline}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-red">
+                  See {a.name} services →
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/areas"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-brand-navy text-brand-navy px-6 py-3 text-sm font-semibold hover:bg-brand-navy hover:text-white transition-colors"
+            >
+              View all service areas
+            </Link>
           </div>
         </div>
       </section>

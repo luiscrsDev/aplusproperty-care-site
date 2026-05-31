@@ -103,6 +103,40 @@ export function faqSchema(items: Array<{ q: string; a: string }>) {
   };
 }
 
+/**
+ * Per-area LocalBusiness Service schema. Tells Google: "this business serves
+ * THIS specific city as a Service", with the page itself as the canonical
+ * landing for that area. Combined with the FAQ + Breadcrumb already emitted
+ * by the area page, this gives strong local-pack ranking signals.
+ *
+ * Per-area pages also reference the root LocalBusiness via @id so all the
+ * NAP info stays consistent without duplication.
+ */
+export function areaServiceSchema(opts: {
+  areaName: string;
+  url: string;
+  description: string;
+  zips?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: `Home Maintenance & Property Care in ${opts.areaName}`,
+    description: opts.description,
+    url: opts.url,
+    provider: { "@id": `${BRAND.url}/#business` },
+    areaServed: {
+      "@type": "City",
+      name: opts.areaName,
+      ...(opts.zips && opts.zips.length > 0
+        ? { containedInPlace: { "@type": "AdministrativeArea", name: "Miami-Dade County" } }
+        : {}),
+    },
+    serviceType: "Home Maintenance",
+    audience: { "@type": "Audience", audienceType: "Property owners" },
+  };
+}
+
 export function breadcrumbSchema(crumbs: Array<{ name: string; url: string }>) {
   return {
     "@context": "https://schema.org",

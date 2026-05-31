@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Phone, Mail, MapPin } from "lucide-react";
 import { ADDRESS, BRAND, CONTACT, SERVICES, SOCIAL } from "@/lib/constants";
+import { AREA_CONTENT } from "@/lib/content/areas";
 
 export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-brand-navy text-white/85 mt-0">
-      <div className="container-narrow px-5 py-14 grid gap-10 md:grid-cols-4">
+      <div className="container-narrow px-5 py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-5">
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/aplus-logo.png" alt={`${BRAND.name} logo`} className="h-12 w-auto" />
@@ -55,6 +56,30 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="text-white font-semibold">Service Areas</h3>
+          <ul className="mt-4 space-y-2 text-sm">
+            {AREA_CONTENT.map((a) => (
+              <li key={a.slug}>
+                <Link
+                  href={`/areas/${a.slug}`}
+                  className="text-white/70 hover:text-white transition-colors"
+                >
+                  {a.name}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                href="/areas"
+                className="text-white/55 hover:text-white text-xs transition-colors"
+              >
+                All areas →
+              </Link>
+            </li>
           </ul>
         </div>
 

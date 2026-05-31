@@ -5,7 +5,7 @@ import { CheckCircle2, MapPin, ArrowRight, Award } from "lucide-react";
 
 import { BRAND, CONTACT, PLANS } from "@/lib/constants";
 import { AREA_BY_SLUG, AREA_CONTENT } from "@/lib/content/areas";
-import { breadcrumbSchema, faqSchema } from "@/lib/schema";
+import { areaServiceSchema, breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 import { ContactForm } from "@/components/ContactForm";
 import { PlanCard } from "@/components/PlanCard";
@@ -63,6 +63,19 @@ export default async function AreaPage({
               { name: "Service Areas", url: absoluteUrl("/areas") },
               { name: content.name, url },
             ]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            areaServiceSchema({
+              areaName: content.name,
+              url,
+              description: content.subheadline,
+              zips: content.zips,
+            }),
           ),
         }}
       />
