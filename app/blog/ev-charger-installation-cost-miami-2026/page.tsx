@@ -124,6 +124,25 @@ export default function EVChargerCostMiamiPost() {
               math from a licensed Miami-Dade contractor.
             </p>
 
+            {/* QUICK ANSWER — structured for AI extraction (AEO) */}
+            <aside
+              aria-label="Quick Answer"
+              className="my-8 rounded-xl border-2 border-brand-red/30 bg-brand-red/5 px-6 py-5"
+            >
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-red mb-3">
+                Quick Answer
+              </p>
+              <p className="font-bold text-brand-text text-lg leading-snug mb-2">
+                EV charger installation in Miami costs $800–$1,500 (no panel upgrade) or up to $6,500 if a panel upgrade is needed.
+              </p>
+              <ul className="mt-3 space-y-1 text-base text-brand-text/80">
+                <li>⚡ Labor: $400–$1,200 · Charger: $400–$700</li>
+                <li>⚡ Panel upgrade (200A): add $2,500–$5,000</li>
+                <li>⚡ Federal tax credit: 30% of cost, up to $1,000 (through Jun 2026)</li>
+                <li>⚡ Miami-Dade permit required for Level 2 (240V)</li>
+              </ul>
+            </aside>
+
             <h2 className="font-bold text-2xl md:text-3xl text-brand-text mt-12">TL;DR — the numbers</h2>
             <ul className="space-y-2.5">
               <li className="flex items-start gap-3">
