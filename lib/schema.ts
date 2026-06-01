@@ -40,8 +40,15 @@ export function localBusinessSchema() {
       name: city,
     })),
     knowsAbout: [
+      "EV charger installation Miami-Dade",
+      "Level 2 EV charger installation Miami",
+      "Tesla Wall Connector installation Miami",
       "EV charger installation",
       "Preventive home maintenance",
+      "Miami home maintenance plan",
+      "Home maintenance subscription Miami",
+      "Preventive maintenance Miami Beach",
+      "Property maintenance Miami-Dade",
       "Plumbing",
       "Electrical",
       "HVAC",
@@ -49,7 +56,21 @@ export function localBusinessSchema() {
       "Landscaping and gardening",
       "Furniture and art transport",
       "Pest control",
+      "Hurricane home preparation Miami",
+      "Emergency home repair Miami",
+      "Condo maintenance Miami Beach",
+      "Licensed general contractor Miami",
     ],
+    founder: {
+      "@type": "Person",
+      "@id": `${BRAND.url}/#anderson-moraes`,
+      name: "Anderson Moraes",
+      jobTitle: "CEO & General Contractor",
+      description:
+        "General Contractor with 12+ years of residential and commercial construction and maintenance experience in Miami-Dade, FL.",
+      url: `${BRAND.url}/about`,
+      worksFor: { "@id": `${BRAND.url}/#business` },
+    },
     openingHoursSpecification: HOURS.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: `https://schema.org/${h.day}`,
@@ -117,6 +138,7 @@ export function areaServiceSchema(opts: {
   url: string;
   description: string;
   zips?: string[];
+  dateModified?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -124,6 +146,7 @@ export function areaServiceSchema(opts: {
     name: `Home Maintenance & Property Care in ${opts.areaName}`,
     description: opts.description,
     url: opts.url,
+    dateModified: opts.dateModified ?? "2026-05-31",
     provider: { "@id": `${BRAND.url}/#business` },
     areaServed: {
       "@type": "City",
