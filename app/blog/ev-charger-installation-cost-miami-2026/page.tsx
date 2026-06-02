@@ -46,8 +46,29 @@ export default function EVChargerCostMiamiPost() {
     keywords: post.tags.join(", "),
   };
 
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How to Install a Level 2 EV Charger in a Miami Home",
+    description: "Step-by-step process to install a 240V Level 2 EV charger in Miami-Dade, including permit, FPL coordination, and inspection.",
+    totalTime: "P3D",
+    estimatedCost: { "@type": "MonetaryAmount", currency: "USD", value: "800-6500" },
+    step: [
+      { "@type": "HowToStep", position: 1, name: "Assess your electrical panel", text: "A licensed electrician checks whether your panel has a free 240V/50A slot. Panels under 100A almost always need an upgrade to 200A ($2,500–$5,000 extra). This is the single biggest cost variable." },
+      { "@type": "HowToStep", position: 2, name: "Choose your Level 2 charger", text: "Tesla owners: Wall Connector ($400). All other EVs: ChargePoint Home Flex ($650) or Wallbox Pulsar Plus ($600). All three are ENERGY STAR certified and eligible for the federal tax credit." },
+      { "@type": "HowToStep", position: 3, name: "Apply for Miami-Dade electrical permit", text: "Florida law requires a permit for any 240V installation. Your licensed electrician pulls the permit from Miami-Dade Building Department (typically $75–$150). DIY installs without a permit void warranties." },
+      { "@type": "HowToStep", position: 4, name: "Install the charger and run the 240V circuit", text: "A licensed electrician mounts the charger, runs conduit from the panel, connects the 240V/50A circuit, and weatherproofs outdoor components. Single-day job (3–5 hours) for a standard garage install." },
+      { "@type": "HowToStep", position: 5, name: "Coordinate FPL if a panel upgrade is needed", text: "Panel upgrades require FPL to swap the meter. Schedule FPL coordination at least 1–2 weeks ahead. Your electrician handles this paperwork." },
+      { "@type": "HowToStep", position: 6, name: "Pass final inspection and claim your federal tax credit", text: "Miami-Dade inspects the permit within 5–7 business days. After passing, file IRS Form 8911 for the Alternative Fuel Vehicle Refueling Property Credit: 30% of total installed cost, up to $1,000, through June 30, 2026." },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
