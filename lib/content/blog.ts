@@ -71,6 +71,68 @@ export const POSTS: BlogPostMeta[] = [
       },
     ],
   },
+  {
+    slug: "how-to-get-hoa-approval-ev-charger-miami",
+    title: "How to Get HOA or Condo Approval for an EV Charger in Miami (2026 Guide)",
+    shortTitle: "HOA EV Charger Approval Miami 2026",
+    description:
+      "Florida Statute 718.113 gives condo owners the right to install EV chargers at their own expense. Here is how to get board approval — sample proposal, timeline, and what Miami HOAs typically require.",
+    date: "2026-06-01",
+    author: "APLUS Property Care",
+    wordCount: 1800,
+    tags: ["EV Charger", "HOA", "Condo", "Miami", "Florida Law", "Installation"],
+    faq: [
+      {
+        q: "Do I have the right to install an EV charger in my Miami condo?",
+        a: "Yes. Florida Statute 718.113(9) gives condo unit owners the right to install EV charging equipment at their own expense, provided the installation is within their limited common elements (parking space) or exclusive use area. The HOA cannot unreasonably deny the request.",
+      },
+      {
+        q: "What does Florida law say about HOA EV charger rights?",
+        a: "For condos, Florida Statute 718.113(9) applies. For HOA communities (single-family, townhomes), Florida Statute 720.317 applies. Both statutes prohibit blanket bans on EV chargers and require associations to consider requests in good faith, though they can impose reasonable conditions on installation.",
+      },
+      {
+        q: "What does a typical Miami condo board require for EV charger approval?",
+        a: "Most boards require: (1) a licensed electrician installation plan showing the circuit route and panel impact, (2) proof of liability insurance from your contractor, (3) agreement to cover all installation costs and future maintenance, (4) approval of charger location and conduit path by the building engineer or manager.",
+      },
+      {
+        q: "How long does HOA EV charger approval take in Miami?",
+        a: "Most condo boards meet monthly. With a complete proposal submitted before the deadline, you typically get a decision within 30-60 days. Some boards approve via email vote faster. A professional installation plan dramatically reduces back-and-forth.",
+      },
+      {
+        q: "Can APLUS Property Care help with my HOA EV charger approval?",
+        a: "Yes. We prepare the full technical proposal package for your board: installation plan, panel impact assessment, conduit routing diagram, and liability insurance certificate. We have navigated approvals in multiple Miami Beach and Brickell condo buildings.",
+      },
+    ],
+  },
+  {
+    slug: "miami-beach-home-maintenance-checklist-2026",
+    title: "Miami Beach Home Maintenance Checklist 2026: Monthly, Seasonal & Annual Tasks",
+    shortTitle: "Miami Beach Home Maintenance Checklist 2026",
+    description:
+      "Salt air, year-round humidity, and hurricane season make Miami Beach properties age faster than anywhere else in Florida. Complete monthly, seasonal, and annual maintenance checklist for Miami Beach homes and condos.",
+    date: "2026-06-01",
+    author: "APLUS Property Care",
+    wordCount: 2100,
+    tags: ["Home Maintenance", "Miami Beach", "Checklist", "Hurricane Prep", "Preventive Maintenance"],
+    faq: [
+      {
+        q: "How often should I do maintenance on a Miami Beach home?",
+        a: "At minimum, a professional inspection every month. Miami Beach salt air and humidity accelerate corrosion and mold growth faster than inland Florida. AC filters need checking monthly (not quarterly). Exterior surfaces should be inspected quarterly and treated annually.",
+      },
+      {
+        q: "What is the most important home maintenance task in Miami Beach?",
+        a: "AC maintenance is number one. A neglected condensate line in a beachfront condo can damage units two floors below. Salt corrosion on metal fixtures is number two. Both fail silently and expensively. After those, exterior caulking and window seals prevent the saltwater intrusion that causes the biggest repair bills.",
+      },
+      {
+        q: "When should I start hurricane prep for my Miami Beach home?",
+        a: "June 1 is the official start of hurricane season. Prep should begin by May 15: inspect hurricane shutters or impact windows, test generator, clear drains and gutters, trim trees, and document the home with photos for insurance. APLUS includes a hurricane prep visit in Premium and VIP plans before each named storm.",
+      },
+      {
+        q: "What does a monthly home maintenance visit include in Miami Beach?",
+        a: "A standard APLUS monthly visit includes: AC filter and condensate line check, water heater inspection, exterior walk for salt corrosion or caulking failures, plumbing leak check under sinks and around toilets, electrical panel visual inspection, and a photo report.",
+      },
+    ],
+  },
 ];
 
 export const POSTS_BY_SLUG = Object.fromEntries(POSTS.map((p) => [p.slug, p])) as Record<
