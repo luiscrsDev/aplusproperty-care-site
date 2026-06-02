@@ -1,4 +1,4 @@
-/**
+—/**
  * Long-form content for each `/services/[slug]` page.
  *
  * Flagship pages (EV charger installation) get the full treatment — long body,
@@ -97,6 +97,14 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
       {
         q: "Can I claim the federal tax credit if you install my charger?",
         a: "Yes. We provide an itemized invoice and Form 8911 documentation so you can claim 30% back (up to $1,000) on your federal taxes. The credit applies to installs completed by June 30, 2026.",
+      },
+      {
+        q: "Can I install an EV charger in a Miami condo or HOA community?",
+        a: "Yes. Florida Statute 718.113(9) gives condo unit owners the right to install EV charging at their own expense within their designated parking space. HOA communities fall under Statute 720.317. Both prohibit blanket bans. APLUS can prepare the full technical proposal for your board: installation plan, panel impact assessment, and insurance certificate.",
+      },
+      {
+        q: "What happens if my panel needs an upgrade?",
+        a: "We assess your panel before quoting. If an upgrade from 100A to 200A is needed, that adds $2,500–$5,000 and requires FPL meter coordination (1–2 week lead time). We handle all paperwork. The upgrade pays dividends across every future electrical project for 20+ years.",
       },
     ],
   },
