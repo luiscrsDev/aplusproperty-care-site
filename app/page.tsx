@@ -34,6 +34,7 @@ import {
   TEAM,
 } from "@/lib/constants";
 import { AREA_CONTENT } from "@/lib/content/areas";
+import { faqSchema } from "@/lib/schema";
 import { PlanCard } from "@/components/PlanCard";
 import { ContactForm } from "@/components/ContactForm";
 import { ClientsGrid } from "@/components/Clients";
@@ -485,6 +486,49 @@ export default function HomePage() {
             >
               View all service areas
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ — AEO: FAQPage schema + visible Q&A for AI extraction */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            faqSchema([
+              { q: "What does a home maintenance plan in Miami cost?", a: "APLUS offers three plans: Essential ($199/mo, 1 visit/month), Premium ($399/mo, 2 visits/month + 24/7 support + small repairs), and VIP ($699/mo, weekly visits + dedicated property manager + all repairs + landscaping). All include photo reports and certified technicians. Cancel anytime." },
+              { q: "What areas of Miami does APLUS serve?", a: "Miami Beach, Sunny Isles Beach, Bal Harbour, Surfside, Brickell, and Coral Gables. Broader Miami-Dade County on request." },
+              { q: "Do you install EV chargers in Miami?", a: "Yes — Level 2 (240V) home EV chargers across Miami-Dade. We handle the Miami-Dade permit, panel assessment, FPL coordination, and full installation. Typical cost $800–$1,500 (no panel upgrade)." },
+              { q: "How fast can you respond to a home emergency?", a: "Premium and VIP members: 24/7 same-day dispatch. Essential members: next-business-day priority. Non-plan customers: typically within 48 hours." },
+              { q: "Are your technicians licensed and insured?", a: "Yes. All technicians are certified and insured. Electrical by licensed electricians, plumbing by licensed plumbers. Led by Anderson Moraes, General Contractor with 12+ years in Miami-Dade." },
+              { q: "Can I cancel my plan at any time?", a: "Yes — all plans are month-to-month, no contracts, no cancellation fees." },
+            ])
+          ),
+        }}
+      />
+      <section id="faq" className="section bg-brand-bg-cool border-t border-brand-line">
+        <div className="container-narrow max-w-3xl">
+          <h2 className="font-bold text-3xl md:text-4xl text-brand-text text-center">
+            Frequently Asked <span className="text-brand-red">Questions</span>
+          </h2>
+          <p className="mt-3 text-center text-brand-muted">Quick answers about our services, pricing, and coverage in Miami.</p>
+          <div className="mt-10 space-y-4">
+            {[
+              { q: "What does a home maintenance plan in Miami cost?", a: "APLUS offers three plans: Essential ($199/mo, 1 visit), Premium ($399/mo, 2 visits + 24/7 support + small repairs), and VIP ($699/mo, weekly visits + dedicated property manager + all repairs + landscaping). All include photo reports and certified technicians. Cancel anytime." },
+              { q: "What areas of Miami does APLUS serve?", a: "Miami Beach, Sunny Isles Beach, Bal Harbour, Surfside, Brickell, and Coral Gables. Broader Miami-Dade County on request." },
+              { q: "Do you install EV chargers in Miami?", a: "Yes — Level 2 (240V) home EV chargers across Miami-Dade. We handle the Miami-Dade permit, panel assessment, FPL coordination, and full installation. Typical cost $800–$1,500 (no panel upgrade)." },
+              { q: "How fast can you respond to a home emergency?", a: "Premium and VIP members: 24/7 same-day dispatch. Essential members: next-business-day priority. Non-plan customers: typically within 48 hours." },
+              { q: "Are your technicians licensed and insured?", a: "Yes. All technicians are certified and insured. Electrical by licensed electricians, plumbing by licensed plumbers. Led by Anderson Moraes, General Contractor with 12+ years in Miami-Dade." },
+              { q: "Can I cancel my plan at any time?", a: "Yes — all plans are month-to-month, no contracts, no cancellation fees." },
+            ].map((item, i) => (
+              <details key={i} className="group rounded-2xl border border-brand-line bg-white p-6 shadow-sm open:shadow-md transition-shadow">
+                <summary className="flex items-center justify-between cursor-pointer list-none font-semibold text-brand-text">
+                  <span>{item.q}</span>
+                  <span className="ml-4 text-brand-red text-xl group-open:rotate-45 transition-transform flex-shrink-0">+</span>
+                </summary>
+                <p className="mt-4 text-brand-text/85 leading-relaxed">{item.a}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
