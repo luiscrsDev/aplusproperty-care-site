@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   Wrench,
@@ -172,8 +173,26 @@ export default function HomePage() {
   return (
     <>
       {/* HERO — photo background + glassmorphic form */}
-      <section className="hero-bg relative">
-        <div className="container-narrow relative px-5 pt-20 pb-24 md:pt-28 md:pb-32 grid gap-12 md:grid-cols-[1.1fr_1fr] items-center">
+      <section className="relative overflow-hidden">
+        {/* LCP image — next/image with priority for instant preload */}
+        <Image
+          src="/hero-home.webp"
+          alt="APLUS Property Care — professional home maintenance in Miami"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+          quality={80}
+        />
+        {/* Gradient overlay (replaces CSS background-image gradient) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(4, 14, 63, 0.55) 0%, rgba(4, 14, 63, 0.35) 50%, rgba(4, 14, 63, 0.15) 100%)",
+          }}
+        />
+        <div className="container-narrow relative z-10 px-5 pt-20 pb-24 md:pt-28 md:pb-32 grid gap-12 md:grid-cols-[1.1fr_1fr] items-center">
           <div className="text-white">
             <h1 className="font-bold text-4xl md:text-6xl leading-[1.05] tracking-tight">
               Your Home Cared,{" "}

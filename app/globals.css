@@ -87,14 +87,8 @@ body {
   margin-inline: auto;
 }
 
-/* Hero background image with darkening overlay so the form & headline read clearly. */
-.hero-bg {
-  background-image:
-    linear-gradient(to right, rgba(4, 14, 63, 0.55) 0%, rgba(4, 14, 63, 0.35) 50%, rgba(4, 14, 63, 0.15) 100%),
-    url("/hero-home.jpg");
-  background-size: cover;
-  background-position: center;
-}
+/* Hero background — image now loaded via next/image for LCP optimization.
+   Gradient overlay is an absolute-positioned div in page.tsx. */
 
 /* Glassmorphism card used by the hero contact form (sits over the photo). */
 .glass-card {

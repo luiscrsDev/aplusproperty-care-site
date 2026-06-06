@@ -1,0 +1,26 @@
+{
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.aplusproperty.care"
+        }
+      ],
+      "destination": "https://aplusproperty.care/:path",
+      "permanent": true
+    },
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "v2.aplusproperty.care"
+        }
+      ],
+      "destination": "https://aplusproperty.care/:path",
+      "permanent": true
+    }
+  ]
+}
