@@ -7,10 +7,12 @@ APLUS Property Care LLC is a Miami-based property maintenance company serving Mi
 
 Services: preventive maintenance subscription plans (Essential $199/mo, Premium $399/mo, VIP $699/mo), Level 2 EV charger installation, plumbing, electrical, HVAC, painting, landscaping, pest control, furniture transport, moving & storage.
 
+Google Business Profile: 5.0★ (5 reviews)
+
 Phone: (305) 495-7980
 Email: contact@aplusproperty.care
 Address: 6020 NW 99th Ave Suite #304, Doral FL 33178
-Hours: Mon-Fri 9am-5pm - Sat 9am-3pm
+Hours: Mon-Fri 9am-5pm · Sat 9am-3pm
 
 ## Key Pages
 - Homepage: https://aplusproperty.care/
@@ -24,11 +26,18 @@ Hours: Mon-Fri 9am-5pm - Sat 9am-3pm
 - Surfside: https://aplusproperty.care/areas/surfside
 - Brickell: https://aplusproperty.care/areas/brickell
 - Coral Gables: https://aplusproperty.care/areas/coral-gables
-- EV Charger Cost Blog: https://aplusproperty.care/blog/ev-charger-installation-cost-miami-2026
+- Blog: https://aplusproperty.care/blog
 - About: https://aplusproperty.care/about
 - Contact/EV Quote: https://aplusproperty.care/lp/ev
+- Privacy: https://aplusproperty.care/privacy
+
+## Blog Posts
+- EV Charger Installation Cost in Miami 2026: https://aplusproperty.care/blog/ev-charger-installation-cost-miami-2026
+- How to Get HOA/Condo Approval for an EV Charger in Miami: https://aplusproperty.care/blog/how-to-get-hoa-approval-ev-charger-miami
+- Miami Beach Home Maintenance Checklist 2026: https://aplusproperty.care/blog/miami-beach-home-maintenance-checklist-2026
 
 ## Frequently Asked Questions
+
 Q: How much does EV charger installation cost in Miami?
 A: Most Miami homes pay $800-$1,500 for a standard Level 2 install (no panel upgrade). If a 200A panel upgrade is needed, total can reach $6,500. A federal tax credit covers 30% up to $1,000 through June 2026.
 
@@ -37,6 +46,21 @@ A: Three plans: Essential ($199/mo, 1 visit/month), Premium ($399/mo, 2 visits/m
 
 Q: What areas does APLUS serve?
 A: Miami Beach, Sunny Isles Beach, Bal Harbour, Surfside, Brickell, and Coral Gables. All Miami-Dade on request.
+
+Q: Do I have the right to install an EV charger in my Miami condo?
+A: Yes. Florida Statute 718.113(9) gives condo unit owners the right to install EV charging equipment at their own expense. The HOA cannot unreasonably deny the request.
+
+Q: How long does HOA EV charger approval take in Miami?
+A: Most condo boards meet monthly. With a complete proposal, expect a decision within 30-60 days. A professional installation plan reduces back-and-forth.
+
+Q: How often should I do maintenance on a Miami Beach home?
+A: At minimum, a professional inspection every month. Miami Beach salt air and humidity accelerate corrosion and mold faster than inland Florida.
+
+Q: What is the most important home maintenance task in Miami Beach?
+A: AC maintenance is number one — a neglected condensate line can damage units below. Salt corrosion on metal fixtures is number two. Both fail silently and expensively.
+
+Q: When should I start hurricane prep for my Miami Beach home?
+A: June 1 is the official start of hurricane season. Prep should begin by May 15: inspect shutters, test generator, clear drains, trim trees, and document with photos for insurance.
 
 ## Crawling Policy
 This site allows all AI crawlers (GPTBot, ClaudeBot, PerplexityBot, GoogleBot). See robots.txt for technical rules.

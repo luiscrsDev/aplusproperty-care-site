@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  async rewrites() {
+    return [
+      {
+        source: "/.well-known/llms.txt",
+        destination: "/llms.txt",
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

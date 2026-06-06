@@ -10,7 +10,7 @@
  *   - Offer / AggregateOffer (subscription plans)
  */
 
-import { ADDRESS, BRAND, CONTACT, HOURS, PRICE_RANGE, SERVICE_AREA } from "./constants";
+import { ADDRESS, BRAND, CONTACT, HOURS, PRICE_RANGE, SERVICE_AREA, SOCIAL } from "./constants";
 import { absoluteUrl } from "./utils";
 
 export function localBusinessSchema() {
@@ -71,6 +71,18 @@ export function localBusinessSchema() {
       url: `${BRAND.url}/about`,
       worksFor: { "@id": `${BRAND.url}/#business` },
     },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      bestRating: "5",
+      worstRating: "1",
+      ratingCount: "5",
+      reviewCount: "5",
+    },
+    sameAs: [
+      SOCIAL.instagram,
+      SOCIAL.facebook,
+    ],
     openingHoursSpecification: HOURS.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: `https://schema.org/${h.day}`,
