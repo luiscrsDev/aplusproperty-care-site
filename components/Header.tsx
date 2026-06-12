@@ -71,7 +71,7 @@ export function Header() {
             Get Quote
           </Link>
           <Link
-            href="/admin-login"
+            href="https://app.aplusproperty.care/login"
             className="rounded-full border border-brand-red text-brand-red px-5 py-2 text-sm font-semibold hover:bg-brand-red hover:text-white transition-colors"
           >
             Login
@@ -109,7 +109,7 @@ export function Header() {
                 Get Quote
               </Link>
               <Link
-                href="/admin-login"
+                href="https://app.aplusproperty.care/login"
                 onClick={() => setOpen(false)}
                 className="rounded-full border border-brand-red text-brand-red px-5 py-2.5 text-center text-sm font-semibold"
               >

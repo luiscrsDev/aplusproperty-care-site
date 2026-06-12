@@ -18,6 +18,28 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      // URL antiga usada em anúncios EV — removida do site, mantém o tráfego vivo
+      {
+        source: "/ev",
+        destination: "/services/ev-charger-installation",
+        permanent: true,
+      },
+      // URL antiga indexada pelo Google (GSC 404)
+      {
+        source: "/month",
+        destination: "/maintenance-plans",
+        permanent: true,
+      },
+      // Login agora vive no app Aplus PRO
+      {
+        source: "/admin-login",
+        destination: "https://app.aplusproperty.care/login",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
