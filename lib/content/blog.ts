@@ -105,6 +105,39 @@ export const POSTS: BlogPostMeta[] = [
     ],
   },
   {
+    slug: "property-care-miami-beach-guide",
+    title: "Property Care in Miami Beach: What Homeowners and Investors Need to Know (2026)",
+    shortTitle: "Property Care Miami Beach Guide",
+    description:
+      "Miami Beach property maintenance is different from anywhere else in Florida. Salt air, absentee owners, and hurricane season demand professional property care. What it costs, what it covers, and how to choose a provider.",
+    date: "2026-06-16",
+    author: "APLUS Property Care",
+    wordCount: 2200,
+    tags: ["Property Care", "Miami Beach", "Property Maintenance", "Home Care", "Preventive Maintenance", "Absentee Owners"],
+    faq: [
+      {
+        q: "What does property care in Miami Beach typically include?",
+        a: "A professional Miami Beach property care plan covers monthly inspections (AC, plumbing, electrical, exterior), preventive maintenance, hurricane prep, coordination of licensed contractors for repairs, and photo reports after every visit. Higher-tier plans include small repairs, landscaping, and 24/7 emergency response.",
+      },
+      {
+        q: "How much does property maintenance cost in Miami Beach?",
+        a: "Professional property care plans in Miami Beach start at $199–$299/month for a basic monthly inspection plan. Mid-tier plans with twice-monthly visits and minor repairs included run $399–$499/month. Full-service VIP plans for absentee owners or luxury properties range from $599–$899/month depending on property size and scope.",
+      },
+      {
+        q: "Do I need a property care service if I live in my Miami Beach home?",
+        a: "Yes — but especially if you travel. Salt air, humidity, and the barrier island environment mean that unaddressed issues escalate faster here than anywhere in Florida. A monthly professional inspection catches condensate leaks, salt corrosion, and mold early — before they become $10,000+ repairs.",
+      },
+      {
+        q: "What is the difference between property management and property care?",
+        a: "Property management handles tenants, leases, and rent collection. Property care (also called property maintenance) focuses on the physical condition of the home — inspections, preventive maintenance, repairs, and contractor coordination. You need property care whether your home is rented, a vacation property, or your primary residence.",
+      },
+      {
+        q: "How does salt air damage Miami Beach properties?",
+        a: "Salt air accelerates metal corrosion 2–3x faster than inland environments. Hinges, railing fasteners, HVAC components, outdoor fixtures, and window frames corrode in months instead of years. Exterior caulking and paint fail 12–18 months earlier than on inland properties. Without regular treatment, the compounding repair cost over 5 years can exceed $30,000 on a typical single-family home.",
+      },
+    ],
+  },
+  {
     slug: "miami-beach-home-maintenance-checklist-2026",
     title: "Miami Beach Home Maintenance Checklist 2026: Monthly, Seasonal & Annual Tasks",
     shortTitle: "Miami Beach Home Maintenance Checklist 2026",
