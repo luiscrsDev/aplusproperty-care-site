@@ -32,6 +32,13 @@ const nextConfig: NextConfig = {
         destination: "/maintenance-plans",
         permanent: true,
       },
+      // Página antiga de parceria com construtoras (GSC 404) — o interesse
+      // "Builder partnership" hoje vive no formulário da home.
+      {
+        source: "/parceria-construtoras",
+        destination: "/",
+        permanent: true,
+      },
       // Login agora vive no app Aplus PRO
       {
         source: "/admin-login",

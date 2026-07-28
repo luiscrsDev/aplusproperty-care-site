@@ -9,6 +9,12 @@ import { NextRequest, NextResponse } from "next/server";
  * 308-redirected to the main domain so we don't fragment SEO or confuse users.
  *
  * The main domain (`aplusproperty.care` and `www.`) is left untouched.
+ *
+ * IMPORTANT: do NOT add a `v2.aplusproperty.care` catch-all redirect to
+ * `vercel.json`. Platform-level redirects run BEFORE middleware, so such a rule
+ * swallows every v2 request and the `/lp` and `/ev` rewrites below never
+ * execute — paid-ads traffic lands on the generic home instead of the landing
+ * page. The `www.` redirect stays in `vercel.json` because it has no rewrites.
  */
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
