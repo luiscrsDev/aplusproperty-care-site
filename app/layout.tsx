@@ -22,7 +22,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: `${BRAND.name} | Home Maintenance & EV Charger Miami`,
-    template: `%s | ${BRAND.name}`,
+    /**
+     * Short brand suffix on purpose: the SERP truncates around 60 chars, and
+     * `| APLUS Property Care` (22 chars) ate a third of that budget. Page
+     * titles must NOT append their own brand — the template handles it.
+     */
+    template: "%s | APLUS",
   },
   description: BRAND.description,
   applicationName: BRAND.name,

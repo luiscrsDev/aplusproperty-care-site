@@ -53,8 +53,8 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
         body: "Tesla Wall Connector (Gen 3), ChargePoint Home Flex, Wallbox Pulsar Plus, and Grizzl-E Smart. We're brand-agnostic — we'll recommend based on your vehicle, charging speed needs, smart-home setup, and budget. If you've already bought your charger, we install it. If you haven't, we source it for you with no markup beyond Florida's wholesale pricing.",
       },
       {
-        title: "Federal incentive — 30% back, up to $1,000",
-        body: "The federal Alternative Fuel Vehicle Refueling Property Credit covers 30% of EV charger installation costs up to $1,000, applicable to installs completed by June 30, 2026. We provide the documentation you need to claim it on your taxes. FPL also runs the EVolution Home program ($31–$38/month flat fee with no upfront cost) — we can compare both paths so you pick what's cheaper over your ownership horizon.",
+        title: "Incentives — what's still available in 2026",
+        body: "The federal Alternative Fuel Vehicle Refueling Property Credit (30% back, up to $1,000) expired on June 30, 2026 under the One Big Beautiful Bill Act — installs completed after that date no longer qualify. What's still live: FPL's EVolution Home program covers the charger and electrical upgrade for a flat $31–$38/month with no upfront cost. We'll run the numbers on both paths — FPL's monthly fee versus owning your charger outright — so you pick what's cheaper over your ownership horizon.",
       },
     ],
     included: [
@@ -95,8 +95,8 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
         a: "For Tesla owners: the Tesla Wall Connector (Gen 3) integrates seamlessly. For non-Tesla EVs: the ChargePoint Home Flex offers the best app and adjustable amperage. Wallbox Pulsar Plus is a strong premium option. We're brand-agnostic — we install whatever you buy, or source it for you.",
       },
       {
-        q: "Can I claim the federal tax credit if you install my charger?",
-        a: "Yes. We provide an itemized invoice and Form 8911 documentation so you can claim 30% back (up to $1,000) on your federal taxes. The credit applies to installs completed by June 30, 2026.",
+        q: "Is the federal EV charger tax credit still available?",
+        a: "No. The federal 30C credit (30% back, up to $1,000) expired on June 30, 2026 — installs finished after that date don't qualify. If your charger was placed in service on or before that date, we can still provide the itemized invoice and Form 8911 documentation you need. For new installs, the live option is FPL's EVolution Home program: $31–$38/month flat, no upfront cost. We're not tax advisors, so confirm your own eligibility with your CPA.",
       },
       {
         q: "Can I install an EV charger in a Miami condo or HOA community?",

@@ -45,7 +45,7 @@ import { absoluteUrl } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Level 2 EV Charger Installation Miami — Same-Week Install",
   description:
-    "Licensed Level 2 EV charger installation in Miami. Tesla, ChargePoint, Wallbox. Permits handled (at cost), fixed labor quote, same-week install. Free site assessment.",
+    "Licensed Level 2 EV charger installation in Miami. Tesla, ChargePoint, Wallbox. Permits at cost, fixed labor quote, same-week install. Free site assessment.",
   alternates: { canonical: absoluteUrl("/lp/ev") },
   openGraph: {
     title: "Level 2 EV Charger Installation Miami — Same-Week Install",

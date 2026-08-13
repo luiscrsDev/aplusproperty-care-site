@@ -7,7 +7,7 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Miami Home Maintenance Tips & EV Charger Guides | APLUS",
+  title: "Miami Home Maintenance & EV Charger Guides",
   description:
     "Free practical guides on home maintenance, EV charger installation, and property care — written by Miami-Dade licensed technicians at APLUS Property Care.",
   alternates: { canonical: absoluteUrl("/blog") },

@@ -46,8 +46,8 @@ export const POSTS: BlogPostMeta[] = [
         a: "Yes for Level 2 (240V). Miami-Dade requires an electrical permit and inspection. Level 1 (standard 120V plug-in) does not require a permit.",
       },
       {
-        q: "What's the federal EV charger tax credit in 2026?",
-        a: "The Alternative Fuel Vehicle Refueling Property Credit covers 30% of installation costs (charger + labor) up to $1,000, for installs completed by June 30, 2026.",
+        q: "Is there still a federal EV charger tax credit in 2026?",
+        a: "No. The Alternative Fuel Vehicle Refueling Property Credit (30% of installation costs up to $1,000) expired on June 30, 2026 and no longer applies to new installs. The live alternative in Miami is FPL's EVolution Home program: $31–$38/month flat with no upfront cost. Confirm your own tax situation with a CPA.",
       },
       {
         q: "Should I get a Tesla Wall Connector or a ChargePoint?",

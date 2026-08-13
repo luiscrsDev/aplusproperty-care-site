@@ -7,7 +7,7 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Property Care in Miami Beach, Brickell & Coral Gables | APLUS",
+  title: "Home Maintenance Miami Beach, Brickell & Gables",
   description:
     "APLUS serves Miami Beach, Sunny Isles, Bal Harbour, Surfside, Brickell, and Coral Gables. Same-day response for coastal and luxury property owners.",
   alternates: { canonical: absoluteUrl("/areas") },

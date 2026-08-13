@@ -5,9 +5,9 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — APLUS Property Care",
+  title: "Privacy Policy",
   description:
-    "How APLUS Property Care collects, uses, and protects your personal information when you use our website and services.",
+    "How APLUS Property Care collects, uses, and protects your personal information when you use our website, contact forms, and home maintenance services in Miami.",
   alternates: { canonical: absoluteUrl("/privacy") },
 };
 

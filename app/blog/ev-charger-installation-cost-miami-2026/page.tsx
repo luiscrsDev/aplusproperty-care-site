@@ -59,7 +59,7 @@ export default function EVChargerCostMiamiPost() {
       { "@type": "HowToStep", position: 3, name: "Apply for Miami-Dade electrical permit", text: "Florida law requires a permit for any 240V installation. Your licensed electrician pulls the permit from Miami-Dade Building Department (typically $75–$150). DIY installs without a permit void warranties." },
       { "@type": "HowToStep", position: 4, name: "Install the charger and run the 240V circuit", text: "A licensed electrician mounts the charger, runs conduit from the panel, connects the 240V/50A circuit, and weatherproofs outdoor components. Single-day job (3–5 hours) for a standard garage install." },
       { "@type": "HowToStep", position: 5, name: "Coordinate FPL if a panel upgrade is needed", text: "Panel upgrades require FPL to swap the meter. Schedule FPL coordination at least 1–2 weeks ahead. Your electrician handles this paperwork." },
-      { "@type": "HowToStep", position: 6, name: "Pass final inspection and claim your federal tax credit", text: "Miami-Dade inspects the permit within 5–7 business days. After passing, file IRS Form 8911 for the Alternative Fuel Vehicle Refueling Property Credit: 30% of total installed cost, up to $1,000, through June 30, 2026." },
+      { "@type": "HowToStep", position: 6, name: "Pass final inspection and close the permit", text: "Miami-Dade inspects the permit within 5–7 business days. After passing, you receive the permit closeout documents. Note: the federal Alternative Fuel Vehicle Refueling Property Credit (Form 8911) expired June 30, 2026 and no longer applies to new installs." },
     ],
   };
 
@@ -191,8 +191,8 @@ export default function EVChargerCostMiamiPost() {
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="h-5 w-5 text-brand-red flex-shrink-0 mt-1" />
                 <span>
-                  <strong className="text-brand-text">Federal tax credit:</strong> 30% back, up to
-                  $1,000. Cuts the typical install cost by ~$400–$600.
+                  <strong className="text-brand-text">FPL EVolution Home:</strong> $31–$38/month
+                  flat, no upfront cost. (The federal 30% credit expired June 30, 2026.)
                 </span>
               </li>
             </ul>
@@ -393,17 +393,22 @@ export default function EVChargerCostMiamiPost() {
             </p>
 
             <h2 className="font-bold text-2xl md:text-3xl text-brand-text mt-12">
-              Federal tax credit: 30%, up to $1,000
+              Incentives: what changed in mid-2026
             </h2>
             <p>
-              The Alternative Fuel Vehicle Refueling Property Credit covers 30% of installation
-              costs (charger + labor combined) up to $1,000, for installs completed by{" "}
-              <strong>June 30, 2026</strong>. We provide the itemized invoice and IRS Form 8911
-              documentation you need.
+              The federal Alternative Fuel Vehicle Refueling Property Credit — 30% of installation
+              costs up to $1,000 — <strong>expired on June 30, 2026</strong> under the One Big
+              Beautiful Bill Act. Installs completed after that date no longer qualify. If your
+              charger was placed in service on or before June 30, we still provide the itemized
+              invoice and IRS Form 8911 documentation you need.
             </p>
             <p>
-              For a typical $1,500 install, that&apos;s $450 back — bringing your effective cost to
-              ~$1,050.
+              What&apos;s still available: <strong>FPL&apos;s EVolution Home</strong> program covers
+              the charger and the electrical upgrade for a flat $31–$38/month with no upfront cost.
+              Over a five-year horizon that runs roughly $1,900–$2,300 — more than owning outright,
+              but with nothing due on day one. We&apos;ll run both numbers for your specific panel
+              before you decide. We&apos;re not tax advisors, so confirm your own eligibility with
+              your CPA.
             </p>
 
             <h2 className="font-bold text-2xl md:text-3xl text-brand-text mt-12">

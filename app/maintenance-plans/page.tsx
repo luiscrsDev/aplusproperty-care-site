@@ -9,7 +9,7 @@ import { PlanCard } from "@/components/PlanCard";
 import { ContactForm } from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Home Maintenance Plans in Miami — From $199/mo | APLUS",
+  title: "Home Maintenance Plans Miami — From $199/mo",
   description:
     "Essential ($199), Premium ($399), or VIP ($699) monthly plans for Miami homeowners. Certified technicians, photo reports, priority scheduling. Cancel anytime.",
   alternates: { canonical: absoluteUrl("/maintenance-plans") },

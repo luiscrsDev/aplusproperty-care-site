@@ -22,9 +22,9 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Home Maintenance & EV Charger Installation Miami | APLUS",
+  title: "Home Maintenance & EV Charger Services Miami",
   description:
-    "Licensed Miami-Dade team offering preventive maintenance, EV charger installation, plumbing, electrical, HVAC, painting, landscaping, and more. Request a quote today.",
+    "Licensed Miami-Dade team: preventive maintenance, EV charger installation, plumbing, electrical, HVAC, painting and landscaping. Request a free quote.",
   alternates: { canonical: absoluteUrl("/services") },
 };
 

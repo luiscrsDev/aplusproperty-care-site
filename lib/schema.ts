@@ -68,17 +68,21 @@ export function localBusinessSchema() {
       jobTitle: "CEO & General Contractor",
       description:
         "General Contractor with 12+ years of residential and commercial construction and maintenance experience in Miami-Dade, FL.",
-      url: `${BRAND.url}/about`,
+      url: `${BRAND.url}/#about`,
       worksFor: { "@id": `${BRAND.url}/#business` },
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      bestRating: "5",
-      worstRating: "1",
-      ratingCount: "5",
-      reviewCount: "5",
-    },
+    /**
+     * No `aggregateRating` here on purpose.
+     *
+     * Self-declared ratings without the corresponding reviews rendered on the
+     * page are the pattern Google treats as self-serving review markup, and it
+     * carries manual-action risk. The old block also went stale (it claimed 5
+     * reviews while the Google Business Profile was already at 11).
+     *
+     * To earn the review rich result: render real testimonials on the page and
+     * mark them up with matching `Review` items, then reintroduce an
+     * `aggregateRating` whose counts are generated from that same source.
+     */
     sameAs: [
       SOCIAL.instagram,
       SOCIAL.facebook,
