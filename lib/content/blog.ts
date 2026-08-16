@@ -166,6 +166,39 @@ export const POSTS: BlogPostMeta[] = [
       },
     ],
   },
+  {
+    slug: "home-maintenance-cost-miami-per-year",
+    title: "How Much Does Home Maintenance Cost in Miami Per Year? (2026 Numbers)",
+    shortTitle: "Home Maintenance Cost Miami Per Year",
+    description:
+      "Miami homeowners spend roughly $5,000–$9,000 a year maintaining a house. Here is where that money goes, why the 1% rule underestimates Florida, and how reactive and planned maintenance actually compare.",
+    date: "2026-08-16",
+    author: "APLUS Property Care",
+    wordCount: 1800,
+    tags: ["Home Maintenance", "Cost", "Miami", "Budgeting", "Preventive Maintenance"],
+    faq: [
+      {
+        q: "How much should I budget for home maintenance in Miami per year?",
+        a: "Plan on 1.5% to 3% of the home's value annually, not the 1% rule you see quoted nationally. On a $600,000 Miami home that is $9,000–$18,000 a year. The national average sits around $6,600, but Florida runs higher because of AC runtime, humidity, salt exposure near the coast, and hurricane-season preparation. Older homes and coastal properties land at the top of the range.",
+      },
+      {
+        q: "Why is home maintenance more expensive in Miami than the national average?",
+        a: "Four reasons specific to South Florida. AC runs close to year-round, so systems that last 15–20 years elsewhere last 10–12 here. Humidity drives mold and moisture intrusion that dry climates never see. Salt air within a few miles of the coast corrodes metal 2–3 times faster. And hurricane season adds annual prep costs plus the risk of storm damage that has to be repaired to code, which in Miami-Dade means HVHZ standards.",
+      },
+      {
+        q: "Is a maintenance plan cheaper than paying per repair?",
+        a: "It depends on the property, and any company that tells you it is always cheaper is selling. Plans win when the property has many systems (pool, irrigation, multiple AC units), when the owner is not there year-round, or when the home is old enough that small failures are frequent. Paying per call wins for newer, smaller, owner-occupied homes with few systems. The honest comparison is the plan's annual cost versus your actual repair spend over the last two years.",
+      },
+      {
+        q: "What are the biggest single maintenance expenses for a Miami home?",
+        a: "AC replacement is the largest recurring one — $6,000–$12,000 every 10–12 years for a typical single-family system. Roof replacement runs $15,000–$40,000 but on a 15–25 year cycle. Electrical panel upgrades run $2,500–$5,000 and are increasingly forced by insurers rather than by failure. Water heaters are $1,200–$3,000 every 8–12 years. Everything else tends to be small and frequent rather than large and rare.",
+      },
+      {
+        q: "Does preventive maintenance actually reduce total cost?",
+        a: "It reduces the frequency of emergency repairs, which are the expensive kind — emergency rates run well above scheduled work, and failures that go unnoticed cause secondary damage. What preventive maintenance does not do is eliminate capital replacement: your AC will still reach end of life on schedule. The realistic framing is that preventive care shifts spend from unpredictable emergencies to predictable monthly cost, and extends equipment life at the margin.",
+      },
+    ],
+  },
 ];
 
 export const POSTS_BY_SLUG = Object.fromEntries(POSTS.map((p) => [p.slug, p])) as Record<

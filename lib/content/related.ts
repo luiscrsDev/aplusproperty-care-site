@@ -25,8 +25,8 @@ export const POSTS_BY_SERVICE: Partial<Record<ServiceSlug, string[]>> = {
     "how-to-get-hoa-approval-ev-charger-miami",
   ],
   "preventive-maintenance": [
+    "home-maintenance-cost-miami-per-year",
     "miami-beach-home-maintenance-checklist-2026",
-    "property-care-miami-beach-guide",
   ],
   // Panel upgrades are the expensive half of most EV jobs — the cost guide
   // covers them in more depth than the electrical stub does.
@@ -62,6 +62,15 @@ export const POSTS_BY_AREA: Record<string, string[]> = {
   brickell: ["how-to-get-hoa-approval-ev-charger-miami", "ev-charger-installation-cost-miami-2026"],
   "coral-gables": ["property-care-miami-beach-guide"],
 };
+
+/**
+ * Pages that answer "plan or one-off?" — the bottom-of-funnel question.
+ *
+ * `/services/per-visit` already carries that comparison ("When per-visit makes
+ * sense" / "When a plan makes more sense"), so we link to it rather than
+ * building a second page that would compete with it for the same query.
+ */
+export const COMPARISON_URL = "/services/per-visit";
 
 /** Resolve post slugs to full metadata, dropping any that no longer exist. */
 export function resolvePosts(slugs: string[] | undefined): BlogPostMeta[] {

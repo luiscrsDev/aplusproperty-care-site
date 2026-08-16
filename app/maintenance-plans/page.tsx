@@ -231,7 +231,14 @@ export default function MaintenancePlansPage() {
             <ContactForm />
           </div>
           <p className="mt-6 text-center text-sm text-brand-muted">
-            Or browse{" "}
+            Not sure a plan is right for you? Compare it with{" "}
+            <Link
+              href="/services/per-visit"
+              className="text-brand-red font-semibold hover:underline"
+            >
+              per-visit service
+            </Link>{" "}
+            — or browse{" "}
             <Link href="/services" className="text-brand-red font-semibold hover:underline">
               individual services <ArrowRight className="inline h-3 w-3" />
             </Link>

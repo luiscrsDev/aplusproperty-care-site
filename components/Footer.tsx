@@ -101,7 +101,7 @@ export function Footer() {
             </li>
             <li>
               <Link
-                href="/#about"
+                href="/about"
                 className="text-white/70 hover:text-white transition-colors"
               >
                 About

@@ -68,7 +68,7 @@ export function localBusinessSchema() {
       jobTitle: "CEO & General Contractor",
       description:
         "General Contractor with 12+ years of residential and commercial construction and maintenance experience in Miami-Dade, FL.",
-      url: `${BRAND.url}/#about`,
+      url: `${BRAND.url}/about`,
       worksFor: { "@id": `${BRAND.url}/#business` },
     },
     /**
