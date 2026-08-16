@@ -158,16 +158,24 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   plumbing: {
     slug: "plumbing",
-    metaTitle: "Plumbing Services Miami | Licensed",
+    metaTitle: "Plumbing Maintenance Contract Miami",
     metaDescription:
-      "Licensed plumbers serving all of Miami-Dade. Leak detection, fixture replacement, water heater repair, drain cleaning. Fast response.",
+      "Recurring plumbing maintenance for Miami homes on a monthly contract — plus leak detection, fixtures, water heaters and drain cleaning by licensed plumbers.",
     headline: "Plumbing Services in Miami",
     subheadline:
-      "Leaks, fixtures, water heaters, and drain cleaning by licensed plumbers — same crew, same standards, every visit.",
+      "Leaks, fixtures, water heaters, and drain cleaning by licensed plumbers — on a recurring maintenance contract or as a one-off call.",
     sections: [
       {
-        title: "What we handle",
-        body: "Leak detection and repair, faucet and fixture replacement, toilet repair and installation, water heater service and replacement, drain cleaning and unclogging, garbage disposal install and repair, sump pump service.",
+        title: "Plumbing on a maintenance contract",
+        body: "Most Miami homeowners call a plumber when water is already on the floor. A maintenance contract inverts that: we inspect the same fixtures, connections, and shutoffs on a schedule, and catch the failure while it's still a $150 fix. Every APLUS plan includes plumbing inspection on each visit — supply lines under sinks, water heater condition and anode rod, angle stops, visible drain lines, and water pressure at the main. Essential covers one visit a month, Premium two with small repairs included, VIP weekly with all routine repairs included. If you're searching for a plumbing maintenance contract in Miami-Dade rather than a one-time repair, that's what the plans are.",
+      },
+      {
+        title: "What we handle on a call-out",
+        body: "Leak detection and repair, faucet and fixture replacement, toilet repair and installation, water heater service and replacement, drain cleaning and unclogging, garbage disposal install and repair, sump pump service. Available with or without a plan — plan members get priority scheduling and, on Premium and VIP, the small repairs come included rather than invoiced.",
+      },
+      {
+        title: "What fails first in Miami homes",
+        body: "Hard water and salt air set the failure order here. Water heater anode rods go early, especially in coastal properties, and a $40 rod replaced on schedule buys years on a $1,200 heater. Braided supply lines under sinks have a service life most homeowners never think about — they're the single most common cause of interior water damage claims. Angle stops seize from mineral buildup and then won't close when you actually need them. None of these are dramatic repairs; all of them are cheap on a schedule and expensive as an emergency.",
       },
     ],
     included: [
@@ -183,6 +191,14 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
     ],
     faq: [
       {
+        q: "Do you offer a plumbing maintenance contract?",
+        a: "Yes — that's what the APLUS plans are. Essential ($199/mo) includes one visit a month with plumbing inspection; Premium ($399/mo) includes two visits plus small repairs; VIP ($699/mo) is weekly with all routine repairs included. All are month-to-month with no contract lock-in, which is the part most maintenance agreements get wrong. We serve all of Miami-Dade, including Miami Springs, Doral, and the coastal municipalities.",
+      },
+      {
+        q: "Is a maintenance contract worth it versus calling when something breaks?",
+        a: "It depends on your property. For a small apartment with two bathrooms and newer fixtures, probably not — call us when you need us. For a house with a pool, irrigation, multiple water heaters, or an owner who isn't there year-round, the math flips fast: one avoided water-damage claim usually covers a year of Essential. We'll tell you honestly which side you're on during the free assessment.",
+      },
+      {
         q: "Do you handle emergencies after hours?",
         a: "Yes — Premium and VIP plan members get 24/7 emergency response. Non-plan customers get next-business-day priority.",
       },
@@ -195,33 +211,74 @@ export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
 
   electrical: {
     slug: "electrical",
-    metaTitle: "Electrical Services Miami | Licensed",
+    metaTitle: "Electrician Miami — Outlets, Panels & Meters",
     metaDescription:
-      "Licensed electricians in Miami. Panel upgrades, outlets, lighting, smart home wiring, EV chargers. Code-compliant work with permits.",
-    headline: "Electrical Services in Miami",
+      "Licensed Miami electricians: add residential outlets, panel and meter installation, 200A service upgrades, wiring and switches. Miami-Dade permits at cost.",
+    headline: "Licensed Electricians in Miami",
     subheadline:
-      "Panel upgrades, outlet and lighting installs, smart home wiring, and EV charger setups — by licensed Miami-Dade electricians.",
+      "Adding outlets, upgrading a panel, replacing a meter can, or rewiring a room — Florida-licensed electricians who pull the Miami-Dade permit and stay through inspection.",
     sections: [
       {
-        title: "What we handle",
-        body: "Panel upgrades (100A → 200A is our most common), GFCI outlet installs (required in Miami kitchens, baths, and outdoor spaces), recessed and pendant lighting, smart switch and thermostat wiring, ceiling fan installs, EV charger circuits, generator transfer switches, surge protection.",
+        title: "Adding outlets to an existing room",
+        body: "The most common request we get. If your room has two outlets and you need six, that's a new branch circuit — not a splice off the nearest box. We run the circuit from the panel, fish the wall where possible to avoid drywall damage, and install to current code. Miami-Dade requires GFCI protection in kitchens, bathrooms, garages, laundry areas, and anywhere within 6 feet of a water source, plus AFCI protection on most living-area circuits. Expect roughly $150–$350 per outlet for a standard add, more if the run is long or the wall is block (common in Miami homes built before 1980).",
+      },
+      {
+        title: "Panel and meter installation",
+        body: "Two different jobs that usually happen together. The meter can is FPL's connection point; the panel is yours. If your panel is a recalled Federal Pacific or Zinsco — still common in Miami homes from the 60s and 70s — insurers increasingly refuse to write policies on it, which is why most of our panel work starts with an insurance letter rather than a failure. A 100A to 200A upgrade in Miami-Dade runs roughly $2,500–$5,000 including panel, breakers, labor, permit, and FPL coordination. Budget 1–2 weeks of lead time: FPL has to schedule the meter pull and reconnect, and that queue is outside anyone's control.",
+      },
+      {
+        title: "Electrical service upgrades — when you actually need one",
+        body: "Not every home needs 200A. You need the upgrade if you're adding a major load (EV charger, pool heater, second AC handler, tankless water heater), if your panel is full with no room for a double-pole breaker, or if the panel is one of the recalled brands. You probably don't need it just because the house is old — a 1970s 150A panel in good condition with spare slots may serve a two-person household fine for another decade. We do a load calculation before quoting so you're not paying for capacity you'll never draw.",
+      },
+      {
+        title: "Wiring, switches and lighting",
+        body: "Rewiring a room, replacing cloth or aluminum branch wiring, adding three-way and smart switches, recessed and pendant lighting, ceiling fan boxes rated for the load, and generator transfer switches. Aluminum branch wiring deserves a note: homes built in Miami between roughly 1965 and 1973 often have it, it's a known fire risk at the connections, and the fix is usually pigtailing with approved connectors rather than a full rewire. We'll tell you which one your house needs after we open two or three boxes.",
+      },
+      {
+        title: "Storm-zone specifics most quotes leave out",
+        body: "Miami-Dade is a High-Velocity Hurricane Zone, and that changes the hardware. Exterior disconnects, meter cans, and any outdoor-mounted equipment have to meet HVHZ attachment standards — not just NEC. Surge protection at the panel matters more here than in most of the country because of lightning density: Florida leads the US in strikes per square mile, and a whole-home surge device costs a fraction of one replaced AC control board. We install to HVHZ spec as standard, not as an upsell line item.",
       },
     ],
     included: [
-      "Florida-licensed electricians",
-      "Permits pulled when required",
-      "Code-compliant work — passes inspection first try",
-      "1-year workmanship warranty",
+      "Florida-licensed electricians — license number provided up front",
+      "Miami-Dade permit pulled in your name, billed at cost with no markup",
+      "Load calculation before any panel or service upgrade quote",
+      "FPL coordination for meter work, including scheduling",
+      "GFCI and AFCI protection to current code",
+      "HVHZ-compliant mounting for all exterior equipment",
+      "Inspection coordination — we stay on-site through sign-off",
+      "1-year workmanship warranty, written and transferable",
     ],
     whyUs: [
       "Same crew across plumbing, electrical, HVAC — one accountable team",
+      "Fixed quote in writing before we start; only permit fees pass through",
       "Bundle with EV charger installation if relevant",
       "HVHZ-compliant for storm-zone Miami homes",
     ],
     faq: [
       {
         q: "Do I need a permit for an electrical panel upgrade?",
-        a: "Yes — Miami-Dade requires an electrical permit and inspection for panel upgrades. We pull the permit in your name and stay on-site through final inspection.",
+        a: "Yes — Miami-Dade requires an electrical permit and inspection for panel upgrades, service changes, and any new branch circuit. We pull the permit in your name and stay on-site through final inspection. Permit and inspection fees for panel work typically run $200–$400 and are billed at cost, with no markup on our side.",
+      },
+      {
+        q: "How much does it cost to add outlets to a room in Miami?",
+        a: "Roughly $150–$350 per outlet for a standard add on an interior drywall wall, including the outlet, code-required GFCI or AFCI protection, and labor. The number goes up when the run is long, when the wall is concrete block (common in Miami homes built before 1980, since fishing block requires surface conduit or channeling), or when the circuit is full and a new one has to be run from the panel. We quote per job after seeing the space, not per outlet over the phone.",
+      },
+      {
+        q: "What does a 200 amp panel upgrade cost in Miami-Dade?",
+        a: "A 100A to 200A upgrade typically runs $2,500–$5,000 in Miami-Dade, including the panel, breakers, labor, the permit, and FPL coordination. The spread depends on whether the meter can and service entrance also need replacing, whether the home has to meet HVHZ requirements, and whether the existing grounding meets current code. We give a fixed written quote after a load calculation and a look at your service entrance.",
+      },
+      {
+        q: "Why does my insurer care about my electrical panel?",
+        a: "Federal Pacific Stab-Lok and Zinsco panels — both common in Miami homes built in the 1960s and 70s — have documented failure rates where breakers do not trip under fault. Many Florida carriers now decline to write or renew policies on homes that still have them, and a four-point inspection will flag it. If you got a letter from your insurer, bring it to the assessment; it usually specifies exactly what they need to see.",
+      },
+      {
+        q: "How long does the FPL meter coordination take?",
+        a: "Plan on 1–2 weeks between permit approval and the meter swap. FPL schedules the disconnect and reconnect on their own calendar, and that queue is outside our control. The actual panel work is a single day once they're on site. We handle all the paperwork and scheduling — you don't call FPL.",
+      },
+      {
+        q: "Do you install EV charger circuits?",
+        a: "Yes, and it is our most common electrical job. If your panel can carry the load we run a dedicated 240V circuit; if it can't, the panel upgrade and the charger install happen together with one permit and one crew. See our EV charger installation page for the full breakdown, including current Miami-Dade permit costs and the FPL EVolution Home alternative.",
       },
     ],
   },
