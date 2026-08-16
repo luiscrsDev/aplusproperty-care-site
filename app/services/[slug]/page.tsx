@@ -22,6 +22,7 @@ import {
 
 import { BRAND, CONTACT, SERVICES, type ServiceSlug } from "@/lib/constants";
 import { SERVICE_CONTENT } from "@/lib/content/services";
+import { POSTS_BY_SERVICE, resolvePosts } from "@/lib/content/related";
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 import { ContactForm } from "@/components/ContactForm";
@@ -81,6 +82,7 @@ export default async function ServicePage({
   const url = absoluteUrl(`/services/${slug}`);
 
   const otherServices = SERVICES.filter((s) => s.slug !== slug).slice(0, 4);
+  const relatedPosts = resolvePosts(POSTS_BY_SERVICE[slug as ServiceSlug]);
 
   return (
     <>
@@ -237,6 +239,37 @@ export default async function ServicePage({
           </div>
         </div>
       </section>
+
+      {/* RELATED GUIDES — pushes authority from the blog into this page */}
+      {relatedPosts.length > 0 && (
+        <section className="section bg-white border-t border-brand-line">
+          <div className="container-narrow max-w-4xl">
+            <h2 className="font-bold text-2xl md:text-3xl text-brand-text">
+              Read before you book
+            </h2>
+            <p className="mt-3 text-brand-muted">
+              Written by our team — real Miami numbers, permits, and timelines.
+            </p>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+              {relatedPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group rounded-2xl border border-brand-line bg-brand-bg-cool p-6 hover:border-brand-red/40 hover:shadow-md transition-all"
+                >
+                  <h3 className="font-bold text-lg text-brand-text leading-snug group-hover:text-brand-red transition-colors">
+                    {post.shortTitle || post.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-brand-muted line-clamp-3">{post.description}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-red">
+                    Read the guide <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* OTHER SERVICES */}
       <section className="section bg-white border-t border-brand-line">

@@ -36,7 +36,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "miami-beach",
     name: "Miami Beach",
-    metaTitle: "Miami Beach Home Maintenance & Property Care | APLUS",
+    metaTitle: "Miami Beach Home Maintenance & Property Care",
     metaDescription:
       "Hospitality-grade maintenance for Miami Beach condos, beachfront homes, and luxury properties. Trusted by Faena, Fisher Island Club & Broken Shaker. Request a free assessment.",
     headline: "Home Maintenance & Property Care in Miami Beach",
@@ -86,7 +86,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "sunny-isles-beach",
     name: "Sunny Isles Beach",
-    metaTitle: "Sunny Isles Beach Property Care & Home Maintenance | APLUS",
+    metaTitle: "Sunny Isles Beach Property Care & Home Maintenance",
     metaDescription:
       "Year-round care for Sunny Isles Beach condos and snowbird homes. Absentee-owner plans, hurricane prep, VIP concierge. Acqualina, Jade & Porsche Tower area. Get a free quote.",
     headline: "Home Maintenance & Property Care in Sunny Isles Beach",
@@ -123,7 +123,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "bal-harbour",
     name: "Bal Harbour",
-    metaTitle: "Bal Harbour Luxury Home Maintenance & Property Care | APLUS",
+    metaTitle: "Bal Harbour Luxury Home Maintenance & Property Care",
     metaDescription:
       "Discreet, white-glove property care for Bal Harbour ultra-luxury homes and condos. Dedicated property manager, all repairs included. NDAs available. Request a free assessment.",
     headline: "Ultra-Luxury Home Care in Bal Harbour",
@@ -156,7 +156,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "surfside",
     name: "Surfside",
-    metaTitle: "Surfside FL Home Maintenance & Preventive Property Care | APLUS",
+    metaTitle: "Surfside FL Home Maintenance & Preventive Property Care",
     metaDescription:
       "Preventive home maintenance for Surfside families and condo owners. Structural inspections, eco-friendly products, photo reports. Licensed Miami-Dade team. Get a free quote.",
     headline: "Home Maintenance & Property Care in Surfside",
@@ -189,7 +189,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "brickell",
     name: "Brickell",
-    metaTitle: "Brickell Condo Maintenance & EV Charger Installation | APLUS",
+    metaTitle: "Brickell Condo Maintenance & EV Charger Installation",
     metaDescription:
       "Preventive maintenance and EV charger installation for Brickell luxury condos. High-rise specialists, building-approved, permits included. Licensed Miami-Dade team.",
     headline: "Home Maintenance & Property Care in Brickell",
@@ -222,7 +222,7 @@ export const AREA_CONTENT: AreaContent[] = [
   {
     slug: "coral-gables",
     name: "Coral Gables",
-    metaTitle: "Coral Gables Home Maintenance & Estate Care | APLUS",
+    metaTitle: "Coral Gables Home Maintenance & Estate Care",
     metaDescription:
       "Restoration-aware maintenance for Coral Gables homes, estates, and historic properties. Preventive plans, hurricane prep, concierge service. Licensed Miami-Dade team.",
     headline: "Home Maintenance & Property Care in Coral Gables",

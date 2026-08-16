@@ -5,6 +5,12 @@ import { CheckCircle2, MapPin, ArrowRight, Award } from "lucide-react";
 
 import { BRAND, CONTACT, PLANS } from "@/lib/constants";
 import { AREA_BY_SLUG, AREA_CONTENT } from "@/lib/content/areas";
+import {
+  POSTS_BY_AREA,
+  SERVICES_BY_AREA,
+  resolvePosts,
+  resolveServices,
+} from "@/lib/content/related";
 import { areaServiceSchema, breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 import { ContactForm } from "@/components/ContactForm";
@@ -47,6 +53,8 @@ export default async function AreaPage({
   const recommendedPlan = PLANS.find((p) => p.slug === content.recommendedPlan)!;
   const url = absoluteUrl(`/areas/${city}`);
   const otherAreas = AREA_CONTENT.filter((a) => a.slug !== city).slice(0, 3);
+  const areaServices = resolveServices(SERVICES_BY_AREA[city]);
+  const areaPosts = resolvePosts(POSTS_BY_AREA[city]);
 
   return (
     <>
@@ -247,6 +255,62 @@ export default async function AreaPage({
           </div>
         </div>
       </section>
+
+      {/* SERVICES IN THIS AREA — links the geo page into the service pages */}
+      {areaServices.length > 0 && (
+        <section className="section bg-brand-bg-cool border-t border-brand-line">
+          <div className="container-narrow">
+            <h2 className="font-bold text-2xl md:text-3xl text-brand-text text-center">
+              What we do most in {content.name}
+            </h2>
+            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {areaServices.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/services/${s.slug}`}
+                  className="group rounded-2xl bg-white border border-brand-line p-5 hover:border-brand-red/40 hover:shadow-md transition-all"
+                >
+                  <h3 className="font-bold text-base text-brand-text group-hover:text-brand-red transition-colors">
+                    {s.name}
+                  </h3>
+                  <p className="mt-1.5 text-sm text-brand-muted line-clamp-2">{s.short}</p>
+                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-brand-red">
+                    See details <ArrowRight className="h-3 w-3" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* LOCAL GUIDES */}
+      {areaPosts.length > 0 && (
+        <section className="section bg-white border-t border-brand-line">
+          <div className="container-narrow max-w-4xl">
+            <h2 className="font-bold text-2xl md:text-3xl text-brand-text">
+              Guides for {content.name} homeowners
+            </h2>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+              {areaPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group rounded-2xl border border-brand-line bg-brand-bg-cool p-6 hover:border-brand-red/40 hover:shadow-md transition-all"
+                >
+                  <h3 className="font-bold text-lg text-brand-text leading-snug group-hover:text-brand-red transition-colors">
+                    {post.shortTitle || post.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-brand-muted line-clamp-3">{post.description}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-red">
+                    Read the guide <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* OTHER AREAS */}
       <section className="section bg-brand-bg-cool border-t border-brand-line">
