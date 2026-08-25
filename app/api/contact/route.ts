@@ -56,6 +56,15 @@ export async function POST(req: Request) {
   //
   // Attribution fields (utm_*, gclid, landing_page, referrer) come from the
   // sessionStorage snapshot stored by lib/utm.ts — see schema above.
+  // Track whether the lead actually landed somewhere. If every channel fails we
+  // must NOT return ok — see the failure note at the end of this handler.
+  let persisted = false;
+  let notified = false;
+
+  if (!supabaseUrl || !serviceKey) {
+    console.error("[contact] Supabase env vars missing — lead will not be persisted");
+  }
+
   if (supabaseUrl && serviceKey) {
     const supabase = createClient(supabaseUrl, serviceKey, {
       auth: { persistSession: false },
@@ -80,27 +89,68 @@ export async function POST(req: Request) {
       referrer: lead.referrer || null,
     });
     if (error) {
-      // Log but do not block the user — they expect immediate confirmation.
       console.error("[contact] Supabase insert failed:", error.message);
+    } else {
+      persisted = true;
     }
   }
 
-  // Notify the team. Best-effort.
+  // Notify the team.
+  if (!resendKey) {
+    console.error("[contact] RESEND_API_KEY missing — no notification will be sent");
+  }
+
   if (resendKey) {
     try {
       const resend = new Resend(resendKey);
       const to = process.env.RESEND_LEAD_NOTIFICATION_TO?.split(",").map((s) => s.trim()) || [
         "anderson@aplusproperty.care",
       ];
-      await resend.emails.send({
+      const { error: sendError } = await resend.emails.send({
         from: process.env.RESEND_FROM || "APLUS Lead <leads@aplusproperty.care>",
         to,
         subject: `New lead — ${lead.name} (${lead.service || "general"})`,
         html: leadEmailHtml(lead),
       });
+      // The Resend SDK reports API-level rejections (unverified domain, invalid
+      // recipient) in the response body, not as a thrown error. Without this
+      // check a rejected send looked identical to a successful one.
+      if (sendError) {
+        console.error("[contact] Resend rejected the send:", sendError.message);
+      } else {
+        notified = true;
+      }
     } catch (e) {
       console.error("[contact] Resend send failed:", (e as Error).message);
     }
+  }
+
+  /**
+   * If neither channel worked, the lead is gone — and returning ok here is what
+   * made that invisible. The client fires the `form_submit` dataLayer event on
+   * `res.ok`, which Google Ads counts as a conversion. So a silent failure
+   * produced a reported conversion with no lead behind it: 42 conversions
+   * against 3 delivered leads over one month.
+   *
+   * Failing loudly costs one bounced submission and surfaces the outage. The
+   * previous behaviour cost a month of unattributable ad spend.
+   */
+  if (!persisted && !notified) {
+    console.error("[contact] Lead lost — no channel succeeded", {
+      email: lead.email,
+      page: lead.page,
+    });
+    return NextResponse.json(
+      { error: "We could not record your request. Please call us at (305) 495-7980." },
+      { status: 502 },
+    );
+  }
+
+  // Partial success is still a delivered lead, but worth knowing about.
+  if (!persisted || !notified) {
+    console.warn(
+      `[contact] Partial delivery — persisted=${persisted} notified=${notified}`,
+    );
   }
 
   return NextResponse.json({ ok: true });
