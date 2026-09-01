@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Itens escolhidos — sala de jantar, quarto e varanda</title>
-<meta name="description" content="Seleção de móveis, iluminação e decoração para o apartamento, com foto e preço de cada item.">
+<title>Shopping list — Viceroy apartment</title>
+<meta name="description" content="Furniture, lighting and decor selected for the Viceroy apartment, with a photo and price for every item.">
 <meta name="robots" content="noindex">
-<meta property="og:title" content="Itens escolhidos">
-<meta property="og:description" content="Seleção de móveis, iluminação e decoração para o apartamento, com foto e preço de cada item.">
+<meta property="og:title" content="Shopping list — Viceroy apartment">
+<meta property="og:description" content="Furniture, lighting and decor selected for the Viceroy apartment, with a photo and price for every item.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://aplusproperty.care/viceroy/images/01-leaf-chandelier-1.jpg">
+<meta property="og:image" content="https://aplusproperty.care/viceroy/images/01-leaf-chandelier.jpg">
 <meta property="og:url" content="https://aplusproperty.care/viceroy/">
 <link rel="canonical" href="https://aplusproperty.care/viceroy/">
 <meta name="theme-color" content="#1C1815">
@@ -31,6 +31,10 @@
   .kicker{color:var(--muted);font-size:.86rem;margin:0 0 12px}
   h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.3rem,6vw,3.9rem);
      line-height:1.04;margin:0 0 24px;max-width:14ch}
+
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+  .brand{flex:0 0 auto;padding-top:4px}
+  .brand img{max-width:190px;max-height:78px;width:auto;height:auto}
   .totalbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 34px;
      border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0}
   .total-amount{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);line-height:1;
@@ -39,6 +43,14 @@
   .total-meta{color:var(--muted);font-size:.9rem;margin-left:auto;text-align:right}
   .jsonly{display:none}
   .js .jsonly{display:inline}
+
+
+  .share{display:none;margin-top:12px;background:none;border:1px solid var(--line);
+     color:var(--text);font-family:var(--sans);font-size:.86rem;font-weight:300;
+     padding:8px 16px;border-radius:999px;cursor:pointer;transition:border-color .18s,color .18s}
+  .share:hover,.share:focus-visible{border-color:var(--brass);color:var(--brass)}
+  .js .share{display:inline-block}
+  .share-note{display:block;margin-top:8px;color:var(--brass);font-size:.82rem}
 
   nav{display:flex;flex-wrap:wrap;gap:10px;padding:22px 0 8px}
   nav a{color:var(--text);text-decoration:none;font-size:.9rem;border:1px solid var(--line);
@@ -54,7 +66,7 @@
 
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:26px}
   .card{background:var(--surface);border:1px solid var(--line);overflow:hidden}
-  .card.off{opacity:.42}
+  .card.on{border-color:var(--brass)}
   .shot{display:block;position:relative;background:var(--surface-2);cursor:zoom-in;line-height:0}
   .shot img{width:100%;aspect-ratio:4/5;object-fit:cover}
   .more{position:absolute;right:10px;bottom:10px;background:rgba(18,15,13,.72);color:var(--text);
@@ -66,10 +78,18 @@
   .pick{display:none;flex:0 0 auto;margin:2px 0 0;width:19px;height:19px;accent-color:var(--brass);cursor:pointer}
   .js .pick{display:block}
 
+
+  .hero{display:flex;justify-content:center;position:relative;line-height:0;margin-bottom:26px;
+     border:1px solid var(--line);cursor:zoom-in;background:var(--surface-2)}
+  .hero img{width:auto;max-width:100%;max-height:560px;object-fit:contain}
+  .hero .tag{position:absolute;left:12px;bottom:12px;background:rgba(18,15,13,.72);
+     color:var(--text);font-size:.78rem;padding:4px 10px;border:1px solid rgba(199,154,87,.45);line-height:1.5}
+
+
   footer{color:var(--muted);font-size:.85rem;padding:48px 0 60px;border-top:1px solid var(--line);margin-top:44px}
   footer p{margin:0 0 8px}
 
-  /* zoom em CSS puro (:target) — funciona mesmo sem JavaScript */
+  /* CSS-only lightbox (:target) — works without JavaScript */
   .zoom{display:none}
   .zoom:target{display:block;position:fixed;inset:0;z-index:50;background:rgba(14,11,9,.95)}
   .scrim{position:absolute;inset:0}
@@ -90,12 +110,15 @@
 
   @media (max-width:620px){
     header{padding:36px 0 22px}
+    .masthead{gap:14px}
+    .brand img{max-width:110px;max-height:48px}
     .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
     .body{padding:11px 12px 13px}
     .name{font-size:.88rem}
     .price{font-size:1.1rem}
     .total-meta{margin-left:0;text-align:left;width:100%}
     .stage{top:64px;left:12px;right:12px;bottom:96px}
+    .hero img{max-height:360px}
   }
   @media print{
     body{background:#fff;color:#000}
@@ -109,303 +132,291 @@
 
 <div class="wrap">
   <header>
-    <p class="kicker">Lista de compras do apartamento</p>
-    <h1>Itens escolhidos</h1>
+    <div class="masthead">
+      <div>
+        <p class="kicker">Viceroy apartment</p>
+        <h1>Shopping list</h1>
+      </div>
+      <div class="brand"><img src="/viceroy/images/logo.png" width="760" height="428" alt="A Plus Property Care"></div>
+    </div>
     <div class="totalbar">
       <div>
-        <div class="total-label">Total</div>
-        <div class="total-amount" id="total">$6,297.22</div>
+        <div class="total-label">Selected total</div>
+        <div class="total-amount" id="total">$199.58</div>
       </div>
       <div class="total-meta">
-        <span id="picked">15 itens</span>
-        <span class="jsonly">— desmarque um item para tirá-lo da conta.</span>
+        <span id="picked">1 of 14 items</span>
+        <span class="jsonly">— tick items to add them to the total.</span>
+        <button class="share" id="share" type="button">Copy selection link</button>
+        <span class="share-note" id="shareNote" hidden>Link copied</span>
       </div>
     </div>
-    <nav>
-      <a href="#sala-de-jantar">Sala de jantar</a>
-      <a href="#quarto">Quarto</a>
-      <a href="#varanda">Varanda</a>
-    </nav>
+    <nav><a href="#dining-room">Dining room</a><a href="#bedroom-4103">Bedroom 4103</a><a href="#bedroom-4102">Bedroom 4102</a><a href="#balcony-side-a">Balcony — Side A</a><a href="#balcony-side-b">Balcony — Side B</a></nav>
   </header>
 
   <main>
-      <section id="sala-de-jantar">
-        <div class="sec-head"><h2>Sala de jantar</h2><span class="count">3 itens</span><span class="sub" data-sub="sala-de-jantar">$796.33</span></div>
+      <section id="dining-room">
+        <div class="sec-head"><h2>Dining room</h2><span class="count">3 items</span><span class="sub" data-sub="dining-room"></span></div>
         <div class="grid">
-        <article class="card" id="item1">
-          <a class="shot" href="#z-01a" aria-label="Ampliar foto de Leaf Chandelier">
-            <img src="/viceroy/images/01-leaf-chandelier-thumb.jpg" width="360" height="560" loading="lazy" alt="Leaf Chandelier"><span class="more">3 fotos</span>
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Leaf Chandelier</p><div class="price">$402.59</div></div>
-            <input class="pick" type="checkbox" checked data-p="402.59" data-room="sala-de-jantar" aria-label="Incluir Leaf Chandelier no total">
-          </div>
-        </article>
-        <article class="card" id="item2">
-          <a class="shot" href="#z-02a" aria-label="Ampliar foto de Linen Drum Chandelier">
-            <img src="/viceroy/images/02-linen-drum-chandelier-thumb.jpg" width="406" height="560" loading="lazy" alt="Linen Drum Chandelier">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Linen Drum Chandelier</p><div class="price">$151.75</div></div>
-            <input class="pick" type="checkbox" checked data-p="151.75" data-room="sala-de-jantar" aria-label="Incluir Linen Drum Chandelier no total">
-          </div>
-        </article>
-        <article class="card" id="item3">
-          <a class="shot" href="#z-03a" aria-label="Ampliar foto de Globe Chandelier">
-            <img src="/viceroy/images/03-globe-chandelier-thumb.jpg" width="414" height="560" loading="lazy" alt="Globe Chandelier">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Globe Chandelier</p><div class="price">$241.99</div></div>
-            <input class="pick" type="checkbox" checked data-p="241.99" data-room="sala-de-jantar" aria-label="Incluir Globe Chandelier no total">
-          </div>
-        </article>
+          <article class="card" id="item1">
+            <a class="shot" href="#z-01b" aria-label="Enlarge photo of Leaf Chandelier">
+              <img src="/viceroy/images/01-leaf-chandelier-thumb.jpg" width="420" height="560" loading="lazy" alt="Leaf Chandelier">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Leaf Chandelier</p><div class="price">$462.98</div></div>
+              <input class="pick" type="checkbox" data-p="462.98" data-room="dining-room" aria-label="Include Leaf Chandelier in the total">
+            </div>
+          </article>
+          <article class="card" id="item2">
+            <a class="shot" href="#z-02a" aria-label="Enlarge photo of Linen Drum Chandelier">
+              <img src="/viceroy/images/02-linen-drum-chandelier-thumb.jpg" width="406" height="560" loading="lazy" alt="Linen Drum Chandelier">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Linen Drum Chandelier</p><div class="price">$174.51</div></div>
+              <input class="pick" type="checkbox" data-p="174.51" data-room="dining-room" aria-label="Include Linen Drum Chandelier in the total">
+            </div>
+          </article>
+          <article class="card" id="item3">
+            <a class="shot" href="#z-03a" aria-label="Enlarge photo of Globe Chandelier">
+              <img src="/viceroy/images/03-globe-chandelier-thumb.jpg" width="414" height="560" loading="lazy" alt="Globe Chandelier">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Globe Chandelier</p><div class="price">$278.29</div></div>
+              <input class="pick" type="checkbox" data-p="278.29" data-room="dining-room" aria-label="Include Globe Chandelier in the total">
+            </div>
+          </article>
         </div>
       </section>
-      <section id="quarto">
-        <div class="sec-head"><h2>Quarto</h2><span class="count">4 itens</span><span class="sub" data-sub="quarto">$4,344.75</span></div>
+      <section id="bedroom-4103">
+        <div class="sec-head"><h2>Bedroom 4103</h2><span class="count">3 items</span><span class="sub" data-sub="bedroom-4103"></span></div>
         <div class="grid">
-        <article class="card" id="item4">
-          <a class="shot" href="#z-04a" aria-label="Ampliar foto de Marlie 6-Drawer Dresser">
-            <img src="/viceroy/images/04-marlie-6-drawer-dresser-thumb.jpg" width="560" height="449" loading="lazy" alt="Marlie 6-Drawer Dresser">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Marlie 6-Drawer Dresser</p><div class="price">$1,648.90</div></div>
-            <input class="pick" type="checkbox" checked data-p="1648.9" data-room="quarto" aria-label="Incluir Marlie 6-Drawer Dresser no total">
-          </div>
-        </article>
-        <article class="card" id="item5">
-          <a class="shot" href="#z-05a" aria-label="Ampliar foto de Park Dresser">
-            <img src="/viceroy/images/05-park-dresser-thumb.jpg" width="560" height="454" loading="lazy" alt="Park Dresser">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Park Dresser</p><div class="price">$2,308.90</div></div>
-            <input class="pick" type="checkbox" checked data-p="2308.9" data-room="quarto" aria-label="Incluir Park Dresser no total">
-          </div>
-        </article>
-        <article class="card" id="item6">
-          <a class="shot" href="#z-06a" aria-label="Ampliar foto de ET2 Souffle Flush Mount">
-            <img src="/viceroy/images/06-et2-souffle-flush-mount-thumb.jpg" width="560" height="529" loading="lazy" alt="ET2 Souffle Flush Mount">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">ET2 Souffle Flush Mount</p><div class="price">$213.40</div></div>
-            <input class="pick" type="checkbox" checked data-p="213.4" data-room="quarto" aria-label="Incluir ET2 Souffle Flush Mount no total">
-          </div>
-        </article>
-        <article class="card" id="item7">
-          <a class="shot" href="#z-07a" aria-label="Ampliar foto de Round Flush Mount Ceiling Light">
-            <img src="/viceroy/images/07-round-flush-mount-ceiling-light-thumb.jpg" width="560" height="543" loading="lazy" alt="Round Flush Mount Ceiling Light">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Round Flush Mount Ceiling Light</p><div class="price">$173.55</div></div>
-            <input class="pick" type="checkbox" checked data-p="173.55" data-room="quarto" aria-label="Incluir Round Flush Mount Ceiling Light no total">
-          </div>
-        </article>
+          <article class="card" id="item4">
+            <a class="shot" href="#z-04a" aria-label="Enlarge photo of Marlie 6-Drawer Dresser">
+              <img src="/viceroy/images/04-marlie-6-drawer-dresser-thumb.jpg" width="560" height="449" loading="lazy" alt="Marlie 6-Drawer Dresser">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Marlie 6-Drawer Dresser</p><div class="price">$1,896.24</div></div>
+              <input class="pick" type="checkbox" data-p="1896.24" data-room="bedroom-4103" aria-label="Include Marlie 6-Drawer Dresser in the total">
+            </div>
+          </article>
+          <article class="card" id="item5">
+            <a class="shot" href="#z-05a" aria-label="Enlarge photo of Park Dresser">
+              <img src="/viceroy/images/05-park-dresser-thumb.jpg" width="560" height="454" loading="lazy" alt="Park Dresser">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Park Dresser</p><div class="price">$2,655.24</div></div>
+              <input class="pick" type="checkbox" data-p="2655.24" data-room="bedroom-4103" aria-label="Include Park Dresser in the total">
+            </div>
+          </article>
+          <article class="card" id="item6">
+            <a class="shot" href="#z-06a" aria-label="Enlarge photo of ET2 Souffle Flush Mount">
+              <img src="/viceroy/images/06-et2-souffle-flush-mount-thumb.jpg" width="417" height="560" loading="lazy" alt="ET2 Souffle Flush Mount">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">ET2 Souffle Flush Mount</p><div class="price">$245.41</div></div>
+              <input class="pick" type="checkbox" data-p="245.41" data-room="bedroom-4103" aria-label="Include ET2 Souffle Flush Mount in the total">
+            </div>
+          </article>
         </div>
       </section>
-      <section id="varanda">
-        <div class="sec-head"><h2>Varanda</h2><span class="count">8 itens</span><span class="sub" data-sub="varanda">$1,156.14</span></div>
+      <section id="bedroom-4102">
+        <div class="sec-head"><h2>Bedroom 4102</h2><span class="count">1 item</span><span class="sub" data-sub="bedroom-4102">$199.58</span></div>
         <div class="grid">
-        <article class="card" id="item8">
-          <a class="shot" href="#z-08a" aria-label="Ampliar foto de Planter">
-            <img src="/viceroy/images/08-planter-thumb.jpg" width="549" height="560" loading="lazy" alt="Planter"><span class="more">2 fotos</span>
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Planter</p><div class="price">$87.99</div></div>
-            <input class="pick" type="checkbox" checked data-p="87.99" data-room="varanda" aria-label="Incluir Planter no total">
-          </div>
-        </article>
-        <article class="card" id="item9">
-          <a class="shot" href="#z-09a" aria-label="Ampliar foto de Egg Swing Chair">
-            <img src="/viceroy/images/09-egg-swing-chair-thumb.jpg" width="433" height="560" loading="lazy" alt="Egg Swing Chair"><span class="more">2 fotos</span>
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Egg Swing Chair</p><div class="price">$438.89</div></div>
-            <input class="pick" type="checkbox" checked data-p="438.89" data-room="varanda" aria-label="Incluir Egg Swing Chair no total">
-          </div>
-        </article>
-        <article class="card" id="item10">
-          <a class="shot" href="#z-10a" aria-label="Ampliar foto de Travertine Side Table">
-            <img src="/viceroy/images/10-travertine-side-table-thumb.jpg" width="520" height="560" loading="lazy" alt="Travertine Side Table">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Travertine Side Table</p><div class="price">$94.16</div></div>
-            <input class="pick" type="checkbox" checked data-p="94.16" data-room="varanda" aria-label="Incluir Travertine Side Table no total">
-          </div>
-        </article>
-        <article class="card" id="item11">
-          <a class="shot" href="#z-11a" aria-label="Ampliar foto de Round Jute Rug">
-            <img src="/viceroy/images/11-round-jute-rug-thumb.jpg" width="394" height="322" loading="lazy" alt="Round Jute Rug">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Round Jute Rug</p><div class="price">$47.29</div></div>
-            <input class="pick" type="checkbox" checked data-p="47.29" data-room="varanda" aria-label="Incluir Round Jute Rug no total">
-          </div>
-        </article>
-        <article class="card" id="item12">
-          <a class="shot" href="#z-12a" aria-label="Ampliar foto de Artificial Plant 4'7&quot;">
-            <img src="/viceroy/images/12-artificial-plant-47-thumb.jpg" width="376" height="560" loading="lazy" alt="Artificial Plant 4'7&quot;">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Artificial Plant 4'7&quot;</p><div class="price">$131.99</div></div>
-            <input class="pick" type="checkbox" checked data-p="131.99" data-room="varanda" aria-label="Incluir Artificial Plant 4'7&quot; no total">
-          </div>
-        </article>
-        <article class="card" id="item13">
-          <a class="shot" href="#z-13a" aria-label="Ampliar foto de Decorative Branches (Set of 2)">
-            <img src="/viceroy/images/13-decorative-branches-set-of-2-thumb.jpg" width="560" height="456" loading="lazy" alt="Decorative Branches (Set of 2)">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Decorative Branches (Set of 2)</p><div class="price">$24.19</div></div>
-            <input class="pick" type="checkbox" checked data-p="24.19" data-room="varanda" aria-label="Incluir Decorative Branches (Set of 2) no total">
-          </div>
-        </article>
-        <article class="card" id="item14">
-          <a class="shot" href="#z-14a" aria-label="Ampliar foto de Outdoor Solar Lantern">
-            <img src="/viceroy/images/14-outdoor-solar-lantern-thumb.jpg" width="560" height="486" loading="lazy" alt="Outdoor Solar Lantern"><span class="more">2 fotos</span>
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">Outdoor Solar Lantern</p><div class="price">$153.99</div></div>
-            <input class="pick" type="checkbox" checked data-p="153.99" data-room="varanda" aria-label="Incluir Outdoor Solar Lantern no total">
-          </div>
-        </article>
-        <article class="card" id="item15">
-          <a class="shot" href="#z-15a" aria-label="Ampliar foto de LED Corner Floor Lamp">
-            <img src="/viceroy/images/15-led-corner-floor-lamp-thumb.jpg" width="404" height="214" loading="lazy" alt="LED Corner Floor Lamp">
-          </a>
-          <div class="body">
-            <div class="info"><p class="name">LED Corner Floor Lamp</p><div class="price">$177.64</div></div>
-            <input class="pick" type="checkbox" checked data-p="177.64" data-room="varanda" aria-label="Incluir LED Corner Floor Lamp no total">
-          </div>
-        </article>
+          <article class="card" id="item7">
+            <a class="shot" href="#z-07a" aria-label="Enlarge photo of Round Flush Mount Ceiling Light">
+              <img src="/viceroy/images/07-round-flush-mount-ceiling-light-thumb.jpg" width="461" height="560" loading="lazy" alt="Round Flush Mount Ceiling Light">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Round Flush Mount Ceiling Light</p><div class="price">$199.58</div></div>
+              <input class="pick" type="checkbox" checked data-p="199.58" data-room="bedroom-4102" aria-label="Include Round Flush Mount Ceiling Light in the total">
+            </div>
+          </article>
+        </div>
+      </section>
+      <section id="balcony-side-a">
+        <div class="sec-head"><h2>Balcony — Side A</h2><span class="count">3 items</span><span class="sub" data-sub="balcony-side-a"></span></div>
+        <a class="hero" href="#z-09a" aria-label="Enlarge photo of Balcony — Side A">
+          <img src="/viceroy/images/hero-balcony-side-a-thumb.jpg" width="734" height="950" loading="lazy" alt="Balcony — Side A">
+          <span class="tag">Enlarge</span>
+        </a>
+        <div class="grid">
+          <article class="card" id="item8">
+            <a class="shot" href="#z-09b" aria-label="Enlarge photo of Egg Swing Chair">
+              <img src="/viceroy/images/08-egg-swing-chair-thumb.jpg" width="460" height="465" loading="lazy" alt="Egg Swing Chair">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Egg Swing Chair</p><div class="price">$504.72</div></div>
+              <input class="pick" type="checkbox" data-p="504.72" data-room="balcony-side-a" aria-label="Include Egg Swing Chair in the total">
+            </div>
+          </article>
+          <article class="card" id="item9">
+            <a class="shot" href="#z-10a" aria-label="Enlarge photo of Travertine Side Table">
+              <img src="/viceroy/images/09-travertine-side-table-thumb.jpg" width="520" height="560" loading="lazy" alt="Travertine Side Table">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Travertine Side Table</p><div class="price">$108.28</div></div>
+              <input class="pick" type="checkbox" data-p="108.28" data-room="balcony-side-a" aria-label="Include Travertine Side Table in the total">
+            </div>
+          </article>
+          <article class="card" id="item10">
+            <a class="shot" href="#z-11a" aria-label="Enlarge photo of Round Jute Rug">
+              <img src="/viceroy/images/10-round-jute-rug-thumb.jpg" width="394" height="322" loading="lazy" alt="Round Jute Rug">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Round Jute Rug</p><div class="price">$54.38</div></div>
+              <input class="pick" type="checkbox" data-p="54.38" data-room="balcony-side-a" aria-label="Include Round Jute Rug in the total">
+            </div>
+          </article>
+        </div>
+      </section>
+      <section id="balcony-side-b">
+        <div class="sec-head"><h2>Balcony — Side B</h2><span class="count">4 items</span><span class="sub" data-sub="balcony-side-b"></span></div>
+        <a class="hero" href="#z-14a" aria-label="Enlarge photo of Balcony — Side B">
+          <img src="/viceroy/images/hero-balcony-side-b-thumb.jpg" width="950" height="825" loading="lazy" alt="Balcony — Side B">
+          <span class="tag">Enlarge</span>
+        </a>
+        <div class="grid">
+          <article class="card" id="item11">
+            <a class="shot" href="#z-08a" aria-label="Enlarge photo of Planter">
+              <img src="/viceroy/images/11-planter-thumb.jpg" width="549" height="560" loading="lazy" alt="Planter">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Planter</p><div class="price">$101.19</div></div>
+              <input class="pick" type="checkbox" data-p="101.19" data-room="balcony-side-b" aria-label="Include Planter in the total">
+            </div>
+          </article>
+          <article class="card" id="item12">
+            <a class="shot" href="#z-12a" aria-label="Enlarge photo of Artificial Plant 4'7&quot;">
+              <img src="/viceroy/images/12-artificial-plant-47-thumb.jpg" width="376" height="560" loading="lazy" alt="Artificial Plant 4'7&quot;">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Artificial Plant 4'7&quot;</p><div class="price">$151.79</div></div>
+              <input class="pick" type="checkbox" data-p="151.79" data-room="balcony-side-b" aria-label="Include Artificial Plant 4'7&quot; in the total">
+            </div>
+          </article>
+          <article class="card" id="item13">
+            <a class="shot" href="#z-14b" aria-label="Enlarge photo of Floor Lamp — Short">
+              <img src="/viceroy/images/13-floor-lamp-short-thumb.jpg" width="560" height="560" loading="lazy" alt="Floor Lamp — Short">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Floor Lamp — Short</p><div class="price">$177.09</div></div>
+              <input class="pick" type="checkbox" data-p="177.09" data-room="balcony-side-b" aria-label="Include Floor Lamp — Short in the total">
+            </div>
+          </article>
+          <article class="card" id="item14">
+            <a class="shot" href="#z-15a" aria-label="Enlarge photo of Floor Lamp — Tall">
+              <img src="/viceroy/images/14-floor-lamp-tall-thumb.jpg" width="560" height="560" loading="lazy" alt="Floor Lamp — Tall">
+            </a>
+            <div class="body">
+              <div class="info"><p class="name">Floor Lamp — Tall</p><div class="price">$204.29</div></div>
+              <input class="pick" type="checkbox" data-p="204.29" data-room="balcony-side-b" aria-label="Include Floor Lamp — Tall in the total">
+            </div>
+          </article>
         </div>
       </section>
   </main>
 
   <footer>
-    <p>Toque em qualquer foto para ampliar. Itens com mais de uma foto têm setas para passar as imagens.</p>
-    <p>Preços conforme a lista original.</p>
+    <p>Tap any photo to enlarge. Items with more than one photo have arrows to move between images.</p>
+    <p>Prices as listed.</p>
   </footer>
 </div>
 
-  <div class="zoom" id="z-01a">
-    <a class="scrim" href="#item1" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/01-leaf-chandelier-1.jpg" width="610" height="950" loading="lazy" alt="Leaf Chandelier"></div>
-    <a class="nav prev" href="#z-01c" aria-label="Foto anterior">&#8249;</a><a class="nav next" href="#z-01b" aria-label="Proxima foto">&#8250;</a><a class="close" href="#item1" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Leaf Chandelier</b> &nbsp;$402.59 &middot; foto 1 de 3</div>
-  </div>
   <div class="zoom" id="z-01b">
-    <a class="scrim" href="#item1" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/01-leaf-chandelier-2.jpg" width="712" height="950" loading="lazy" alt="Leaf Chandelier"></div>
-    <a class="nav prev" href="#z-01a" aria-label="Foto anterior">&#8249;</a><a class="nav next" href="#z-01c" aria-label="Proxima foto">&#8250;</a><a class="close" href="#item1" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Leaf Chandelier</b> &nbsp;$402.59 &middot; foto 2 de 3</div>
-  </div>
-  <div class="zoom" id="z-01c">
-    <a class="scrim" href="#item1" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/01-leaf-chandelier-3.jpg" width="812" height="950" loading="lazy" alt="Leaf Chandelier"></div>
-    <a class="nav prev" href="#z-01b" aria-label="Foto anterior">&#8249;</a><a class="nav next" href="#z-01a" aria-label="Proxima foto">&#8250;</a><a class="close" href="#item1" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Leaf Chandelier</b> &nbsp;$402.59 &middot; foto 3 de 3</div>
+    <a class="scrim" href="#item1" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/01-leaf-chandelier.jpg" width="712" height="950" loading="lazy" alt="Leaf Chandelier"></div>
+    <a class="close" href="#item1" aria-label="Close">&times;</a>
+    <div class="cap"><b>Leaf Chandelier</b> &nbsp;$462.98</div>
   </div>
   <div class="zoom" id="z-02a">
-    <a class="scrim" href="#item2" aria-label="Fechar"></a>
+    <a class="scrim" href="#item2" aria-label="Close"></a>
     <div class="stage"><img src="/viceroy/images/02-linen-drum-chandelier.jpg" width="688" height="950" loading="lazy" alt="Linen Drum Chandelier"></div>
-    <a class="close" href="#item2" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Linen Drum Chandelier</b> &nbsp;$151.75</div>
+    <a class="close" href="#item2" aria-label="Close">&times;</a>
+    <div class="cap"><b>Linen Drum Chandelier</b> &nbsp;$174.51</div>
   </div>
   <div class="zoom" id="z-03a">
-    <a class="scrim" href="#item3" aria-label="Fechar"></a>
+    <a class="scrim" href="#item3" aria-label="Close"></a>
     <div class="stage"><img src="/viceroy/images/03-globe-chandelier.jpg" width="703" height="950" loading="lazy" alt="Globe Chandelier"></div>
-    <a class="close" href="#item3" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Globe Chandelier</b> &nbsp;$241.99</div>
+    <a class="close" href="#item3" aria-label="Close">&times;</a>
+    <div class="cap"><b>Globe Chandelier</b> &nbsp;$278.29</div>
   </div>
   <div class="zoom" id="z-04a">
-    <a class="scrim" href="#item4" aria-label="Fechar"></a>
+    <a class="scrim" href="#item4" aria-label="Close"></a>
     <div class="stage"><img src="/viceroy/images/04-marlie-6-drawer-dresser.jpg" width="950" height="761" loading="lazy" alt="Marlie 6-Drawer Dresser"></div>
-    <a class="close" href="#item4" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Marlie 6-Drawer Dresser</b> &nbsp;$1,648.90</div>
+    <a class="close" href="#item4" aria-label="Close">&times;</a>
+    <div class="cap"><b>Marlie 6-Drawer Dresser</b> &nbsp;$1,896.24</div>
   </div>
   <div class="zoom" id="z-05a">
-    <a class="scrim" href="#item5" aria-label="Fechar"></a>
+    <a class="scrim" href="#item5" aria-label="Close"></a>
     <div class="stage"><img src="/viceroy/images/05-park-dresser.jpg" width="950" height="770" loading="lazy" alt="Park Dresser"></div>
-    <a class="close" href="#item5" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Park Dresser</b> &nbsp;$2,308.90</div>
+    <a class="close" href="#item5" aria-label="Close">&times;</a>
+    <div class="cap"><b>Park Dresser</b> &nbsp;$2,655.24</div>
   </div>
   <div class="zoom" id="z-06a">
-    <a class="scrim" href="#item6" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/06-et2-souffle-flush-mount.jpg" width="950" height="898" loading="lazy" alt="ET2 Souffle Flush Mount"></div>
-    <a class="close" href="#item6" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>ET2 Souffle Flush Mount</b> &nbsp;$213.40</div>
+    <a class="scrim" href="#item6" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/06-et2-souffle-flush-mount.jpg" width="1125" height="1512" loading="lazy" alt="ET2 Souffle Flush Mount"></div>
+    <a class="close" href="#item6" aria-label="Close">&times;</a>
+    <div class="cap"><b>ET2 Souffle Flush Mount</b> &nbsp;$245.41</div>
   </div>
   <div class="zoom" id="z-07a">
-    <a class="scrim" href="#item7" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/07-round-flush-mount-ceiling-light.jpg" width="950" height="921" loading="lazy" alt="Round Flush Mount Ceiling Light"></div>
-    <a class="close" href="#item7" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Round Flush Mount Ceiling Light</b> &nbsp;$173.55</div>
-  </div>
-  <div class="zoom" id="z-08a">
-    <a class="scrim" href="#item8" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/08-planter-1.jpg" width="931" height="950" loading="lazy" alt="Planter"></div>
-    <a class="nav prev" href="#z-08b" aria-label="Foto anterior">&#8249;</a><a class="nav next" href="#z-08b" aria-label="Proxima foto">&#8250;</a><a class="close" href="#item8" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Planter</b> &nbsp;$87.99 &middot; foto 1 de 2</div>
-  </div>
-  <div class="zoom" id="z-08b">
-    <a class="scrim" href="#item8" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/08-planter-2.jpg" width="747" height="950" loading="lazy" alt="Planter"></div>
-    <a class="nav prev" href="#z-08a" aria-label="Foto anterior">&#8249;</a><a class="nav next" href="#z-08a" aria-label="Proxima foto">&#8250;</a><a class="close" href="#item8" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Planter</b> &nbsp;$87.99 &middot; foto 2 de 2</div>
+    <a class="scrim" href="#item7" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/07-round-flush-mount-ceiling-light.jpg" width="1125" height="1367" loading="lazy" alt="Round Flush Mount Ceiling Light"></div>
+    <a class="close" href="#item7" aria-label="Close">&times;</a>
+    <div class="cap"><b>Round Flush Mount Ceiling Light</b> &nbsp;$199.58</div>
   </div>
   <div class="zoom" id="z-09a">
-    <a class="scrim" href="#item9" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/09-egg-swing-chair-1.jpg" width="734" height="950" loading="lazy" alt="Egg Swing Chair"></div>
-    <a class="nav prev" href="#z-09b" aria-label="Foto anterior">&#8249;</a><a class="nav next" href="#z-09b" aria-label="Proxima foto">&#8250;</a><a class="close" href="#item9" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Egg Swing Chair</b> &nbsp;$438.89 &middot; foto 1 de 2</div>
+    <a class="scrim" href="#balcony-side-a" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/hero-balcony-side-a.jpg" width="734" height="950" loading="lazy" alt="Balcony — Side A"></div>
+    <a class="close" href="#balcony-side-a" aria-label="Close">&times;</a>
+    <div class="cap"><b>Balcony — Side A</b></div>
   </div>
   <div class="zoom" id="z-09b">
-    <a class="scrim" href="#item9" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/09-egg-swing-chair-2.jpg" width="460" height="465" loading="lazy" alt="Egg Swing Chair"></div>
-    <a class="nav prev" href="#z-09a" aria-label="Foto anterior">&#8249;</a><a class="nav next" href="#z-09a" aria-label="Proxima foto">&#8250;</a><a class="close" href="#item9" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Egg Swing Chair</b> &nbsp;$438.89 &middot; foto 2 de 2</div>
+    <a class="scrim" href="#item8" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/08-egg-swing-chair.jpg" width="460" height="465" loading="lazy" alt="Egg Swing Chair"></div>
+    <a class="close" href="#item8" aria-label="Close">&times;</a>
+    <div class="cap"><b>Egg Swing Chair</b> &nbsp;$504.72</div>
   </div>
   <div class="zoom" id="z-10a">
-    <a class="scrim" href="#item10" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/10-travertine-side-table.jpg" width="882" height="950" loading="lazy" alt="Travertine Side Table"></div>
-    <a class="close" href="#item10" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Travertine Side Table</b> &nbsp;$94.16</div>
+    <a class="scrim" href="#item9" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/09-travertine-side-table.jpg" width="882" height="950" loading="lazy" alt="Travertine Side Table"></div>
+    <a class="close" href="#item9" aria-label="Close">&times;</a>
+    <div class="cap"><b>Travertine Side Table</b> &nbsp;$108.28</div>
   </div>
   <div class="zoom" id="z-11a">
-    <a class="scrim" href="#item11" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/11-round-jute-rug.jpg" width="394" height="322" loading="lazy" alt="Round Jute Rug"></div>
-    <a class="close" href="#item11" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Round Jute Rug</b> &nbsp;$47.29</div>
-  </div>
-  <div class="zoom" id="z-12a">
-    <a class="scrim" href="#item12" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/12-artificial-plant-47.jpg" width="638" height="950" loading="lazy" alt="Artificial Plant 4'7&quot;"></div>
-    <a class="close" href="#item12" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Artificial Plant 4'7&quot;</b> &nbsp;$131.99</div>
-  </div>
-  <div class="zoom" id="z-13a">
-    <a class="scrim" href="#item13" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/13-decorative-branches-set-of-2.jpg" width="950" height="773" loading="lazy" alt="Decorative Branches (Set of 2)"></div>
-    <a class="close" href="#item13" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Decorative Branches (Set of 2)</b> &nbsp;$24.19</div>
+    <a class="scrim" href="#item10" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/10-round-jute-rug.jpg" width="394" height="322" loading="lazy" alt="Round Jute Rug"></div>
+    <a class="close" href="#item10" aria-label="Close">&times;</a>
+    <div class="cap"><b>Round Jute Rug</b> &nbsp;$54.38</div>
   </div>
   <div class="zoom" id="z-14a">
-    <a class="scrim" href="#item14" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/14-outdoor-solar-lantern-1.jpg" width="950" height="825" loading="lazy" alt="Outdoor Solar Lantern"></div>
-    <a class="nav prev" href="#z-14b" aria-label="Foto anterior">&#8249;</a><a class="nav next" href="#z-14b" aria-label="Proxima foto">&#8250;</a><a class="close" href="#item14" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Outdoor Solar Lantern</b> &nbsp;$153.99 &middot; foto 1 de 2</div>
+    <a class="scrim" href="#balcony-side-b" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/hero-balcony-side-b.jpg" width="950" height="825" loading="lazy" alt="Balcony — Side B"></div>
+    <a class="close" href="#balcony-side-b" aria-label="Close">&times;</a>
+    <div class="cap"><b>Balcony — Side B</b></div>
+  </div>
+  <div class="zoom" id="z-08a">
+    <a class="scrim" href="#item11" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/11-planter.jpg" width="931" height="950" loading="lazy" alt="Planter"></div>
+    <a class="close" href="#item11" aria-label="Close">&times;</a>
+    <div class="cap"><b>Planter</b> &nbsp;$101.19</div>
+  </div>
+  <div class="zoom" id="z-12a">
+    <a class="scrim" href="#item12" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/12-artificial-plant-47.jpg" width="638" height="950" loading="lazy" alt="Artificial Plant 4'7&quot;"></div>
+    <a class="close" href="#item12" aria-label="Close">&times;</a>
+    <div class="cap"><b>Artificial Plant 4'7&quot;</b> &nbsp;$151.79</div>
   </div>
   <div class="zoom" id="z-14b">
-    <a class="scrim" href="#item14" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/14-outdoor-solar-lantern-2.jpg" width="415" height="315" loading="lazy" alt="Outdoor Solar Lantern"></div>
-    <a class="nav prev" href="#z-14a" aria-label="Foto anterior">&#8249;</a><a class="nav next" href="#z-14a" aria-label="Proxima foto">&#8250;</a><a class="close" href="#item14" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>Outdoor Solar Lantern</b> &nbsp;$153.99 &middot; foto 2 de 2</div>
+    <a class="scrim" href="#item13" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/13-floor-lamp-short.jpg" width="1218" height="1218" loading="lazy" alt="Floor Lamp — Short"></div>
+    <a class="close" href="#item13" aria-label="Close">&times;</a>
+    <div class="cap"><b>Floor Lamp — Short</b> &nbsp;$177.09</div>
   </div>
   <div class="zoom" id="z-15a">
-    <a class="scrim" href="#item15" aria-label="Fechar"></a>
-    <div class="stage"><img src="/viceroy/images/15-led-corner-floor-lamp.jpg" width="404" height="214" loading="lazy" alt="LED Corner Floor Lamp"></div>
-    <a class="close" href="#item15" aria-label="Fechar">&times;</a>
-    <div class="cap"><b>LED Corner Floor Lamp</b> &nbsp;$177.64</div>
+    <a class="scrim" href="#item14" aria-label="Close"></a>
+    <div class="stage"><img src="/viceroy/images/14-floor-lamp-tall.jpg" width="1222" height="1222" loading="lazy" alt="Floor Lamp — Tall"></div>
+    <a class="close" href="#item14" aria-label="Close">&times;</a>
+    <div class="cap"><b>Floor Lamp — Tall</b> &nbsp;$204.29</div>
   </div>
 
 <script>
@@ -415,20 +426,73 @@
   function recalc(){
     var sum=0,n=0,rooms={};
     picks.forEach(function(cb){
-      var p=parseFloat(cb.dataset.p),r=cb.dataset.room;
+      var r=cb.dataset.room;
       if(rooms[r]===undefined)rooms[r]=0;
-      cb.closest('.card').classList.toggle('off',!cb.checked);
-      if(cb.checked){sum+=p;n++;rooms[r]+=p;}
+      cb.closest('.card').classList.toggle('on',cb.checked);
+      if(cb.checked){var p=parseFloat(cb.dataset.p);sum+=p;n++;rooms[r]+=p;}
     });
     document.getElementById('total').textContent=fmt(sum);
-    document.getElementById('picked').textContent=n+' de '+picks.length+' itens';
+    document.getElementById('picked').textContent=n+' of '+picks.length+' items';
     Object.keys(rooms).forEach(function(r){
       var el=document.querySelector('[data-sub="'+r+'"]');
-      if(el)el.textContent=fmt(rooms[r]);
+      if(el)el.textContent=rooms[r]?fmt(rooms[r]):'';
     });
   }
-  picks.forEach(function(cb){cb.addEventListener('change',recalc);});
+  var KEY='viceroy-selection';
+
+  function code(){
+    var bits=0;
+    picks.forEach(function(cb,i){ if(cb.checked) bits+=Math.pow(2,i); });
+    return bits.toString(36);
+  }
+  function apply(str){
+    if(!/^[0-9a-z]{1,8}$/.test(str)) return false;
+    var bits=parseInt(str,36);
+    if(isNaN(bits)||bits<0||bits>=Math.pow(2,picks.length)) return false;
+    picks.forEach(function(cb,i){ cb.checked=!!(Math.floor(bits/Math.pow(2,i))%2); });
+    return true;
+  }
+  function remember(){
+    try{ localStorage.setItem(KEY,code()); }catch(e){}
+  }
+
+  var fromUrl=new URLSearchParams(location.search).get('s');
+  if(fromUrl && apply(fromUrl)){
+    remember();
+  }else{
+    try{
+      var saved=localStorage.getItem(KEY);
+      if(saved) apply(saved);
+    }catch(e){}
+  }
+
+  picks.forEach(function(cb){
+    cb.addEventListener('change',function(){ recalc(); remember(); });
+  });
   recalc();
+
+  var btn=document.getElementById('share'), note=document.getElementById('shareNote');
+  if(btn){
+    btn.addEventListener('click',function(){
+      var url=location.origin+location.pathname+'?s='+code();
+      function done(){
+        note.hidden=false; note.textContent='Link copied';
+        setTimeout(function(){ note.hidden=true; },2600);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(done,function(){ fallback(url,done); });
+      }else{ fallback(url,done); }
+    });
+  }
+  function fallback(url,done){
+    var ta=document.createElement('textarea');
+    ta.value=url; ta.setAttribute('readonly','');
+    ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }
+    catch(e){ note.hidden=false; note.textContent=url; }
+    document.body.removeChild(ta);
+  }
 
   document.addEventListener('keydown',function(e){
     var z=document.querySelector('.zoom:target'); if(!z) return;
