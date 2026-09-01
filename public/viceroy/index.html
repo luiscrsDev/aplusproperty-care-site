@@ -44,6 +44,14 @@
   .jsonly{display:none}
   .js .jsonly{display:inline}
 
+
+  .share{display:none;margin-top:12px;background:none;border:1px solid var(--line);
+     color:var(--text);font-family:var(--sans);font-size:.86rem;font-weight:300;
+     padding:8px 16px;border-radius:999px;cursor:pointer;transition:border-color .18s,color .18s}
+  .share:hover,.share:focus-visible{border-color:var(--brass);color:var(--brass)}
+  .js .share{display:inline-block}
+  .share-note{display:block;margin-top:8px;color:var(--brass);font-size:.82rem}
+
   nav{display:flex;flex-wrap:wrap;gap:10px;padding:22px 0 8px}
   nav a{color:var(--text);text-decoration:none;font-size:.9rem;border:1px solid var(--line);
      border-radius:999px;padding:7px 16px}
@@ -139,6 +147,8 @@
       <div class="total-meta">
         <span id="picked">1 of 14 items</span>
         <span class="jsonly">— tick items to add them to the total.</span>
+        <button class="share" id="share" type="button">Copy selection link</button>
+        <span class="share-note" id="shareNote" hidden>Link copied</span>
       </div>
     </div>
     <nav><a href="#dining-room">Dining room</a><a href="#bedroom-4103">Bedroom 4103</a><a href="#bedroom-4102">Bedroom 4102</a><a href="#balcony-side-a">Balcony — Side A</a><a href="#balcony-side-b">Balcony — Side B</a></nav>
@@ -428,8 +438,61 @@
       if(el)el.textContent=rooms[r]?fmt(rooms[r]):'';
     });
   }
-  picks.forEach(function(cb){cb.addEventListener('change',recalc);});
+  var KEY='viceroy-selection';
+
+  function code(){
+    var bits=0;
+    picks.forEach(function(cb,i){ if(cb.checked) bits+=Math.pow(2,i); });
+    return bits.toString(36);
+  }
+  function apply(str){
+    if(!/^[0-9a-z]{1,8}$/.test(str)) return false;
+    var bits=parseInt(str,36);
+    if(isNaN(bits)||bits<0||bits>=Math.pow(2,picks.length)) return false;
+    picks.forEach(function(cb,i){ cb.checked=!!(Math.floor(bits/Math.pow(2,i))%2); });
+    return true;
+  }
+  function remember(){
+    try{ localStorage.setItem(KEY,code()); }catch(e){}
+  }
+
+  var fromUrl=new URLSearchParams(location.search).get('s');
+  if(fromUrl && apply(fromUrl)){
+    remember();
+  }else{
+    try{
+      var saved=localStorage.getItem(KEY);
+      if(saved) apply(saved);
+    }catch(e){}
+  }
+
+  picks.forEach(function(cb){
+    cb.addEventListener('change',function(){ recalc(); remember(); });
+  });
   recalc();
+
+  var btn=document.getElementById('share'), note=document.getElementById('shareNote');
+  if(btn){
+    btn.addEventListener('click',function(){
+      var url=location.origin+location.pathname+'?s='+code();
+      function done(){
+        note.hidden=false; note.textContent='Link copied';
+        setTimeout(function(){ note.hidden=true; },2600);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(done,function(){ fallback(url,done); });
+      }else{ fallback(url,done); }
+    });
+  }
+  function fallback(url,done){
+    var ta=document.createElement('textarea');
+    ta.value=url; ta.setAttribute('readonly','');
+    ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }
+    catch(e){ note.hidden=false; note.textContent=url; }
+    document.body.removeChild(ta);
+  }
 
   document.addEventListener('keydown',function(e){
     var z=document.querySelector('.zoom:target'); if(!z) return;
