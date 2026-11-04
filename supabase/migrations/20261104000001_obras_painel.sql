@@ -72,3 +72,7 @@ alter table public.obra_docs replica identity full;
 alter table public.obra_projetos replica identity full;
 alter publication supabase_realtime add table public.obra_docs;
 alter publication supabase_realtime add table public.obra_projetos;
+
+-- Funções de acesso só para usuários logados
+revoke execute on function public.obra_pode_ler(text), public.obra_pode_editar(text), public.obra_equipe_geral(), public.obra_email() from public, anon;
+grant execute on function public.obra_pode_ler(text), public.obra_pode_editar(text), public.obra_equipe_geral(), public.obra_email() to authenticated;
