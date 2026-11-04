@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
         source: "/.well-known/llms.txt",
         destination: "/llms.txt",
       },
+      // Painel de Obra (página estática com login Supabase)
+      { source: "/obras", destination: "/painel-obra.html" },
+      { source: "/obras/:projeto", destination: "/painel-obra.html" },
+      { source: "/cliente/:projeto", destination: "/painel-obra.html" },
     ];
   },
   async redirects() {
