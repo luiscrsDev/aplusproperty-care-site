@@ -302,7 +302,7 @@ const S={
     {k:"prazo",l:"Prazo",t:"date",list:1,half:1},
     {k:"obs",l:"Observações",t:"textarea",sub:1}]}
 };
-const TABS=[["geral","Visão geral"],["tarefas","Cronograma"],["pacotes","Pacotes"],["cotacoes","Orçamentos"],["pedidos","Pedidos"],["licencas","Licenças"],["decisoes","Decisões"],["pagamentos","Pagamentos"],["riscos","Riscos"],["punch","Punch list"],["relatorio","Relatório"]];
+const TABS=[["geral","Visão geral"],["tarefas","Cronograma"],["pacotes","Pacotes"],["cotacoes","Orçamentos"],["pedidos","Pedidos"],["licencas","Licenças"],["decisoes","Decisões"],["pagamentos","Pagamentos"],["riscos","Riscos"],["punch","Punch list"],["historico","Histórico"],["relatorio","Relatório"]];
 
 /* ---------- Estado ---------- */
 let db=null, canWrite=true, loaded=false;
@@ -368,6 +368,7 @@ function render(){
   if(!loaded){m.innerHTML=`<div class="notice"><strong>Carregando o projeto…</strong><br>Os dados aparecem assim que o banco de dados responder.</div>`;return}
   if(tab==="geral")m.innerHTML=viewGeral();
   else if(tab==="relatorio")m.innerHTML=viewRelatorio();
+  else if(tab==="historico")m.innerHTML=viewHistorico();
   else if(tab==="tarefas")m.innerHTML=viewTarefas();
   else m.innerHTML=viewTable(tab);
 }
@@ -531,6 +532,50 @@ function weeklyText(){
   ent.forEach(p=>L.push(`• Entrega prevista ${fd(p.previsao)}: ${p.item}`));
   return L.join("\n");
 }
+/* ---------- Histórico de alterações (tabela obra_historico, gravada pelo banco) ---------- */
+const COL_LABEL={tarefas:"Cronograma",pacotes:"Pacotes",cotacoes:"Orçamentos",pedidos:"Pedidos",licencas:"Licenças",decisoes:"Decisões",pagamentos:"Pagamentos",riscos:"Riscos",punch:"Punch list",_projeto:"Projeto"};
+const ACAO_TONE={criou:"good",alterou:"info",excluiu:"bad"};
+let HIST={pid:null,rows:[],loading:false,err:""};
+function fieldLabel(col,k){const f=S[col]&&S[col].fields.find(x=>x.k===k);return f?f.l:k}
+function itemTitle(col,d){if(!d)return"";if(col==="_projeto")return d.nome||"";const f=S[col]&&S[col].fields.find(x=>x.main);return f?String(d[f.k]||""):""}
+function fmtVal(v){if(v==null||v==="")return"—";if(typeof v==="object")return"…";const s=String(v);return /^\d{4}-\d{2}-\d{2}$/.test(s)?fd(s):s.length>80?s.slice(0,80)+"…":s}
+function diffHTML(h){
+  if(h.acao!=="alterou")return"";
+  const a=h.antes||{},b=h.depois||{};
+  const ks=[...new Set([...Object.keys(a),...Object.keys(b)])].filter(k=>k!=="updatedAt"&&k!=="ordem"&&JSON.stringify(a[k])!==JSON.stringify(b[k]));
+  return ks.map(k=>`<small>${esc(fieldLabel(h.colecao,k))}: <s>${esc(fmtVal(a[k]))}</s> → <b>${esc(fmtVal(b[k]))}</b></small>`).join("");
+}
+function histLi(h,showItem){
+  const dt=new Date(h.em);
+  const when=dt.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})+" "+dt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+  const title=showItem?`${esc(COL_LABEL[h.colecao]||h.colecao)} · ${esc(itemTitle(h.colecao,h.depois||h.antes))}`:"";
+  return `<li class="empty" style="grid-template-columns:auto 1fr auto"><span class="d">${when}</span><span class="t">${title?title+"<small>":"<small>"}${esc(h.email||"sistema")}</small>${diffHTML(h)}</span><span class="pill ${ACAO_TONE[h.acao]||""}">${esc(h.acao)}</span></li>`;
+}
+async function loadHist(force){
+  if(!db||(!force&&HIST.pid===PROJ.id&&HIST.rows.length))return;
+  HIST={pid:PROJ.id,rows:[],loading:true,err:""};if(tab==="historico")render();
+  const{data,error}=await sb.from("obra_historico").select("*").eq("projeto",PROJ.id).order("em",{ascending:false}).limit(300);
+  if(HIST.pid!==PROJ.id)return;
+  HIST.loading=false;HIST.rows=data||[];HIST.err=error?"Não foi possível carregar o histórico.":"";
+  if(tab==="historico"&&!editing)render();
+}
+function viewHistorico(){
+  if(HIST.pid!==PROJ.id&&!HIST.loading)setTimeout(()=>loadHist(),0);
+  const head=`<div class="head-row"><div><h2 class="sec">Histórico</h2><p class="sec-sub">Toda criação, alteração e exclusão fica registrada pelo banco de dados, com o e-mail de quem fez e os valores de antes e depois. Ninguém consegue apagar este registro pelo painel.</p></div><button class="btn ghost" id="histReload">Atualizar</button></div>`;
+  if(HIST.loading||HIST.pid!==PROJ.id)return `<div class="view">${head}<div class="notice"><strong>Carregando o histórico…</strong></div></div>`;
+  if(HIST.err)return `<div class="view">${head}<div class="notice"><strong>${HIST.err}</strong></div></div>`;
+  if(!HIST.rows.length)return `<div class="view">${head}<div class="notice"><strong>Nenhuma alteração registrada ainda.</strong><br>As mudanças feitas a partir de agora aparecem aqui.</div></div>`;
+  return `<div class="view">${head}<section class="panel"><ul class="mini">${HIST.rows.map(h=>histLi(h,true)).join("")}</ul></section></div>`;
+}
+async function loadDocHist(k,id){
+  const box=$("shHist");if(!box)return;
+  const{data,error}=await sb.from("obra_historico").select("*").eq("projeto",PROJ.id).eq("colecao",k).eq("doc_id",id).order("em",{ascending:false}).limit(50);
+  if(!$("shHist"))return;
+  if(error){box.innerHTML="";return}
+  box.innerHTML=data&&data.length?`<div class="fld"><label>Histórico deste item</label><section class="panel"><ul class="mini">${data.map(h=>histLi(h,false)).join("")}</ul></section></div>`:`<p class="sec-sub">Sem alterações registradas para este item.</p>`;
+}
+document.addEventListener("click",e=>{if(e.target.id==="histReload")loadHist(true)});
+
 function viewRelatorio(){
   return `<div class="view"><div class="head-row"><div><h2 class="sec">Relatório semanal</h2><p class="sec-sub">Gerado a partir do banco de dados: situação, riscos, decisões do contratante e entregas da semana seguinte (cláusula 4f). Revise e copie para o e-mail de sexta.</p></div><button class="btn" id="copyRep">Copiar texto</button></div><div class="report" id="repTxt">${esc(weeklyText())}</div></div>`;
 }
@@ -588,7 +633,9 @@ function openSheet(k,id){
   sch.fields.forEach(f=>{if(f.half){pair.push(fieldHTML(f));if(pair.length===2){out.push(`<div class="two">${pair.join("")}</div>`);pair=[]}}else{if(pair.length){out.push(`<div class="two">${pair.join("")}</div>`);pair=[]}out.push(fieldHTML(f))}});
   if(pair.length)out.push(`<div class="two">${pair.join("")}</div>`);
   if(r&&r.updatedAt)out.push(`<p class="sec-sub">Última alteração: ${new Date(r.updatedAt).toLocaleString("pt-BR")}</p>`);
+  if(r&&canWrite)out.push(`<div id="shHist"><p class="sec-sub">Carregando histórico…</p></div>`);
   $("shForm").innerHTML=out.join("");
+  if(r&&canWrite)loadDocHist(k,id);
   $("shForm").querySelectorAll("input,select,textarea").forEach(el=>el.disabled=!canWrite);
   $("shDel").hidden=!r;$("shDel").textContent="Excluir";$("shDel").dataset.armed="";
   $("sheet").hidden=false;$("scrim").hidden=false;
@@ -707,6 +754,7 @@ function subscribeProject(){
   });
 }
 function switchProject(id){
+  HIST={pid:null,rows:[],loading:false,err:""};
   const p=PROJS.find(x=>x.id===id);if(!p)return;
   applyProject(p);applyAccess();try{localStorage.setItem("aplus-proj",id)}catch(_){}
   const want="/"+ROUTE.mode+"/"+encodeURIComponent(id);
@@ -719,7 +767,7 @@ async function start(session){
   db=makeDb();
   const{data:m}=await sb.from("obra_membros").select("projeto,papel").eq("email",EMAIL);
   MEMB=m||[];
-  if(ROUTE.mode==="cliente"){for(let i=TABS.length-1;i>=0;i--)if(["pacotes","cotacoes","pagamentos"].includes(TABS[i][0]))TABS.splice(i,1)}
+  if(ROUTE.mode==="cliente"){for(let i=TABS.length-1;i>=0;i--)if(["pacotes","cotacoes","pagamentos","historico"].includes(TABS[i][0]))TABS.splice(i,1)}
   if(!MEMB.length){$("main").innerHTML=`<div class="notice"><strong>O e-mail ${esc(EMAIL)} ainda não tem acesso a nenhum projeto.</strong><br>Peça à APLUS para liberar seu acesso. <button class="btn ghost" id="logout" style="margin-top:10px">Sair</button></div>`;$("tabs").innerHTML="";$("projBar").innerHTML="";return}
   let first=true;
   if(projUnsub)projUnsub();
