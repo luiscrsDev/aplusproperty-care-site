@@ -682,7 +682,7 @@ window.addEventListener("resize",()=>{clearTimeout(window._rz);window._rz=setTim
 
 /* ---------- Supabase (substitui o banco do Claude) ---------- */
 const SB_URL="https://vewqlrfiqbczuytsortg.supabase.co", SB_KEY="sb_publishable_09vPDW5_c-qrMZ4GeaTQXg_M-QU_O8K";
-const sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:"pkce"}});
+const sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:"implicit"}});
 const ROUTE=(()=>{const m=location.pathname.match(/^\/(obras|cliente)(?:\/([^\/?#]+))?/);return {mode:m&&m[1]==="cliente"?"cliente":"obras",proj:m&&m[2]?decodeURIComponent(m[2]):""}})();
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
 const mapErr=e=>({code:(e&&(e.code==="42501"||/row-level security|permission/i.test(e.message||"")))?"invalid_argument":"unavailable",message:e&&e.message});
@@ -733,7 +733,7 @@ function showLogin(msg){
     const btn=e.target.querySelector("button");btn.disabled=true;btn.textContent="Enviando…";
     const{error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname,shouldCreateUser:true}});
     if(error){btn.disabled=false;btn.textContent="Enviar link de acesso";toast("Não enviou: "+error.message)}
-    else $("main").innerHTML=`<div class="notice" style="max-width:440px"><strong>Link enviado para ${esc(email)}.</strong><br>Abra o e-mail neste mesmo navegador e clique no link.</div>`});
+    else $("main").innerHTML=`<div class="notice" style="max-width:440px"><strong>Link enviado para ${esc(email)}.</strong><br>Abra o e-mail e clique no link. Funciona no computador ou no celular.</div>`});
 }
 /* ---------- Boot ---------- */
 document.addEventListener("change",e=>{if(e.target.id==="projSel")switchProject(e.target.value)});
