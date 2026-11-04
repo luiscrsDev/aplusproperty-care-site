@@ -787,8 +787,14 @@ document.addEventListener("click",async e=>{if(e.target.id==="logout"){await sb.
 try{const s=localStorage.getItem("aplus-tab");if(s&&TABS.some(t=>t[0]===s))tab=s}catch(_){}
 renderMast();
 (async()=>{
-  const{data:{session}}=await sb.auth.getSession();
-  if(session)start(session);else showLogin();
+  // Erro devolvido pelo link (ex.: link expirado ou já usado)
+  const hp=new URLSearchParams(location.hash.slice(1)), qp=new URLSearchParams(location.search);
+  const linkErr=hp.get("error_description")||qp.get("error_description");
+  // Link no formato ?code= (pedido numa versão anterior da página): troca o código pela sessão
+  let{data:{session}}=await sb.auth.getSession();   // lê os tokens do link (#access_token) antes de limpar a URL
+  if(!session&&qp.get("code")){try{const r=await sb.auth.exchangeCodeForSession(qp.get("code"));session=r.data&&r.data.session}catch(_){}}
+  if(location.search||location.hash){try{history.replaceState(null,"",location.pathname)}catch(_){}}
+  if(session)start(session);else showLogin(linkErr?`<strong>O link não funcionou:</strong> ${esc(linkErr.replace(/\+/g," "))}.<br>Peça um link novo abaixo.`:(qp.get("code")?"<strong>O link não funcionou neste navegador.</strong><br>Peça um link novo abaixo e abra o e-mail no mesmo aparelho.":""));
   let started=!!session;
   sb.auth.onAuthStateChange((ev,s)=>{if(s&&!started){started=true;start(s)}if(ev==="SIGNED_OUT"){started=false;showLogin()}});
 })();
