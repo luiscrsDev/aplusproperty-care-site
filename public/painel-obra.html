@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><link rel="icon" href="/icon">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><link rel="icon" href="/icon">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Painel de Obra APLUS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +43,10 @@ button,input,select,textarea{font:inherit;color:inherit}
 .facts b{font-weight:600}
 .status-line{font-size:12.5px;opacity:.75}
 .logo{display:block;line-height:0}.logo img{height:52px;width:auto;max-width:100%}
+.mright{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.langbar{display:inline-flex;border:1px solid color-mix(in srgb,var(--navy-fg) 35%,transparent);border-radius:99px;overflow:hidden}
+.langbar button{background:none;border:0;color:var(--navy-fg);font-weight:700;font-size:12px;letter-spacing:.04em;padding:5px 11px;cursor:pointer}
+.langbar button[aria-pressed="true"]{background:var(--navy-fg);color:var(--navy)}
 .mtop{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
 .projbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .projbar select{background:transparent;color:var(--navy-fg);border:1px solid color-mix(in srgb,var(--navy-fg) 35%,transparent);border-radius:8px;padding:6px 10px;font-weight:600;font-size:13px;max-width:240px}
@@ -192,7 +196,7 @@ tr.late td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
 </head><body>
 <header class="mast">
   <div class="wrap">
-    <div class="mtop"><a href="/" class="logo" aria-label="APLUS Property Care"><img src="/aplus-logo-wide.png" alt="APLUS Property Care" width="600" height="217"></a><div class="projbar" id="projBar"></div></div>
+    <div class="mtop"><a href="/" class="logo" aria-label="APLUS Property Care"><img src="/aplus-logo-wide.png" alt="APLUS Property Care" width="600" height="217"></a><div class="mright"><div class="projbar" id="projBar"></div><div class="langbar" id="langBar" data-noi18n></div></div></div>
     <div class="eyebrow">Painel de obra</div>
     <h1 id="pName">Painel de Obra</h1>
     <div class="facts" id="facts"></div>
@@ -217,6 +221,165 @@ tr.late td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
+/* ---------- Idiomas (EN padrão · PT · ES) ----------
+   O código usa textos-fonte em português; esta camada troca o texto exibido conforme o idioma.
+   Valores gravados no banco (status etc.) nunca mudam: só o rótulo na tela. */
+let LANG=(()=>{try{const l=localStorage.getItem("aplus-lang");return ["en","pt","es"].includes(l)?l:"en"}catch(_){return"en"}})();
+const loc=()=>({en:"en-US",pt:"pt-BR",es:"es-US"}[LANG]);
+const W3=(pt,en,es)=>LANG==="en"?en:LANG==="es"?es:pt;
+// chave (texto-fonte) : [inglês, espanhol, português opcional quando a chave não é português]
+const I18N={
+"Painel de obra":["Project dashboard","Panel de obra"],"Painel de Obra":["Project Dashboard","Panel de Obra"],
+"Conectando ao banco de dados…":["Connecting to the database…","Conectando a la base de datos…"],
+"Editar":["Edit","Editar"],"Fechar":["Close","Cerrar"],"Excluir":["Delete","Eliminar"],"Cancelar":["Cancel","Cancelar"],"Salvar":["Save","Guardar"],
+"Confirmar exclusão":["Confirm delete","Confirmar eliminación"],
+"Visão geral":["Overview","Resumen"],"Cronograma":["Schedule","Cronograma"],"Pacotes":["Packages","Paquetes"],"Orçamentos":["Quotes","Presupuestos"],
+"Pedidos":["Orders","Pedidos"],"Licenças":["Permits","Permisos"],"Decisões":["Decisions","Decisiones"],"Pagamentos":["Payments","Pagos"],
+"Riscos":["Risks","Riesgos"],"Punch list":["Punch list","Punch list"],"Histórico":["History","Historial"],"Relatório":["Report","Informe"],
+"Editar projeto":["Edit project","Editar proyecto"],"+ Novo projeto":["+ New project","+ Nuevo proyecto"],"Sair":["Sign out","Salir"],"Projeto":["Project","Proyecto"],
+"Local":["Location","Ubicación"],"Cliente":["Client","Cliente"],"Gerente":["Manager","Gerente"],"Início":["Start","Inicio"],"Meta":["Target","Meta"],
+"Pendente":["Pending","Pendiente"],"Em andamento":["In progress","En progreso"],"Concluído":["Done","Completado"],"Bloqueado":["Blocked","Bloqueado"],
+"Medir":["To measure","Por medir"],"Cotando":["Quoting","Cotizando"],"Comparativo enviado":["Comparison sent","Comparativo enviado"],"Aprovado":["Approved","Aprobado"],
+"Contratado":["Contracted","Contratado"],"Em execução":["Underway","En ejecución"],"Recebida":["Received","Recibido"],"Recomendada":["Recommended","Recomendado"],
+"Aprovada":["Approved","Aprobado"],"Recusada":["Declined","Rechazado"],"A pedir":["To order","Por pedir"],"Pedido":["Ordered","Pedido"],"Em fabricação":["In production","En fabricación"],
+"Embarcado":["Shipped","Enviado"],"Entregue":["Delivered","Entregado"],"A definir":["TBD","Por definir"],"Em projeto":["In design","En diseño"],"Protocolada":["Submitted","Presentado"],
+"Em análise":["Under review","En revisión"],"Comentários":["Comments","Comentarios"],"Emitida":["Issued","Emitido"],"Vistorias":["Inspections","Inspecciones"],"Encerrada":["Closed out","Cerrado"],
+"Aberta":["Open","Abierta"],"Respondida":["Answered","Respondida"],"A vencer":["Upcoming","Por vencer"],"Faturada":["Invoiced","Facturado"],"Paga":["Paid","Pagado"],
+"Alto":["High","Alto"],"Médio":["Medium","Medio"],"Baixo":["Low","Bajo"],"Aberto":["Open","Abierto"],"Mitigado":["Mitigated","Mitigado"],"Fechado":["Closed","Cerrado"],
+"Open":["Open","Abierto","Aberto"],"Andamento":["In progress","En progreso","Em andamento"],"Closed":["Closed","Cerrado","Fechado"],
+"Sim":["Yes","Sí"],"Não":["No","No"],"Outro":["Other","Otro"],
+"Geral":["General","General"],"Elétrica":["Electrical","Eléctrica"],"Pintura & Plaster":["Paint & Plaster","Pintura y yeso"],
+"Tarefa":["Task","Tarea"],"Pacote":["Package","Paquete"],"Fim":["End","Fin"],"Status":["Status","Estado"],"Responsável":["Owner","Responsable"],"Marco":["Milestone","Hito"],
+"Observações":["Notes","Notas"],"Código":["Code","Código"],"Escopo (Anexo A)":["Scope (Exhibit A)","Alcance (Anexo A)"],"Medição em":["Measured on","Medición el"],
+"Fornecedor aprovado":["Approved vendor","Proveedor aprobado"],"Valor aprovado (US$)":["Approved amount (US$)","Monto aprobado (US$)"],"Fornecedor":["Vendor","Proveedor"],
+"Valor (US$)":["Amount (US$)","Monto (US$)"],"Sinal (US$)":["Deposit (US$)","Anticipo (US$)"],"Prazo de entrega":["Delivery time","Plazo de entrega"],"Recebida em":["Received on","Recibido el"],
+"O que está excluído":["Exclusions","Exclusiones"],"Item":["Item","Artículo"],"Prazo de fabricação":["Lead time","Plazo de fabricación"],"Pedido em":["Ordered on","Pedido el"],
+"Previsão de entrega":["Expected delivery","Entrega prevista"],"Licença":["Permit","Permiso"],"Empreiteiro responsável":["Responsible contractor","Contratista responsable"],
+"Nº do processo":["Permit number","N.º de expediente"],"Data do último evento":["Last event date","Fecha del último evento"],"Requisitos":["Requirements","Requisitos"],
+"Decisão necessária do cliente":["Decision needed from the client","Decisión requerida del cliente"],"Solicitada em":["Requested on","Solicitada el"],"Responder até":["Reply by","Responder antes de"],
+"Respondida em":["Answered on","Respondida el"],"Resposta do cliente":["Client's answer","Respuesta del cliente"],"Parcela":["Installment","Cuota"],"Data prevista":["Expected date","Fecha prevista"],
+"Paga em":["Paid on","Pagado el"],"Condição de vencimento":["Due condition","Condición de vencimiento"],"Risco":["Risk","Riesgo"],"Impacto":["Impact","Impacto"],"Mitigação":["Mitigation","Mitigación"],
+"Pendência":["Item","Pendiente"],"Ambiente / área":["Room / area","Ambiente / área"],"Urgente":["Urgent","Urgente"],"Prazo":["Due date","Fecha límite"],
+"tarefa":["task","tarea"],"pacote":["package","paquete"],"orçamento":["quote","presupuesto"],"pedido":["order","pedido"],"licença":["permit","permiso"],"decisão":["decision","decisión"],
+"parcela":["installment","cuota"],"risco":["risk","riesgo"],"pendência":["item","pendiente"],"+ Adicionar":["+ Add","+ Agregar"],
+"dias corridos restantes":["calendar days left","días corridos restantes"],"Interno concluído":["Interior completed","Interior completado"],"Tarefas concluídas":["Tasks completed","Tareas completadas"],
+"tarefas dos pacotes internos":["tasks in interior packages","tareas de paquetes interiores"],"do cronograma":["in the schedule","del cronograma"],"Tarefas atrasadas":["Late tasks","Tareas atrasadas"],
+"fim já passou, sem conclusão":["past end date, not done","fecha final vencida, sin completar"],"Decisões do cliente":["Client decisions","Decisiones del cliente"],
+"Pedidos a fazer":["Orders to place","Pedidos por hacer"],"itens sem pedido":["items not ordered yet","artículos sin pedir"],"Prazo do bônus":["Bonus deadline","Plazo del bono"],
+"Punch list aberta":["Open punch list","Punch list abierta"],"Tudo fechado.":["All closed.","Todo cerrado."],"Próximos 14 dias":["Next 14 days","Próximos 14 días"],
+"Nada começa ou termina nas próximas duas semanas.":["Nothing starts or ends in the next two weeks.","Nada empieza ni termina en las próximas dos semanas."],
+"Aguardando o cliente":["Waiting on the client","Esperando al cliente"],"Atrasada":["Late","Atrasada"],"Nenhuma decisão pendente.":["No pending decisions.","Ninguna decisión pendiente."],
+"Atrasadas":["Late","Atrasadas"],"Nenhuma tarefa atrasada.":["No late tasks.","Ninguna tarea atrasada."],"Riscos altos":["High risks","Riesgos altos"],
+"Nenhum risco alto aberto.":["No open high risks.","Ningún riesgo alto abierto."],"Entregas do contrato":["Contract deliverables","Entregables del contrato"],
+"Passou":["Past","Pasó"],"Hoje":["Today","Hoy"],"Todos os itens foram pedidos.":["Everything has been ordered.","Todo ha sido pedido."],
+"Projeto sem registros ainda.":["No records in this project yet.","Proyecto sin registros todavía."],
+"Comece pela aba Cronograma ou Punch list e use “+ Nova…” para adicionar o primeiro item.":["Start in the Schedule or Punch list tab and use “+ Add…” to create the first item.","Empieza en la pestaña Cronograma o Punch list y usa “+ Agregar…” para crear el primer elemento."],
+"Buscar…":["Search…","Buscar…"],"Todos os pacotes":["All packages","Todos los paquetes"],"Todos os status":["All statuses","Todos los estados"],"Todos os responsáveis":["All owners","Todos los responsables"],
+"(sem responsável)":["(unassigned)","(sin responsable)"],"Responsável…":["Owner…","Responsable…"],
+"Os 12 pacotes do Anexo A: 8 internos e 4 externos. A coluna de status acompanha medição, orçamentos e contratação.":["The 12 packages from Exhibit A: 8 interior and 4 exterior. The status column tracks measuring, quotes and contracting.","Los 12 paquetes del Anexo A: 8 interiores y 4 exteriores. La columna de estado sigue la medición, los presupuestos y la contratación."],
+"De 2 a 3 orçamentos por pacote, entregues ao cliente em até 3 dias úteis após a medição (cláusula 4c).":["2 to 3 quotes per package, delivered to the client within 3 business days after measuring (clause 4c).","De 2 a 3 presupuestos por paquete, entregados al cliente dentro de 3 días hábiles después de la medición (cláusula 4c)."],
+"Itens de longo prazo de entrega. O Briefing pede que estes sejam encomendados primeiro.":["Long-lead items. The Briefing asks for these to be ordered first.","Artículos de largo plazo de entrega. El Briefing pide que se encarguen primero."],
+"O empreiteiro licenciado obtém cada licença; o gerente acompanha pedidos, comentários e vistorias (cláusula 3.5).":["The licensed contractor pulls each permit; the manager tracks applications, comments and inspections (clause 3.5).","El contratista con licencia obtiene cada permiso; el gerente da seguimiento a solicitudes, comentarios e inspecciones (cláusula 3.5)."],
+"Registre a data de cada pedido e de cada resposta. Atrasos do cliente prorrogam o prazo do bônus dia a dia (cláusula 6.3).":["Log the date of each request and each answer. Client delays extend the bonus deadline day for day (clause 6.3).","Registra la fecha de cada solicitud y de cada respuesta. Los retrasos del cliente prorrogan el plazo del bono día por día (cláusula 6.3)."],
+"Honorários fixos de US$ 20.000 em 4 parcelas, mais bônus de US$ 2.000 por pontualidade.":["Fixed fee of $20,000 in 4 installments, plus a $2,000 on-time bonus.","Honorarios fijos de US$ 20.000 en 4 cuotas, más un bono de US$ 2.000 por puntualidad."],
+"Riscos do cronograma e do contrato, com a mitigação combinada.":["Schedule and contract risks, with the agreed mitigation.","Riesgos del cronograma y del contrato, con la mitigación acordada."],
+"Pendências da vistoria interna. Entrega da lista ao cliente: segunda, 07/12 (cláusula 4g).":["Items from the interior inspection. List due to the client: Monday 12/07 (clause 4g).","Pendientes de la inspección interior. Entrega de la lista al cliente: lunes 07/12 (cláusula 4g)."],
+"Total possível":["Total possible","Total posible"],"honorários + bônus":["fees + bonus","honorarios + bono"],"Recebido":["Received","Recibido"],
+"Nenhum registro ainda.":["No records yet.","Ningún registro todavía."],"Nada neste filtro.":["Nothing matches this filter.","Nada en este filtro."],
+"Limpe a busca ou troque o pacote/status.":["Clear the search or change the package/status.","Borra la búsqueda o cambia el paquete/estado."],"Sem ambiente":["No area","Sin área"],
+"Lista":["List","Lista"],"Cronograma geral":["Master schedule","Cronograma general"],
+"Sequência do Briefing: elétrica embutida, LED e pré-AV → carpintaria e tetos → cozinha → pintura → persianas, cortinas, AV → punch list.":["Briefing sequence: in-wall electrical, LED and AV pre-wire → carpentry and ceilings → kitchen → paint → shades, drapes, AV → punch list.","Secuencia del Briefing: eléctrica empotrada, LED y precableado AV → carpintería y techos → cocina → pintura → persianas, cortinas, AV → punch list."],
+"Nenhuma tarefa ainda.":["No tasks yet.","Ninguna tarea todavía."],"Use “+ Nova tarefa” para montar o cronograma.":["Use “+ Add task” to build the schedule.","Usa “+ Agregar tarea” para armar el cronograma."],
+"Cor = pacote ·":["Color = package ·","Color = paquete ·"],"Pendente (claro)":["Pending (light)","Pendiente (claro)"],"Em andamento (forte)":["In progress (solid)","En progreso (sólido)"],
+"Concluído (listrado)":["Done (striped)","Completado (rayado)"],
+"Relatório semanal":["Weekly report","Informe semanal"],
+"Gerado a partir do banco de dados: situação, riscos, decisões do contratante e entregas da semana seguinte (cláusula 4f). Revise e copie para o e-mail de sexta.":["Built from the database: status, risks, client decisions and next week's deliverables (clause 4f). Review it and paste it into Friday's email.","Generado desde la base de datos: situación, riesgos, decisiones del contratante y entregas de la próxima semana (cláusula 4f). Revísalo y cópialo en el correo del viernes."],
+"Copiar texto":["Copy text","Copiar texto"],"Relatório copiado":["Report copied","Informe copiado"],"Texto selecionado: copie com Ctrl/Cmd+C":["Text selected: copy with Ctrl/Cmd+C","Texto seleccionado: copia con Ctrl/Cmd+C"],
+"Toda criação, alteração e exclusão fica registrada pelo banco de dados, com o e-mail de quem fez e os valores de antes e depois. Ninguém consegue apagar este registro pelo painel.":["Every create, change and delete is logged by the database, with the email of who did it and the before and after values. Nobody can erase this log from the dashboard.","Toda creación, cambio y eliminación queda registrada por la base de datos, con el correo de quien la hizo y los valores de antes y después. Nadie puede borrar este registro desde el panel."],
+"Atualizar":["Refresh","Actualizar"],"Carregando o histórico…":["Loading history…","Cargando historial…"],"Não foi possível carregar o histórico.":["Couldn't load the history.","No se pudo cargar el historial."],
+"Nenhuma alteração registrada ainda.":["No changes logged yet.","Ningún cambio registrado todavía."],"As mudanças feitas a partir de agora aparecem aqui.":["Changes made from now on show up here.","Los cambios hechos a partir de ahora aparecen aquí."],
+"Histórico deste item":["History of this item","Historial de este elemento"],"Sem alterações registradas para este item.":["No changes logged for this item.","Sin cambios registrados para este elemento."],
+"Carregando histórico…":["Loading history…","Cargando historial…"],"criou":["created","creó"],"alterou":["changed","modificó"],"excluiu":["deleted","eliminó"],"sistema":["system","sistema"],
+"Novo projeto":["New project","Nuevo proyecto"],"Nome do projeto":["Project name","Nombre del proyecto"],"Gerente de projeto":["Project manager","Gerente de proyecto"],
+"Meta de conclusão":["Target completion","Meta de finalización"],"Pacotes (um por linha: código | nome)":["Packages (one per line: code | name)","Paquetes (uno por línea: código | nombre)"],
+"Prefixo dos pacotes internos (opcional)":["Interior package prefix (optional)","Prefijo de paquetes interiores (opcional)"],
+"Entregas do contrato (uma por linha: AAAA-MM-DD | descrição | cláusula)":["Contract deliverables (one per line: YYYY-MM-DD | description | clause)","Entregables del contrato (uno por línea: AAAA-MM-DD | descripción | cláusula)"],
+"Bônus por pontualidade (US$, opcional)":["On-time bonus (US$, optional)","Bono por puntualidad (US$, opcional)"],
+"Dê um nome ao projeto":["Give the project a name","Ponle un nombre al proyecto"],"Projeto criado":["Project created","Proyecto creado"],"Projeto salvo":["Project saved","Proyecto guardado"],
+"Você tem acesso só de leitura":["You have read-only access","Tienes acceso de solo lectura"],"Não salvou. Tente de novo.":["Not saved. Try again.","No se guardó. Inténtalo de nuevo."],
+"Salvo":["Saved","Guardado"],"Adicionado":["Added","Agregado"],"Excluído":["Deleted","Eliminado"],"Não excluiu. Tente de novo.":["Not deleted. Try again.","No se eliminó. Inténtalo de nuevo."],
+"Sem conexão com o banco de dados":["No database connection","Sin conexión con la base de datos"],
+"Acesso restrito à equipe APLUS e aos clientes convidados.":["Access limited to the APLUS team and invited clients.","Acceso limitado al equipo APLUS y a clientes invitados."],
+"Entrar":["Sign in","Iniciar sesión"],"Digite seu e-mail. Enviamos um link de acesso; depois do primeiro login, este navegador continua conectado.":["Enter your email. We'll send you a sign-in link; after the first sign-in, this browser stays signed in.","Escribe tu correo. Te enviamos un enlace de acceso; después del primer inicio de sesión, este navegador queda conectado."],
+"E-mail":["Email","Correo electrónico"],"voce@exemplo.com":["you@example.com","tu@ejemplo.com"],"Enviar link de acesso":["Send sign-in link","Enviar enlace de acceso"],"Enviando…":["Sending…","Enviando…"],
+"Abra o e-mail e clique no link. Funciona no computador ou no celular.":["Open the email and click the link. It works on a computer or a phone.","Abre el correo y haz clic en el enlace. Funciona en la computadora o en el celular."],
+"O link não funcionou:":["The link didn't work:","El enlace no funcionó:"],"Peça um link novo abaixo.":["Request a new link below.","Pide un enlace nuevo abajo."],
+"O link não funcionou neste navegador.":["The link didn't work in this browser.","El enlace no funcionó en este navegador."],
+"Peça um link novo abaixo e abra o e-mail no mesmo aparelho.":["Request a new link below and open the email on the same device.","Pide un enlace nuevo abajo y abre el correo en el mismo dispositivo."],
+"Peça à APLUS para liberar seu acesso.":["Ask APLUS to grant you access.","Pide a APLUS que te dé acceso."],
+"Sincronizado em tempo real":["Live sync","Sincronizado en tiempo real"],"Modo leitura":["Read-only","Solo lectura"],"atualizado":["updated","actualizado"],
+"O banco de dados está demorando a responder. Os dados podem estar incompletos.":["The database is slow to respond. Data may be incomplete.","La base de datos tarda en responder. Los datos pueden estar incompletos."],
+"Não foi possível ler os dados deste projeto.":["Couldn't read this project's data.","No se pudieron leer los datos de este proyecto."],"Não foi possível carregar os projetos.":["Couldn't load the projects.","No se pudieron cargar los proyectos."],
+"Carregando o projeto…":["Loading the project…","Cargando el proyecto…"],"Os dados aparecem assim que o banco de dados responder.":["Data shows up as soon as the database responds.","Los datos aparecen en cuanto responda la base de datos."],
+"Última alteração":["Last change","Último cambio"],"Obra":["Project","Obra"]
+};
+// textos com valores no meio: [regex, inglês, espanhol]
+const I18N_RX=[
+[/^Pacote (.*?) · solicitada (.+)$/,"Package $1 · requested $2","Paquete $1 · solicitada $2"],
+[/^Pacote (.*?) · ainda não enviada$/,"Package $1 · not sent yet","Paquete $1 · aún no enviada"],
+[/^(.*) · até (.+)$/,"$1 · until $2","$1 · hasta $2"],
+[/^Meta interna (.+)$/,"Interior target $1","Meta interior $1"],
+[/^Meta (.+)$/,"Target $1","Meta $1"],
+[/^abertas · (\d+) urgente\(s\)$/,"open · $1 urgent","abiertos · $1 urgente(s)"],
+[/^abertas · (\d+) fora do prazo$/,"open · $1 overdue","abiertas · $1 vencidas"],
+[/^(\d+) dia\(s\) de atraso do cliente registrados$/,"$1 day(s) of client delay logged","$1 día(s) de retraso del cliente registrados"],
+[/^\+ (\d+) na aba Punch list$/,"+ $1 more in the Punch list tab","+ $1 más en la pestaña Punch list"],
+[/^(\d+) dia\(s\)$/,"$1 day(s)","$1 día(s)"],
+[/^Cláusula (.+)$/,"Clause $1","Cláusula $1"],
+[/^(\d+)% do total$/,"$1% of total","$1% del total"],
+[/^Ex\.: (.+)$/,"e.g. $1","Ej.: $1"],
+[/^Não enviou: (.+)$/,"Not sent: $1","No se envió: $1"],
+[/^Link enviado para (.+)\.$/,"Link sent to $1.","Enlace enviado a $1."],
+[/^O e-mail (.+) ainda não tem acesso a nenhum projeto\.$/,"$1 doesn't have access to any project yet.","El correo $1 todavía no tiene acceso a ningún proyecto."],
+[/^Nenhum projeto liberado para (.+)\.$/,"No projects available for $1.","Ningún proyecto disponible para $1."]
+];
+function tr(s){
+  if(s==null)return s;const str=String(s);if(LANG==="pt"&&!/^(Open|Andamento|Closed)$/.test(str.trim()))return str;
+  const m=str.match(/^(\s*)([\s\S]*?)(\s*)$/);const k=m[2];if(!k)return str;
+  const pick=e=>LANG==="en"?e[0]:LANG==="es"?e[1]:(e[2]??k);
+  let out=null;const e=I18N[k];
+  if(e)out=pick(e);
+  else if(k.endsWith(":")&&I18N[k.slice(0,-1)])out=pick(I18N[k.slice(0,-1)])+":";
+  else if(LANG!=="pt"){for(const [rx,en,es] of I18N_RX){if(rx.test(k)){out=k.replace(rx,LANG==="en"?en:es);break}}}
+  return out==null?str:m[1]+out+m[3];
+}
+const I18N_SKIP="script,style,textarea,[data-noi18n]";
+const I18N_ATTRS=["placeholder","title","aria-label"];
+const I18N_ORIG=new WeakMap(), I18N_SET=new WeakMap();
+function trAttrs(el){
+  let o=I18N_ORIG.get(el);if(!o||typeof o!=="object"){o={};I18N_ORIG.set(el,o)}
+  let s=I18N_SET.get(el);if(!s||typeof s!=="object"){s={};I18N_SET.set(el,s)}
+  for(const a of I18N_ATTRS){if(!el.hasAttribute(a))continue;const cur=el.getAttribute(a);if(o[a]===undefined||cur!==s[a])o[a]=cur;const v=tr(o[a]);s[a]=v;if(v!==cur)el.setAttribute(a,v)}
+}
+function trNode(n){
+  if(n.nodeType===3){const p=n.parentElement;if(!p||p.closest(I18N_SKIP))return;
+    let o=I18N_ORIG.get(n);if(o===undefined||n.nodeValue!==I18N_SET.get(n)){o=n.nodeValue;I18N_ORIG.set(n,o)}
+    const v=tr(o);I18N_SET.set(n,v);if(v!==n.nodeValue)n.nodeValue=v;return}
+  if(n.nodeType!==1||n.matches(I18N_SKIP))return;
+  trAttrs(n);for(const c of n.childNodes)trNode(c);
+}
+new MutationObserver(ms=>{for(const m of ms){if(m.type==="attributes")trAttrs(m.target);else m.addedNodes.forEach(trNode)}})
+  .observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:I18N_ATTRS});
+let APP_READY=false, connRefresh=null;
+function renderLangBar(){$("langBar").innerHTML=["en","pt","es"].map(l=>`<button type="button" data-lang="${l}" aria-pressed="${LANG===l}">${l.toUpperCase()}</button>`).join("")}
+function setLang(l){
+  LANG=l;try{localStorage.setItem("aplus-lang",l)}catch(_){}
+  document.documentElement.lang={en:"en",pt:"pt-BR",es:"es"}[l];renderLangBar();
+  if(APP_READY){renderMast();render();connRefresh&&connRefresh()}
+  trNode(document.body);
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-lang]");if(b)setLang(b.dataset.lang)});
+
 /* ---------- Configuração do projeto (dados do contrato) ---------- */
 const DEFAULT_PROJ={id:"",nome:"Painel de Obra",entregas:[],pacotes:[]};
 /* projeto ativo: a configuração vem do banco (coleção "projetos"); DEFAULT_PROJ é só o ponto de partida */
@@ -346,8 +509,8 @@ const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${Str
 const DAY=864e5;
 const diff=(a,b)=>Math.round((a-b)/DAY);
 const addD=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
-const fd=s=>{const d=pd(s);return d?`${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}${d.getFullYear()!==2026?"/"+String(d.getFullYear()).slice(2):""}`:(s||"—")};
-const money=n=>(n===""||n==null||isNaN(n))?"—":"US$ "+Number(n).toLocaleString("pt-BR");
+const fd=s=>{const d=pd(s);if(!d)return s||"—";const dd=String(d.getDate()).padStart(2,"0"),mm=String(d.getMonth()+1).padStart(2,"0");return (LANG==="en"?`${mm}/${dd}`:`${dd}/${mm}`)+(d.getFullYear()!==2026?"/"+String(d.getFullYear()).slice(2):"")};
+const money=n=>(n===""||n==null||isNaN(n))?"—":Number(n).toLocaleString(loc(),{style:"currency",currency:"USD",maximumFractionDigits:0});
 const WD=["dom","seg","ter","qua","qui","sex","sáb"];
 
 function toast(m){const t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,2400)}
@@ -369,7 +532,7 @@ const openPunch=()=>D.punch.filter(p=>p.status!=="Closed");
 /* ---------- Render ---------- */
 function renderMast(){
   $("pName").textContent=PROJ.nome||"Projeto";
-  document.title="Obra "+(PROJ.nome||"");
+  document.title=tr("Obra")+" "+(PROJ.nome||"");
   $("facts").innerHTML=[["Local",PROJ.local],["Cliente",PROJ.cliente],["Gerente",PROJ.gerente],["Início",PROJ.inicioObras&&fd(PROJ.inicioObras)],["Meta",PROJ.conclusaoInterna&&fd(PROJ.conclusaoInterna)]].filter(x=>x[1]).map(([a,b])=>`<span>${a}: <b>${esc(b)}</b></span>`).join("");
   const list=PROJS.length?PROJS:[PROJ];
   $("projBar").innerHTML=`<select id="projSel" aria-label="Projeto">${list.map(p=>`<option value="${esc(p.id)}" ${p.id===PROJ.id?"selected":""}>${esc(p.nome||p.id)}</option>`).join("")}</select><button class="mbtn add" data-proj="edit">Editar projeto</button><button class="mbtn add" data-proj="new">+ Novo projeto</button><button class="mbtn" id="logout">Sair</button>`;
@@ -436,10 +599,10 @@ function filterBar(k,extra=""){
   return `<div class="bar">
     <input type="search" id="q-${k}" placeholder="Buscar…" value="${esc(f.q)}" data-f="q">
     ${hasPac?`<select id="p-${k}" data-f="pac"><option value="">Todos os pacotes</option>${PACS.map(([c,n])=>`<option value="${c}" ${f.pac===c?"selected":""}>${c} ${esc(n)}</option>`).join("")}</select>`:""}
-    ${st?`<select id="s-${k}" data-f="st"><option value="">Todos os status</option>${st.o.map(o=>`<option ${f.st===o?"selected":""}>${o}</option>`).join("")}</select>`:""}
-    ${k==="punch"?`<select id="r-${k}" data-f="resp"><option value="">Todos os responsáveis</option>${[...respOpts(),"(sem responsável)"].map(o=>`<option ${f.resp===o?"selected":""}>${esc(o)}</option>`).join("")}</select>`:""}
+    ${st?`<select id="s-${k}" data-f="st"><option value="">Todos os status</option>${st.o.map(o=>`<option value="${esc(o)}" ${f.st===o?"selected":""}>${esc(o)}</option>`).join("")}</select>`:""}
+    ${k==="punch"?`<select id="r-${k}" data-f="resp"><option value="">Todos os responsáveis</option>${[...respOpts(),"(sem responsável)"].map(o=>`<option value="${esc(o)}" ${f.resp===o?"selected":""}>${esc(o)}</option>`).join("")}</select>`:""}
     ${extra}
-    <button class="btn add" data-new="${k}">+ Nova ${sch.item}</button>
+    <button class="btn add" data-new="${k}">${tr("+ Adicionar")} ${tr(sch.item)}</button>
   </div>`;
 }
 function rowsFor(k){
@@ -465,7 +628,7 @@ function cell(r,fl){
 function viewTable(k){
   const sch=S[k];const cols=sch.fields.filter(f=>f.list);const subF=sch.fields.find(f=>f.sub);
   let rows=sortRows(k,rowsFor(k));
-  const intro={
+  let intro={
     pacotes:"Os 12 pacotes do Anexo A: 8 internos e 4 externos. A coluna de status acompanha medição, orçamentos e contratação.",
     cotacoes:"De 2 a 3 orçamentos por pacote, entregues ao cliente em até 3 dias úteis após a medição (cláusula 4c).",
     pedidos:"Itens de longo prazo de entrega. O Briefing pede que estes sejam encomendados primeiro.",
@@ -475,12 +638,13 @@ function viewTable(k){
     riscos:"Riscos do cronograma e do contrato, com a mitigação combinada.",
     punch:"Pendências da vistoria interna. Entrega da lista ao cliente: segunda, 07/12 (cláusula 4g)."
   }[k]||"";
+  if(PROJ.id!=="alhambra1220")intro="";   // textos acima citam o contrato do Alhambra
   let head=`<div class="head-row"><div><h2 class="sec">${sch.label}</h2><p class="sec-sub">${intro}</p></div></div>${filterBar(k)}`;
   if(k==="pagamentos"){
     const tot=D.pagamentos.reduce((s,p)=>s+(+p.valor||0),0),paid=D.pagamentos.filter(p=>p.status==="Paga").reduce((s,p)=>s+(+p.valor||0),0);
     head+=`<div class="kpis"><div class="kpi"><span class="l">Total possível</span><span class="v">${money(tot)}</span><span class="s">honorários + bônus</span></div><div class="kpi gold"><span class="l">Recebido</span><span class="v">${money(paid)}</span><span class="s">${tot?Math.round(paid/tot*100):0}% do total</span></div></div>`;
   }
-  if(!D[k].length)return `<div class="view">${head}<div class="notice"><strong>Nenhum registro ainda.</strong><br>Use “+ Nova ${sch.item}” para adicionar o primeiro.</div></div>`;
+  if(!D[k].length)return `<div class="view">${head}<div class="notice"><strong>Nenhum registro ainda.</strong><br>${W3(`Use “+ Adicionar ${sch.item}” para adicionar o primeiro.`,`Use “+ Add ${tr(sch.item)}” to add the first one.`,`Usa “+ Agregar ${tr(sch.item)}” para agregar el primero.`)}</div></div>`;
   if(!rows.length)return `<div class="view">${head}<div class="notice"><strong>Nada neste filtro.</strong><br>Limpe a busca ou troque o pacote/status.</div></div>`;
   const gk=sch.group;let body="",last=null;
   if(gk){const rank={};D[k].forEach(r=>{const g=r[gk]||"";const o=gk==="pacote"?PACOPTS.indexOf(g):(r.ordem||0);if(rank[g]==null||o<rank[g])rank[g]=o});
@@ -488,7 +652,7 @@ function viewTable(k){
   rows.forEach(r=>{
     if(gk&&r[gk]!==last){last=r[gk];body+=`<tr class="grp"><td colspan="${cols.length}">${gk==="pacote"?dot(last):""}${esc(gk==="pacote"?pacLabel(last):(last||"Sem ambiente"))}</td></tr>`}
     const late=(k==="tarefas"&&lateTask(r))||(k==="decisoes"&&r.status!=="Respondida"&&pd(r.prazo)&&pd(r.prazo)<today)||(k==="pedidos"&&r.status!=="Entregue"&&pd(r.previsao)&&pd(r.previsao)<today)||(k==="punch"&&r.urgente==="Sim"&&r.status!=="Closed");
-    body+=`<tr data-open="${k}" data-id="${esc(r.id)}" class="${late?"late":""}">${cols.map(fl=>(k==="punch"&&fl.k==="resp")?`<td><div class="qc"><select class="qresp ${r.resp?"":"unset"}" data-id="${esc(r.id)}" aria-label="Responsável"><option value="">Responsável…</option>${respOpts().map(o=>`<option ${o===r.resp?"selected":""}>${esc(o)}</option>`).join("")}</select></div></td>`:(k==="punch"&&fl.k==="status")?`<td><div class="qc qseg" role="group" aria-label="Status">${["Open","Andamento","Closed"].map(v=>`<button type="button" data-q="${esc(r.id)}" data-v="${v}" aria-pressed="${(r.status||"Open")===v}">${v}</button>`).join("")}</div></td>`:fl.main?`<td><strong>${esc(r[fl.k])}</strong>${r.urgente==="Sim"?'<span class="tag-urg">Urgente</span>':""}${subF&&r[subF.k]?`<span class="sub">${esc(r[subF.k])}</span>`:""}</td>`:cell(r,fl)).join("")}</tr>`;
+    body+=`<tr data-open="${k}" data-id="${esc(r.id)}" class="${late?"late":""}">${cols.map(fl=>(k==="punch"&&fl.k==="resp")?`<td><div class="qc"><select class="qresp ${r.resp?"":"unset"}" data-id="${esc(r.id)}" aria-label="Responsável"><option value="">Responsável…</option>${respOpts().map(o=>`<option value="${esc(o)}" ${o===r.resp?"selected":""}>${esc(o)}</option>`).join("")}</select></div></td>`:(k==="punch"&&fl.k==="status")?`<td><div class="qc qseg" role="group" aria-label="Status">${["Open","Andamento","Closed"].map(v=>`<button type="button" data-q="${esc(r.id)}" data-v="${v}" aria-pressed="${(r.status||"Open")===v}">${v}</button>`).join("")}</div></td>`:fl.main?`<td><strong>${esc(r[fl.k])}</strong>${r.urgente==="Sim"?'<span class="tag-urg">Urgente</span>':""}${subF&&r[subF.k]?`<span class="sub">${esc(r[subF.k])}</span>`:""}</td>`:cell(r,fl)).join("")}</tr>`;
   });
   return `<div class="view">${head}<div class="tbl-wrap"><table><thead><tr>${cols.map(c=>`<th>${c.l}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div></div>`;
 }
@@ -506,18 +670,18 @@ function viewTarefas(){
   const W=window.innerWidth<640?11:15;const days=diff(end,start)+1;const width=days*W;
   const x=d=>diff(d,start)*W;
   let heads="";for(let d=new Date(start);d<=end;d=addD(d,7))heads+=`<span class="g-wk" style="left:${x(d)}px;top:16px">${String(d.getDate()).padStart(2,"0")}</span>`;
-  let mo="";for(let d=new Date(start.getFullYear(),start.getMonth(),1);d<=end;d=new Date(d.getFullYear(),d.getMonth()+1,1)){const xx=Math.max(0,x(d));mo+=`<span class="g-mo" style="left:${xx}px">${d.toLocaleDateString("pt-BR",{month:"short",year:"2-digit"}).replace(".","")}</span>`}
-  const overlay=`${today>=start&&today<=end?`<span class="g-line" style="left:${x(today)}px" title="Hoje"></span>`:""}<span class="g-line goal" style="left:${x(pd(PROJ.conclusaoInterna))+W}px" title="Meta interna 11/12"></span><span class="g-band" style="left:${x(pd("2026-11-26"))}px;width:${2*W}px" title="Thanksgiving"></span>`;
+  let mo="";for(let d=new Date(start.getFullYear(),start.getMonth(),1);d<=end;d=new Date(d.getFullYear(),d.getMonth()+1,1)){const xx=Math.max(0,x(d));mo+=`<span class="g-mo" style="left:${xx}px">${d.toLocaleDateString(loc(),{month:"short",year:"2-digit"}).replace(".","")}</span>`}
+  const overlay=`${today>=start&&today<=end?`<span class="g-line" style="left:${x(today)}px" title="Hoje"></span>`:""}<span class="g-line goal" style="left:${x(pd(PROJ.conclusaoInterna))+W}px" title="Meta interna ${fd(PROJ.conclusaoInterna)}"></span><span class="g-band" style="left:${x(pd("2026-11-26"))}px;width:${2*W}px" title="Thanksgiving"></span>`;
   const sorted=rows.slice().sort((a,b)=>PACOPTS.indexOf(a.pacote)-PACOPTS.indexOf(b.pacote)||(a.inicio||"").localeCompare(b.inicio||""));
   let body="",last=null;
   sorted.forEach(t=>{
     if(t.pacote!==last){last=t.pacote;body+=`<div class="g-row g-grp"><div class="g-lab">${dot(last)}${esc(pacLabel(last))}</div><div class="g-track" style="width:${width}px"></div></div>`}
     const s=pd(t.inicio),f=pd(t.fim)||s;const stc={"Em andamento":"st-a","Concluído":"st-c","Bloqueado":"st-b"}[t.status]||"st-p";
-    const mark=t.marco==="Sim"?`<span class="g-ms" data-open="tarefas" data-id="${esc(t.id)}" style="left:${x(f)+W/2-6}px" title="${esc(t.nome)} · ${fd(t.fim||t.inicio)}"></span>`:`<span class="g-bar ${stc} ${lateTask(t)?"late":""}" data-open="tarefas" data-id="${esc(t.id)}" style="--pc:${pacColor(t.pacote)};left:${x(s)}px;width:${(diff(f,s)+1)*W-2}px" title="${esc(t.nome)} · ${fd(t.inicio)}–${fd(t.fim)} · ${esc(t.status||"")}"></span>`;
+    const mark=t.marco==="Sim"?`<span class="g-ms" data-open="tarefas" data-id="${esc(t.id)}" style="left:${x(f)+W/2-6}px" title="${esc(t.nome)} · ${fd(t.fim||t.inicio)}"></span>`:`<span class="g-bar ${stc} ${lateTask(t)?"late":""}" data-open="tarefas" data-id="${esc(t.id)}" style="--pc:${pacColor(t.pacote)};left:${x(s)}px;width:${(diff(f,s)+1)*W-2}px" title="${esc(t.nome)} · ${fd(t.inicio)}–${fd(t.fim)} · ${esc(tr(t.status||""))}"></span>`;
     body+=`<div class="g-row"><div class="g-lab" data-open="tarefas" data-id="${esc(t.id)}" title="${esc(t.nome)}">${esc(t.nome)}</div><div class="g-track" style="width:${width}px">${mark}</div></div>`;
   });
   return `<div class="view">${head}
-  <div class="legend"><span>Cor = pacote ·</span><span><i style="background:var(--info);opacity:.38"></i>Pendente (claro)</span><span><i style="background:var(--info);box-shadow:0 0 0 1px var(--info)"></i>Em andamento (forte)</span><span><i style="background:var(--info);background-image:repeating-linear-gradient(135deg,transparent 0 3px,rgba(255,255,255,.5) 3px 5px)"></i>Concluído (listrado)</span><span><i style="background:var(--info);outline:1.5px dashed var(--bad)"></i>Bloqueado</span><span><i style="background:var(--gold);transform:rotate(45deg);width:9px;height:9px"></i>Marco</span><span><i style="border-left:2px solid var(--fg);border-radius:0;width:2px"></i>Hoje</span><span><i style="border-left:2px dashed var(--gold);border-radius:0;width:2px"></i>Meta 11/12</span><span><i style="background:var(--gold-soft)"></i>Thanksgiving</span></div>
+  <div class="legend"><span>Cor = pacote ·</span><span><i style="background:var(--info);opacity:.38"></i>Pendente (claro)</span><span><i style="background:var(--info);box-shadow:0 0 0 1px var(--info)"></i>Em andamento (forte)</span><span><i style="background:var(--info);background-image:repeating-linear-gradient(135deg,transparent 0 3px,rgba(255,255,255,.5) 3px 5px)"></i>Concluído (listrado)</span><span><i style="background:var(--info);outline:1.5px dashed var(--bad)"></i>Bloqueado</span><span><i style="background:var(--gold);transform:rotate(45deg);width:9px;height:9px"></i>Marco</span><span><i style="border-left:2px solid var(--fg);border-radius:0;width:2px"></i>Hoje</span><span><i style="border-left:2px dashed var(--gold);border-radius:0;width:2px"></i>Meta ${fd(PROJ.conclusaoInterna)}</span><span><i style="background:var(--gold-soft)"></i>Thanksgiving</span></div>
   <div class="gantt"><div class="g-inner" style="width:${width+250}px">
     <div class="g-row g-head" style="min-height:36px;border-top:0"><div class="g-lab">Tarefa</div><div class="g-track" style="width:${width}px">${mo}${heads}</div></div>
     <div style="position:relative">${body}<div style="position:absolute;top:0;bottom:0;left:${window.innerWidth<640?150:250}px;width:${width}px;pointer-events:none">${overlay}</div></div>
@@ -525,6 +689,7 @@ function viewTarefas(){
 }
 
 function weeklyText(){
+  const W=W3;
   const sexta=addD(today,(5-today.getDay()+7)%7);const seg=addD(sexta,3),prox=addD(sexta,9);
   const intT=D.tarefas.filter(interior),done=intT.filter(isDone).length;
   const andam=D.tarefas.filter(t=>t.status==="Em andamento");
@@ -535,27 +700,30 @@ function weeklyText(){
   const ent=D.pedidos.filter(p=>{const d=pd(p.previsao);return d&&d>=seg&&d<=prox&&p.status!=="Entregue"});
   const lic=D.licencas.filter(l=>l.status&&l.status!=="Encerrada");
   const delay=clientDelayDays();
+  const meta=pd(PROJ.conclusaoInterna), dleft=meta?Math.max(0,diff(meta,today)):0;
   const L=[];
-  L.push(`RELATÓRIO SEMANAL — ${PROJ.nome}`);
-  L.push(`Semana encerrada em ${fd(iso(sexta))} · Gerente de projeto: ${PROJ.gerente}`);
+  L.push(W(`RELATÓRIO SEMANAL — ${PROJ.nome}`,`WEEKLY REPORT — ${PROJ.nome}`,`INFORME SEMANAL — ${PROJ.nome}`));
+  L.push(W(`Semana encerrada em ${fd(iso(sexta))}`,`Week ending ${fd(iso(sexta))}`,`Semana que termina el ${fd(iso(sexta))}`)+(PROJ.gerente?" · "+W("Gerente de projeto","Project manager","Gerente de proyecto")+": "+PROJ.gerente:""));
   L.push("");
-  L.push("1. SITUAÇÃO");
-  if(intT.length)L.push(`• ${PROJ.interno?"Trabalho interno":"Cronograma"}: ${done} de ${intT.length} tarefas concluídas.${pd(PROJ.conclusaoInterna)?` Meta de conclusão: ${fd(PROJ.conclusaoInterna)} (${Math.max(0,diff(pd(PROJ.conclusaoInterna),today))} dias).`:""}`);
-  if(D.punch.length){const po=openPunch();const ur=po.filter(p=>p.urgente==="Sim");L.push(`• Punch list: ${D.punch.length-po.length} de ${D.punch.length} itens fechados; ${po.length} abertos${ur.length?`, ${ur.length} urgente(s): ${ur.map(p=>p.item).join("; ")}`:""}.`)}
-  if(andam.length)L.push(`• Em andamento: ${andam.map(t=>t.nome).join("; ")}.`);
-  L.push(late.length?`• Atrasadas: ${late.map(t=>`${t.nome} (previsto ${fd(t.fim)})`).join("; ")}.`:"• Nenhuma tarefa atrasada.");
-  if(lic.length)L.push(`• Licenças: ${lic.map(l=>`${l.nome} — ${l.status}`).join("; ")}.`);
+  L.push(W("1. SITUAÇÃO","1. STATUS","1. SITUACIÓN"));
+  if(intT.length)L.push("• "+(PROJ.interno?W("Trabalho interno","Interior work","Trabajo interior"):W("Cronograma","Schedule","Cronograma"))+": "+W(`${done} de ${intT.length} tarefas concluídas.`,`${done} of ${intT.length} tasks completed.`,`${done} de ${intT.length} tareas completadas.`)+(meta?" "+W(`Meta de conclusão: ${fd(PROJ.conclusaoInterna)} (${dleft} dias).`,`Target completion: ${fd(PROJ.conclusaoInterna)} (${dleft} days).`,`Meta de finalización: ${fd(PROJ.conclusaoInterna)} (${dleft} días).`):""));
+  if(D.punch.length){const po=openPunch(),ur=po.filter(p=>p.urgente==="Sim"),cl=D.punch.length-po.length;
+    L.push("• Punch list: "+W(`${cl} de ${D.punch.length} itens fechados; ${po.length} abertos`,`${cl} of ${D.punch.length} items closed; ${po.length} open`,`${cl} de ${D.punch.length} pendientes cerrados; ${po.length} abiertos`)+(ur.length?`, ${ur.length} ${W("urgente(s)","urgent","urgente(s)")}: ${ur.map(p=>p.item).join("; ")}`:"")+".")}
+  if(andam.length)L.push(`• ${W("Em andamento","In progress","En progreso")}: ${andam.map(t=>t.nome).join("; ")}.`);
+  L.push(late.length?`• ${W("Atrasadas","Late","Atrasadas")}: ${late.map(t=>`${t.nome} (${W("previsto","due","previsto")} ${fd(t.fim)})`).join("; ")}.`:"• "+W("Nenhuma tarefa atrasada.","No late tasks.","Ninguna tarea atrasada."));
+  if(lic.length)L.push(`• ${W("Licenças","Permits","Permisos")}: ${lic.map(l=>`${l.nome} — ${tr(l.status)}`).join("; ")}.`);
   L.push("");
-  L.push("2. RISCOS");
-  ris.length?ris.forEach(r=>L.push(`• [${r.impacto||"—"}] ${r.risco}${r.mitigacao?` Mitigação: ${r.mitigacao}`:""}`)):L.push("• Nenhum risco aberto.");
+  L.push(W("2. RISCOS","2. RISKS","2. RIESGOS"));
+  ris.length?ris.forEach(r=>L.push(`• [${r.impacto?tr(r.impacto):"—"}] ${r.risco}${r.mitigacao?` ${W("Mitigação","Mitigation","Mitigación")}: ${r.mitigacao}`:""}`)):L.push("• "+W("Nenhum risco aberto.","No open risks.","Ningún riesgo abierto."));
   L.push("");
-  L.push("3. DECISÕES NECESSÁRIAS DO CONTRATANTE");
-  openDec.length?openDec.forEach(d=>L.push(`• ${d.pergunta} — responder até ${fd(d.prazo)}${pd(d.prazo)&&pd(d.prazo)<today?" (PRAZO VENCIDO)":""}`)):L.push("• Nenhuma decisão pendente.");
-  if(delay)L.push(`• Atraso acumulado em respostas do Contratante: ${delay} dia(s), que prorrogam o prazo do bônus (cláusula 6.3).`);
+  L.push(W("3. DECISÕES NECESSÁRIAS DO CONTRATANTE","3. DECISIONS NEEDED FROM THE CLIENT","3. DECISIONES REQUERIDAS DEL CONTRATANTE"));
+  openDec.length?openDec.forEach(d=>L.push(`• ${d.pergunta} — ${W("responder até","reply by","responder antes de")} ${fd(d.prazo)}${pd(d.prazo)&&pd(d.prazo)<today?" ("+W("PRAZO VENCIDO","OVERDUE","PLAZO VENCIDO")+")":""}`)):L.push("• "+W("Nenhuma decisão pendente.","No pending decisions.","Ninguna decisión pendiente."));
+  if(delay)L.push("• "+W(`Atraso acumulado em respostas do Contratante: ${delay} dia(s), que prorrogam o prazo do bônus (cláusula 6.3).`,`Accumulated delay in the Client's responses: ${delay} day(s), which extend the bonus deadline (clause 6.3).`,`Retraso acumulado en respuestas del Contratante: ${delay} día(s), que prorrogan el plazo del bono (cláusula 6.3).`));
   L.push("");
-  L.push(`4. ENTREGAS DA PRÓXIMA SEMANA (${fd(iso(seg))} a ${fd(iso(addD(seg,5)))})`);
-  nxt.length?nxt.forEach(t=>L.push(`• ${fd(t.inicio)}–${fd(t.fim)}: ${t.nome}${t.resp?` (${t.resp})`:""}`)):L.push("• Nenhuma tarefa programada.");
-  ent.forEach(p=>L.push(`• Entrega prevista ${fd(p.previsao)}: ${p.item}`));
+  const a=fd(iso(seg)),b=fd(iso(addD(seg,5)));
+  L.push(W(`4. ENTREGAS DA PRÓXIMA SEMANA (${a} a ${b})`,`4. NEXT WEEK'S DELIVERABLES (${a} to ${b})`,`4. ENTREGAS DE LA PRÓXIMA SEMANA (${a} al ${b})`));
+  nxt.length?nxt.forEach(t=>L.push(`• ${fd(t.inicio)}–${fd(t.fim)}: ${t.nome}${t.resp?` (${t.resp})`:""}`)):L.push("• "+W("Nenhuma tarefa programada.","No tasks scheduled.","Ninguna tarea programada."));
+  ent.forEach(p=>L.push(`• ${W("Entrega prevista","Expected delivery","Entrega prevista")} ${fd(p.previsao)}: ${p.item}`));
   return L.join("\n");
 }
 /* ---------- Histórico de alterações (tabela obra_historico, gravada pelo banco) ---------- */
@@ -573,8 +741,8 @@ function diffHTML(h){
 }
 function histLi(h,showItem){
   const dt=new Date(h.em);
-  const when=dt.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})+" "+dt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
-  const title=showItem?`${esc(COL_LABEL[h.colecao]||h.colecao)} · ${esc(itemTitle(h.colecao,h.depois||h.antes))}`:"";
+  const when=dt.toLocaleDateString(loc(),{day:"2-digit",month:"2-digit"})+" "+dt.toLocaleTimeString(loc(),{hour:"2-digit",minute:"2-digit"});
+  const title=showItem?`<span>${esc(COL_LABEL[h.colecao]||h.colecao)}</span> · ${esc(itemTitle(h.colecao,h.depois||h.antes))}`:"";
   return `<li class="empty" style="grid-template-columns:auto 1fr auto"><span class="d">${when}</span><span class="t">${title?title+"<small>":"<small>"}${esc(h.email||"sistema")}</small>${diffHTML(h)}</span><span class="pill ${ACAO_TONE[h.acao]||""}">${esc(h.acao)}</span></li>`;
 }
 async function loadHist(force){
@@ -603,7 +771,7 @@ async function loadDocHist(k,id){
 document.addEventListener("click",e=>{if(e.target.id==="histReload")loadHist(true)});
 
 function viewRelatorio(){
-  return `<div class="view"><div class="head-row"><div><h2 class="sec">Relatório semanal</h2><p class="sec-sub">Gerado a partir do banco de dados: situação, riscos, decisões do contratante e entregas da semana seguinte (cláusula 4f). Revise e copie para o e-mail de sexta.</p></div><button class="btn" id="copyRep">Copiar texto</button></div><div class="report" id="repTxt">${esc(weeklyText())}</div></div>`;
+  return `<div class="view"><div class="head-row"><div><h2 class="sec">Relatório semanal</h2><p class="sec-sub">Gerado a partir do banco de dados: situação, riscos, decisões do contratante e entregas da semana seguinte (cláusula 4f). Revise e copie para o e-mail de sexta.</p></div><button class="btn" id="copyRep">Copiar texto</button></div><div class="report" id="repTxt" data-noi18n>${esc(weeklyText())}</div></div>`;
 }
 
 /* ---------- Editor ---------- */
@@ -647,7 +815,7 @@ async function saveProj(){
 function openSheet(k,id){
   const sch=S[k];const r=id?D[k].find(x=>x.id===id):null;if(id&&!r)return;
   editing={k,id};
-  $("shTitle").textContent=(r?"Editar ":"Nova ")+sch.item;
+  $("shTitle").textContent=r?W3("Editar ","Edit ","Editar ")+tr(sch.item):W3("Adicionar ","Add ","Agregar ")+tr(sch.item);
   const defs={};if(!r){const f=F[k]||{};if(f.pac){defs.pacote=f.pac;defs.cod=f.pac}const st=sch.fields.find(x=>x.k==="status");if(st)defs.status=st.o[0];if(k==="decisoes")defs.pedidoEm=iso(today)}
   const v=f=>(r?r[f.k]:defs[f.k])??"";
   const out=[];let pair=[];
@@ -658,7 +826,7 @@ function openSheet(k,id){
     return `<div class="fld"><label for="${id}">${f.l}</label>${inp}</div>`};
   sch.fields.forEach(f=>{if(f.half){pair.push(fieldHTML(f));if(pair.length===2){out.push(`<div class="two">${pair.join("")}</div>`);pair=[]}}else{if(pair.length){out.push(`<div class="two">${pair.join("")}</div>`);pair=[]}out.push(fieldHTML(f))}});
   if(pair.length)out.push(`<div class="two">${pair.join("")}</div>`);
-  if(r&&r.updatedAt)out.push(`<p class="sec-sub">Última alteração: ${new Date(r.updatedAt).toLocaleString("pt-BR")}</p>`);
+  if(r&&r.updatedAt)out.push(`<p class="sec-sub">${tr("Última alteração")}: ${new Date(r.updatedAt).toLocaleString(loc())}</p>`);
   if(r&&canWrite)out.push(`<div id="shHist"><p class="sec-sub">Carregando histórico…</p></div>`);
   $("shForm").innerHTML=out.join("");
   if(r&&canWrite)loadDocHist(k,id);
@@ -774,16 +942,16 @@ function subscribeProject(){
   Object.keys(S).forEach(k=>{D[k]=[];delete got[k]});loaded=false;Object.keys(F).forEach(k=>delete F[k]);
   render();
   clearTimeout(loadTimer);
-  loadTimer=setTimeout(()=>{if(!loaded){loaded=true;$("conn").textContent="O banco de dados está demorando a responder. Os dados podem estar incompletos.";render()}},10000);
+  loadTimer=setTimeout(()=>{if(!loaded){loaded=true;connRefresh=null;$("conn").textContent="O banco de dados está demorando a responder. Os dados podem estar incompletos.";render()}},10000);
   const keys=Object.keys(S), pid=PROJ.id;
   keys.forEach(k=>{
     unsubs.push(db.collection(col(k)).onSnapshot(s=>{
       if(PROJ.id!==pid)return;
       D[k]=s.docs.map(d=>({id:d.id,...d.data()}));got[k]=true;
       if(keys.every(x=>got[x])){if(!loaded)clearTimeout(loadTimer);loaded=true;
-        $("conn").textContent=(canWrite?"Sincronizado em tempo real":"Modo leitura")+" · "+EMAIL+" · atualizado "+new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});}
+        const at=new Date();connRefresh=()=>{$("conn").textContent=tr(canWrite?"Sincronizado em tempo real":"Modo leitura")+" · "+EMAIL+" · "+tr("atualizado")+" "+at.toLocaleTimeString(loc(),{hour:"2-digit",minute:"2-digit"})};connRefresh();}
       if(loaded&&!editing)render(); else if(loaded) renderTabs();
-    },err=>{clearTimeout(loadTimer);loaded=true;$("conn").textContent="Não foi possível ler os dados deste projeto.";render()}));
+    },err=>{clearTimeout(loadTimer);loaded=true;connRefresh=null;$("conn").textContent="Não foi possível ler os dados deste projeto.";render()}));
   });
 }
 function switchProject(id){
@@ -796,6 +964,7 @@ function switchProject(id){
   renderMast();subscribeProject();
 }
 async function start(session){
+  APP_READY=true;
   EMAIL=(session.user.email||"").toLowerCase();
   db=makeDb();
   const{data:m}=await sb.from("obra_membros").select("projeto,papel").eq("email",EMAIL);
@@ -816,6 +985,7 @@ async function start(session){
 }
 document.addEventListener("click",async e=>{if(e.target.id==="logout"){await sb.auth.signOut();location.reload()}});
 try{const s=localStorage.getItem("aplus-tab");if(s&&TABS.some(t=>t[0]===s))tab=s}catch(_){}
+document.documentElement.lang={en:"en",pt:"pt-BR",es:"es"}[LANG];renderLangBar();trNode(document.body);
 renderMast();
 (async()=>{
   // Erro devolvido pelo link (ex.: link expirado ou já usado)
@@ -827,7 +997,7 @@ renderMast();
   if(location.search||location.hash){try{history.replaceState(null,"",location.pathname)}catch(_){}}
   if(session)start(session);else showLogin(linkErr?`<strong>O link não funcionou:</strong> ${esc(linkErr.replace(/\+/g," "))}.<br>Peça um link novo abaixo.`:(qp.get("code")?"<strong>O link não funcionou neste navegador.</strong><br>Peça um link novo abaixo e abra o e-mail no mesmo aparelho.":""));
   let started=!!session;
-  sb.auth.onAuthStateChange((ev,s)=>{if(s&&!started){started=true;start(s)}if(ev==="SIGNED_OUT"){started=false;showLogin()}});
+  sb.auth.onAuthStateChange((ev,s)=>{if(s&&!started){started=true;start(s)}if(ev==="SIGNED_OUT"){started=false;APP_READY=false;showLogin()}});
 })();
 </script>
 </body></html>
