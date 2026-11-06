@@ -224,7 +224,10 @@ tr.late td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
 /* ---------- Idiomas (EN padrão · PT · ES) ----------
    O código usa textos-fonte em português; esta camada troca o texto exibido conforme o idioma.
    Valores gravados no banco (status etc.) nunca mudam: só o rótulo na tela. */
-let LANG=(()=>{try{const l=localStorage.getItem("aplus-lang");return ["en","pt","es"].includes(l)?l:"en"}catch(_){return"en"}})();
+const LANGS=["en","pt","es"];
+const savedLang=pid=>{try{const l=localStorage.getItem("aplus-lang:"+pid);return LANGS.includes(l)?l:null}catch(_){return null}};
+let LANG=(()=>{const m=location.pathname.match(/^\/(?:obras|cliente)\/([^\/?#]+)/);let l=m?savedLang(decodeURIComponent(m[1])):null;
+  if(!l){try{l=localStorage.getItem("aplus-lang")}catch(_){}}return LANGS.includes(l)?l:"en"})();
 const loc=()=>({en:"en-US",pt:"pt-BR",es:"es-US"}[LANG]);
 const W3=(pt,en,es)=>LANG==="en"?en:LANG==="es"?es:pt;
 // chave (texto-fonte) : [inglês, espanhol, português opcional quando a chave não é português]
@@ -321,7 +324,7 @@ const I18N={
 "O banco de dados está demorando a responder. Os dados podem estar incompletos.":["The database is slow to respond. Data may be incomplete.","La base de datos tarda en responder. Los datos pueden estar incompletos."],
 "Não foi possível ler os dados deste projeto.":["Couldn't read this project's data.","No se pudieron leer los datos de este proyecto."],"Não foi possível carregar os projetos.":["Couldn't load the projects.","No se pudieron cargar los proyectos."],
 "Carregando o projeto…":["Loading the project…","Cargando el proyecto…"],"Os dados aparecem assim que o banco de dados responder.":["Data shows up as soon as the database responds.","Los datos aparecen en cuanto responda la base de datos."],
-"Última alteração":["Last change","Último cambio"],"Obra":["Project","Obra"]
+"Última alteração":["Last change","Último cambio"],"Idioma padrão do projeto":["Project default language","Idioma predeterminado del proyecto"],"Obra":["Project","Obra"]
 };
 // textos com valores no meio: [regex, inglês, espanhol]
 const I18N_RX=[
@@ -372,9 +375,11 @@ new MutationObserver(ms=>{for(const m of ms){if(m.type==="attributes")trAttrs(m.
   .observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:I18N_ATTRS});
 let APP_READY=false, connRefresh=null;
 function renderLangBar(){$("langBar").innerHTML=["en","pt","es"].map(l=>`<button type="button" data-lang="${l}" aria-pressed="${LANG===l}">${l.toUpperCase()}</button>`).join("")}
+function applyLang(l){LANG=l;document.documentElement.lang={en:"en",pt:"pt-BR",es:"es"}[l];renderLangBar()}
 function setLang(l){
-  LANG=l;try{localStorage.setItem("aplus-lang",l)}catch(_){}
-  document.documentElement.lang={en:"en",pt:"pt-BR",es:"es"}[l];renderLangBar();
+  // escolha manual: vale para este projeto neste navegador
+  try{localStorage.setItem("aplus-lang",l);if(PROJ&&PROJ.id)localStorage.setItem("aplus-lang:"+PROJ.id,l)}catch(_){}
+  applyLang(l);
   if(APP_READY){renderMast();render();connRefresh&&connRefresh()}
   trNode(document.body);
 }
@@ -789,9 +794,10 @@ function openProjSheet(isNew){
     ta("pj-pac","Pacotes (um por linha: código | nome)",(p.pacotes||[]).map(x=>`${x.c} | ${x.n||""}`).join("\n"),"G | Gestão\n1.1 | Cozinha"),
     f("pj-int","Prefixo dos pacotes internos (opcional)",p.interno,"text","Ex.: 1."),
     ta("pj-ent","Entregas do contrato (uma por linha: AAAA-MM-DD | descrição | cláusula)",(p.entregas||[]).map(e=>[e.d,e.t,e.c].filter(Boolean).join(" | ")).join("\n"),"2026-12-07 | Punch list | 4g"),
+    `<div class="fld"><label for="pj-lang">Idioma padrão do projeto</label><select id="pj-lang" data-noi18n>${[["en","English"],["pt","Português"],["es","Español"]].map(([v,n])=>`<option value="${v}" ${(p.idioma||"en")===v?"selected":""}>${n}</option>`).join("")}</select></div>`,
     `<div class="fld"><label for="pj-bonus">Bônus por pontualidade (US$, opcional)</label><input id="pj-bonus" type="number" value="${esc(p.bonus??"")}"></div>`
   ].join("");
-  $("shForm").querySelectorAll("input,textarea").forEach(el=>el.disabled=!canWrite);
+  $("shForm").querySelectorAll("input,textarea,select").forEach(el=>el.disabled=!canWrite);
   $("shDel").hidden=true;
   $("sheet").hidden=false;$("scrim").hidden=false;
   setTimeout(()=>$("pj-nome").focus(),30);
@@ -802,7 +808,7 @@ async function saveProj(){
   const pacotes=v("pj-pac").split("\n").map(l=>l.split("|").map(s=>s.trim())).filter(a=>a[0]).map(([c,n])=>({c,n:n||""}));
   const entregas=v("pj-ent").split("\n").map(l=>l.split("|").map(s=>s.trim())).filter(a=>a[0]&&a[1]).map(([d,t,c])=>({d,t,c:c||""}));
   const b=v("pj-bonus");
-  const data={nome,local:v("pj-local"),cliente:v("pj-cliente"),gerente:v("pj-gerente"),inicioObras:v("pj-ini"),conclusaoInterna:v("pj-meta"),interno:v("pj-int"),pacotes,entregas,bonus:b===""?null:Number(b),updatedAt:Date.now()};
+  const data={nome,local:v("pj-local"),cliente:v("pj-cliente"),gerente:v("pj-gerente"),inicioObras:v("pj-ini"),conclusaoInterna:v("pj-meta"),interno:v("pj-int"),idioma:$("pj-lang").value,pacotes,entregas,bonus:b===""?null:Number(b),updatedAt:Date.now()};
   try{
     if(editing.isNew){
       let id=nome.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)||"projeto";
@@ -958,6 +964,7 @@ function switchProject(id){
   HIST={pid:null,rows:[],loading:false,err:""};
   const p=PROJS.find(x=>x.id===id);if(!p)return;
   applyProject(p);applyAccess();try{localStorage.setItem("aplus-proj",id)}catch(_){}
+  {const l=savedLang(id)||(LANGS.includes(p.idioma)?p.idioma:"en");if(l!==LANG){applyLang(l);trNode(document.body)}}
   const want="/"+ROUTE.mode+"/"+encodeURIComponent(id);
   if(location.pathname!==want)try{history.replaceState(null,"",want)}catch(_){}
   if(!TABS.some(t=>t[0]===tab))tab="geral";
