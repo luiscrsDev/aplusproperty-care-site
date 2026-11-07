@@ -528,7 +528,7 @@ const S={
     {k:"hora",l:"Horário",t:"text",half:1,ph:"9:00–11:00"},
     {k:"tipo",l:"Tipo",t:"select",o:["Recebimento","Medição","Visita de fornecedor","Vistoria / inspeção","Serviço executado","Reunião","Ocorrência","Observação"],half:1,nb:1},
     {k:"status",l:"Status",t:"select",o:["Agendada","Realizada","Cancelada","Remarcada"],half:1},
-    {k:"empresa",l:"Empresa / pessoa",t:"text",req:1,main:1},
+    {k:"empresa",l:"Empresa / pessoa",t:"text",main:1},
     {k:"contato",l:"Contato",t:"text",half:1},
     {k:"atendente",l:"Atendido por",t:"text",half:1},
     {k:"pacote",l:"Pacote",t:"select",o:PACOPTS,half:1},
@@ -732,7 +732,7 @@ function diarioCard(a){
   const meta=[a.contato,a.atendente&&`${tr("Atendido por")}: ${a.atendente}`,ped&&`${tr("Pedido")}: ${ped.item}`].filter(Boolean).map(esc).join(" · ");
   return `<article class="dcard s-${esc(a.status||"Agendada")}" data-open="diario" data-id="${esc(a.id)}">
     <div class="dtop"><span class="dtime">${fd(a.data)}${a.hora?" · "+esc(a.hora):""}</span><span class="pill">${esc(a.tipo||"")}</span>${pill(a.status)}${a.condicao&&a.condicao!=="OK"?pill(a.condicao):""}</div>
-    <div class="dmain"><strong>${esc(a.empresa||"")}</strong>${a.pacote?`<span class="dpac">${dot(a.pacote)}${esc(pacLabel(a.pacote))}</span>`:""}</div>
+    <div class="dmain"><strong>${esc(a.empresa||tr(a.tipo)||"")}</strong>${a.pacote?`<span class="dpac">${dot(a.pacote)}${esc(pacLabel(a.pacote))}</span>`:""}</div>
     ${a.descricao?`<p class="ddesc">${esc(a.descricao)}</p>`:""}${meta?`<div class="dmeta">${meta}</div>`:""}
     ${(a.fotos||[]).length?fotoThumbs(a.fotos,false):""}
     ${a.status==="Agendada"&&canWrite?`<button type="button" class="btn ghost dsm" data-done="${esc(a.id)}">Marcar realizada</button>`:""}
