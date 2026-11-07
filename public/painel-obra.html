@@ -181,6 +181,28 @@ tr.late td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
 .qseg button[aria-pressed="true"][data-v="Andamento"]{background:var(--warn-bg);color:var(--warn)}
 .qseg button[aria-pressed="true"][data-v="Closed"]{background:var(--good-bg);color:var(--good)}
 .readonly .qc{pointer-events:none}
+/* diário */
+.dsec{display:grid;gap:10px}
+.dh{margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;display:flex;gap:8px}
+.dday{font-family:var(--display);font-weight:600;font-size:14px;margin-top:6px}
+.dlist{display:grid;gap:8px}
+.dcard{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--info);border-radius:10px;padding:12px 14px;display:grid;gap:6px;cursor:pointer;min-width:0}
+.dcard:hover{background:var(--sunk)}
+.dcard.s-Realizada{border-left-color:var(--good)}.dcard.s-Cancelada{border-left-color:var(--muted)}.dcard.s-Remarcada{border-left-color:var(--warn)}
+.dtop{display:flex;gap:6px 8px;align-items:center;flex-wrap:wrap}
+.dtime{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.dmain{display:flex;gap:4px 12px;align-items:baseline;flex-wrap:wrap}
+.dpac{font-size:12.5px;color:var(--muted)}
+.ddesc{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.dmeta{font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+.dfotos{display:flex;gap:6px;flex-wrap:wrap}
+.dph{position:relative;display:block}
+.dfotos img{width:76px;height:76px;object-fit:cover;border-radius:6px;background:var(--sunk);display:block}
+.dphx{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:99px;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:15px;line-height:1;cursor:pointer}
+.dsm{justify-self:start;padding:5px 11px;font-size:12.5px}
+.upl{justify-self:start;cursor:pointer;position:relative;display:inline-flex;align-items:center}
+.vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.readonly .upl,.readonly .dphx,.readonly .dsm{display:none}
 /* report */
 .report{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;white-space:pre-wrap;font-size:14px;line-height:1.55;max-width:78ch;overflow-wrap:anywhere}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600;z-index:40}
@@ -324,7 +346,20 @@ const I18N={
 "O banco de dados está demorando a responder. Os dados podem estar incompletos.":["The database is slow to respond. Data may be incomplete.","La base de datos tarda en responder. Los datos pueden estar incompletos."],
 "Não foi possível ler os dados deste projeto.":["Couldn't read this project's data.","No se pudieron leer los datos de este proyecto."],"Não foi possível carregar os projetos.":["Couldn't load the projects.","No se pudieron cargar los proyectos."],
 "Carregando o projeto…":["Loading the project…","Cargando el proyecto…"],"Os dados aparecem assim que o banco de dados responder.":["Data shows up as soon as the database responds.","Los datos aparecen en cuanto responda la base de datos."],
-"Última alteração":["Last change","Último cambio"],"Idioma padrão do projeto":["Project default language","Idioma predeterminado del proyecto"],"Obra":["Project","Obra"]
+"Última alteração":["Last change","Último cambio"],
+"Diário de obra":["Site log","Bitácora de obra"],"Agendada":["Scheduled","Programada"],"Realizada":["Done","Realizada"],"Cancelada":["Canceled","Cancelada"],"Remarcada":["Rescheduled","Reprogramada"],
+"Recebimento":["Delivery","Recepción"],"Medição":["Measuring","Medición"],"Visita de fornecedor":["Vendor visit","Visita de proveedor"],"Vistoria / inspeção":["Inspection","Inspección"],
+"Serviço executado":["Work performed","Trabajo realizado"],"Reunião":["Meeting","Reunión"],"Ocorrência":["Incident","Incidente"],
+"Data":["Date","Fecha"],"Horário":["Time","Horario"],"Tipo":["Type","Tipo"],"Empresa / pessoa":["Company / person","Empresa / persona"],"Contato":["Contact","Contacto"],
+"Atendido por":["Attended by","Atendido por"],"Condição da entrega":["Delivery condition","Condición de la entrega"],"Com avaria":["Damaged","Con daños"],"Faltando item":["Missing item","Falta artículo"],
+"O que aconteceu":["What happened","Qué pasó"],"Fotos":["Photos","Fotos"],"Foto":["Photo","Foto"],"atividade":["activity","actividad"],"Entregue em":["Delivered on","Entregado el"],
+"Próximas visitas":["Upcoming visits","Próximas visitas"],"Nenhuma visita agendada.":["No visits scheduled.","Ninguna visita programada."],
+"Agendadas":["Scheduled","Programadas"],"Registro":["Log","Registro"],"Marcar realizada":["Mark as done","Marcar realizada"],"Todos os tipos":["All types","Todos los tipos"],
+"+ Adicionar fotos":["+ Add photos","+ Agregar fotos"],"Enviando fotos…":["Uploading photos…","Subiendo fotos…"],"Fotos adicionadas":["Photos added","Fotos agregadas"],
+"Não enviou a foto. Tente de novo.":["Photo not uploaded. Try again.","No se subió la foto. Inténtalo de nuevo."],"Remover":["Remove","Quitar"],
+"Pedido marcado como entregue":["Order marked as delivered","Pedido marcado como entregado"],"Medição registrada no pacote":["Measurement logged on the package","Medición registrada en el paquete"],
+"Visitas, entregas, medições e serviços na casa. Agende antes e marque como realizada depois, com o que aconteceu e fotos.":["Visits, deliveries, measurements and work at the house. Schedule ahead, then mark it done with what happened and photos.","Visitas, entregas, mediciones y trabajos en la casa. Prográmalas antes y márcalas como realizadas después, con lo que pasó y fotos."],
+"Nenhuma atividade registrada ainda.":["No activity logged yet.","Ninguna actividad registrada todavía."],"Use o botão acima para agendar ou registrar a primeira.":["Use the button above to schedule or log the first one.","Usa el botón de arriba para programar o registrar la primera."],"Idioma padrão do projeto":["Project default language","Idioma predeterminado del proyecto"],"Obra":["Project","Obra"]
 };
 // textos com valores no meio: [regex, inglês, espanhol]
 const I18N_RX=[
@@ -405,6 +440,7 @@ applyProject(DEFAULT_PROJ);
 
 /* tone per status label */
 const TONE={
+  "Agendada":"info","Realizada":"good","Cancelada":"","Remarcada":"warn","Com avaria":"bad","Faltando item":"bad","OK":"good",
   "Pendente":"","Em andamento":"info","Concluído":"good","Bloqueado":"bad",
   "Medir":"","Cotando":"info","Comparativo enviado":"warn","Aprovado":"good","Contratado":"good","Em execução":"info",
   "Recebida":"info","Recomendada":"warn","Aprovada":"good","Recusada":"",
@@ -455,6 +491,7 @@ const S={
     {k:"leadtime",l:"Prazo de fabricação",t:"text",list:1,half:1},
     {k:"pedidoEm",l:"Pedido em",t:"date",list:1,half:1},
     {k:"previsao",l:"Previsão de entrega",t:"date",list:1,half:1},
+    {k:"entregueEm",l:"Entregue em",t:"date",half:1},
     {k:"status",l:"Status",t:"select",o:["A pedir","Pedido","Em fabricação","Embarcado","Entregue"],list:1},
     {k:"obs",l:"Observações",t:"textarea",sub:1}]},
   licencas:{label:"Licenças",item:"licença",fields:[
@@ -486,6 +523,19 @@ const S={
     {k:"impacto",l:"Impacto",t:"select",o:["Alto","Médio","Baixo"],list:1,half:1},
     {k:"status",l:"Status",t:"select",o:["Aberto","Mitigado","Fechado"],list:1,half:1},
     {k:"mitigacao",l:"Mitigação",t:"textarea",sub:1}]},
+  diario:{label:"Diário de obra",item:"atividade",fields:[
+    {k:"data",l:"Data",t:"date",req:1,half:1},
+    {k:"hora",l:"Horário",t:"text",half:1,ph:"9:00–11:00"},
+    {k:"tipo",l:"Tipo",t:"select",o:["Recebimento","Medição","Visita de fornecedor","Vistoria / inspeção","Serviço executado","Reunião","Ocorrência"],half:1,nb:1},
+    {k:"status",l:"Status",t:"select",o:["Agendada","Realizada","Cancelada","Remarcada"],half:1},
+    {k:"empresa",l:"Empresa / pessoa",t:"text",req:1,main:1},
+    {k:"contato",l:"Contato",t:"text",half:1},
+    {k:"atendente",l:"Atendido por",t:"text",half:1},
+    {k:"pacote",l:"Pacote",t:"select",o:PACOPTS,half:1},
+    {k:"pedido",l:"Pedido",t:"pedido",half:1},
+    {k:"condicao",l:"Condição da entrega",t:"select",o:["OK","Com avaria","Faltando item"]},
+    {k:"descricao",l:"O que aconteceu",t:"textarea"},
+    {k:"fotos",l:"Fotos",t:"fotos"}]},
   punch:{label:"Punch list",item:"pendência",group:"ambiente",fields:[
     {k:"item",l:"Pendência",t:"text",req:1,list:1,main:1},
     {k:"ambiente",l:"Ambiente / área",t:"text",half:1},
@@ -495,7 +545,7 @@ const S={
     {k:"prazo",l:"Prazo",t:"date",list:1,half:1},
     {k:"obs",l:"Observações",t:"textarea",sub:1}]}
 };
-const TABS=[["geral","Visão geral"],["tarefas","Cronograma"],["pacotes","Pacotes"],["cotacoes","Orçamentos"],["pedidos","Pedidos"],["licencas","Licenças"],["decisoes","Decisões"],["pagamentos","Pagamentos"],["riscos","Riscos"],["punch","Punch list"],["historico","Histórico"],["relatorio","Relatório"]];
+const TABS=[["geral","Visão geral"],["diario","Diário de obra"],["tarefas","Cronograma"],["pacotes","Pacotes"],["cotacoes","Orçamentos"],["pedidos","Pedidos"],["licencas","Licenças"],["decisoes","Decisões"],["pagamentos","Pagamentos"],["riscos","Riscos"],["punch","Punch list"],["historico","Histórico"],["relatorio","Relatório"]];
 
 /* ---------- Estado ---------- */
 let db=null, canWrite=true, loaded=false;
@@ -548,7 +598,8 @@ function counts(){
     decisoes:D.decisoes.filter(d=>d.status!=="Respondida").length,
     pedidos:D.pedidos.filter(p=>p.status==="A pedir").length,
     riscos:D.riscos.filter(r=>r.status==="Aberto"&&r.impacto==="Alto").length,
-    punch:D.punch.filter(p=>p.status!=="Closed").length
+    punch:D.punch.filter(p=>p.status!=="Closed").length,
+    diario:D.diario.filter(a=>a.status==="Agendada"&&a.data===iso(today)).length
   };
 }
 function renderTabs(){
@@ -556,6 +607,7 @@ function renderTabs(){
   $("tabs").innerHTML=TABS.map(([k,l])=>{const n=c[k];return `<button class="tab" role="tab" data-tab="${k}" aria-selected="${tab===k}">${l}${n?`<span class="ct hot">${n}</span>`:""}</button>`}).join("");
 }
 function render(){
+  setTimeout(hydratePhotos,0);
   renderTabs();
   const m=$("main");
   if(!loaded){m.innerHTML=`<div class="notice"><strong>Carregando o projeto…</strong><br>Os dados aparecem assim que o banco de dados responder.</div>`;return}
@@ -563,6 +615,7 @@ function render(){
   else if(tab==="relatorio")m.innerHTML=viewRelatorio();
   else if(tab==="historico")m.innerHTML=viewHistorico();
   else if(tab==="tarefas")m.innerHTML=viewTarefas();
+  else if(tab==="diario")m.innerHTML=viewDiario();
   else m.innerHTML=viewTable(tab);
 }
 
@@ -587,6 +640,8 @@ function viewGeral(){
   if(D.pedidos.length)K.push(`<div class="kpi ${toOrder.length?"alert":""}"><span class="l">Pedidos a fazer</span><span class="v">${toOrder.length}</span><span class="s">itens sem pedido</span></div>`);
   if(meta&&PROJ.bonus)K.push(`<div class="kpi gold"><span class="l">Prazo do bônus</span><span class="v">${fd(iso(addD(meta,delay)))}</span><span class="s">${delay} dia(s) de atraso do cliente registrados</span></div>`);
   const P=[];
+  {const up=D.diario.filter(a=>a.status==="Agendada"&&pd(a.data)&&pd(a.data)>=today).sort((a,b)=>((a.data||"")+(a.hora||"")).localeCompare((b.data||"")+(b.hora||"")));
+   P.push(`<section class="panel"><h3>Próximas visitas <span>${up.length}</span></h3><ul class="mini">${up.slice(0,10).map(a=>li(fd(a.data),esc(a.empresa||""),[tr(a.tipo),a.hora,a.pacote&&pacLabel(a.pacote)].filter(Boolean).map(esc).join(" · "),pill(a.status),"diario",a.id)).join("")||emp("Nenhuma visita agendada.")}</ul></section>`)}
   if(D.punch.length){const pl=pOpen.slice().sort((a,b)=>(b.urgente==="Sim")-(a.urgente==="Sim")||(a.ordem||0)-(b.ordem||0));P.push(`<section class="panel"><h3>Punch list aberta <span>${pOpen.length}</span></h3><ul class="mini">${pl.slice(0,12).map(p=>li(p.prazo?fd(p.prazo):"",esc(p.item)+(p.urgente==="Sim"?'<span class="tag-urg">Urgente</span>':""),[p.ambiente,p.resp,p.obs].filter(Boolean).map(esc).join(" · "),pill(p.status),"punch",p.id)).join("")||emp("Tudo fechado.")}${pl.length>12?`<li class="empty">+ ${pl.length-12} na aba Punch list</li>`:""}</ul></section>`)}
   if(D.tarefas.length)P.push(`<section class="panel"><h3>Próximos 14 dias <span>${nextW.length}</span></h3><ul class="mini">${nextW.slice(0,12).map(t=>li(fd(t.inicio),esc(t.nome),esc(pacLabel(t.pacote))+" · até "+fd(t.fim),pill(t.status),"tarefas",t.id)).join("")||emp("Nada começa ou termina nas próximas duas semanas.")}</ul></section>`);
   if(D.decisoes.length)P.push(`<section class="panel"><h3>Aguardando o cliente <span>${openDec.length}</span></h3><ul class="mini">${openDec.slice().sort((a,b)=>(a.prazo||"").localeCompare(b.prazo||"")).map(d=>{const p=pd(d.prazo);const lt=p&&p<today;return li(fd(d.prazo),esc(d.pergunta),"Pacote "+esc(d.pacote||"—")+(d.pedidoEm?" · solicitada "+fd(d.pedidoEm):" · ainda não enviada"),lt?'<span class="pill bad">Atrasada</span>':"","decisoes",d.id)}).join("")||emp("Nenhuma decisão pendente.")}</ul></section>`);
@@ -605,6 +660,7 @@ function filterBar(k,extra=""){
     <input type="search" id="q-${k}" placeholder="Buscar…" value="${esc(f.q)}" data-f="q">
     ${hasPac?`<select id="p-${k}" data-f="pac"><option value="">Todos os pacotes</option>${PACS.map(([c,n])=>`<option value="${c}" ${f.pac===c?"selected":""}>${c} ${esc(n)}</option>`).join("")}</select>`:""}
     ${st?`<select id="s-${k}" data-f="st"><option value="">Todos os status</option>${st.o.map(o=>`<option value="${esc(o)}" ${f.st===o?"selected":""}>${esc(o)}</option>`).join("")}</select>`:""}
+    ${k==="diario"?`<select id="t-${k}" data-f="tipo"><option value="">Todos os tipos</option>${S.diario.fields.find(x=>x.k==="tipo").o.map(o=>`<option value="${esc(o)}" ${f.tipo===o?"selected":""}>${esc(o)}</option>`).join("")}</select>`:""}
     ${k==="punch"?`<select id="r-${k}" data-f="resp"><option value="">Todos os responsáveis</option>${[...respOpts(),"(sem responsável)"].map(o=>`<option value="${esc(o)}" ${f.resp===o?"selected":""}>${esc(o)}</option>`).join("")}</select>`:""}
     ${extra}
     <button class="btn add" data-new="${k}">${tr("+ Adicionar")} ${tr(sch.item)}</button>
@@ -612,7 +668,7 @@ function filterBar(k,extra=""){
 }
 function rowsFor(k){
   const f=F[k]||{q:"",pac:"",st:""};const q=(f.q||"").toLowerCase();
-  return D[k].filter(r=>(!f.pac||r.pacote===f.pac||r.cod===f.pac)&&(!f.st||r.status===f.st)&&(!f.resp||(f.resp==="(sem responsável)"?!r.resp:r.resp===f.resp))&&(!q||Object.values(r).join(" ").toLowerCase().includes(q)));
+  return D[k].filter(r=>(!f.pac||r.pacote===f.pac||r.cod===f.pac)&&(!f.tipo||r.tipo===f.tipo)&&(!f.st||r.status===f.st)&&(!f.resp||(f.resp==="(sem responsável)"?!r.resp:r.resp===f.resp))&&(!q||Object.values(r).join(" ").toLowerCase().includes(q)));
 }
 function sortRows(k,rows){
   const key={tarefas:"inicio",pedidos:"previsao",decisoes:"prazo",pagamentos:"ordem",riscos:"ordem",pacotes:"ordem",licencas:"ordem",cotacoes:"recebida",punch:"ordem"}[k];
@@ -661,6 +717,57 @@ function viewTable(k){
   });
   return `<div class="view">${head}<div class="tbl-wrap"><table><thead><tr>${cols.map(c=>`<th>${c.l}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div></div>`;
 }
+
+/* ---------- Diário de obra (coleção "diario"; fotos no bucket obra-fotos) ---------- */
+const FOTO_URL={};
+async function hydratePhotos(){
+  const imgs=[...document.querySelectorAll("img[data-foto]:not([src])")];if(!imgs.length||typeof sb==="undefined")return;
+  const need=[...new Set(imgs.map(i=>i.dataset.foto))].filter(p=>!FOTO_URL[p]||FOTO_URL[p].exp<Date.now());
+  if(need.length){const{data}=await sb.storage.from("obra-fotos").createSignedUrls(need,3600);(data||[]).forEach(d=>{if(d.signedUrl)FOTO_URL[d.path]={url:d.signedUrl,exp:Date.now()+3300e3}})}
+  imgs.forEach(i=>{const u=FOTO_URL[i.dataset.foto];if(u){i.src=u.url;const a=i.closest("a");if(a)a.href=u.url}});
+}
+const fotoThumbs=(fotos,removable)=>`<div class="dfotos">${(fotos||[]).map(p=>`<span class="dph"><a target="_blank" rel="noopener"><img data-foto="${esc(p)}" alt="Foto"></a>${removable?`<button type="button" class="dphx" data-rmfoto="${esc(p)}" aria-label="Remover">×</button>`:""}</span>`).join("")}</div>`;
+function diarioCard(a){
+  const ped=a.pedido&&D.pedidos.find(p=>p.id===a.pedido);
+  const meta=[a.contato,a.atendente&&`${tr("Atendido por")}: ${a.atendente}`,ped&&`${tr("Pedido")}: ${ped.item}`].filter(Boolean).map(esc).join(" · ");
+  return `<article class="dcard s-${esc(a.status||"Agendada")}" data-open="diario" data-id="${esc(a.id)}">
+    <div class="dtop"><span class="dtime">${fd(a.data)}${a.hora?" · "+esc(a.hora):""}</span><span class="pill">${esc(a.tipo||"")}</span>${pill(a.status)}${a.condicao&&a.condicao!=="OK"?pill(a.condicao):""}</div>
+    <div class="dmain"><strong>${esc(a.empresa||"")}</strong>${a.pacote?`<span class="dpac">${dot(a.pacote)}${esc(pacLabel(a.pacote))}</span>`:""}</div>
+    ${a.descricao?`<p class="ddesc">${esc(a.descricao)}</p>`:""}${meta?`<div class="dmeta">${meta}</div>`:""}
+    ${(a.fotos||[]).length?fotoThumbs(a.fotos,false):""}
+    ${a.status==="Agendada"&&canWrite?`<button type="button" class="btn ghost dsm" data-done="${esc(a.id)}">Marcar realizada</button>`:""}
+  </article>`;
+}
+function viewDiario(){
+  const head=`<div class="head-row"><div><h2 class="sec">Diário de obra</h2><p class="sec-sub">Visitas, entregas, medições e serviços na casa. Agende antes e marque como realizada depois, com o que aconteceu e fotos.</p></div></div>${filterBar("diario")}`;
+  if(!D.diario.length)return `<div class="view">${head}<div class="notice"><strong>Nenhuma atividade registrada ainda.</strong><br>Use o botão acima para agendar ou registrar a primeira.</div></div>`;
+  const rows=rowsFor("diario");
+  if(!rows.length)return `<div class="view">${head}<div class="notice"><strong>Nada neste filtro.</strong></div></div>`;
+  const key=a=>(a.data||"")+" "+(a.hora||"");
+  const up=rows.filter(a=>a.status==="Agendada").sort((a,b)=>key(a).localeCompare(key(b)));
+  const log=rows.filter(a=>a.status!=="Agendada").sort((a,b)=>key(b).localeCompare(key(a))||(b.ordem||0)-(a.ordem||0));
+  let html="";
+  if(up.length)html+=`<section class="dsec"><h3 class="dh">Agendadas <span>${up.length}</span></h3><div class="dlist">${up.map(diarioCard).join("")}</div></section>`;
+  if(log.length){let last=null,inner="";log.forEach(a=>{if(a.data!==last){last=a.data;inner+=`<div class="dday">${fd(a.data)}</div>`}inner+=diarioCard(a)});
+    html+=`<section class="dsec"><h3 class="dh">Registro <span>${log.length}</span></h3><div class="dlist">${inner}</div></section>`}
+  return `<div class="view">${head}${html}</div>`;
+}
+/* fotos no formulário */
+let SHEET_FOTOS=[],SHEET_NEW=[],SHEET_RM=[],SHEET_SAVED=false;
+function renderSheetFotos(){const b=$("shFotos");if(b){b.innerHTML=fotoThumbs(SHEET_FOTOS,canWrite);hydratePhotos()}}
+function compressImage(file){return new Promise(res=>{const url=URL.createObjectURL(file);const img=new Image();
+  img.onload=()=>{const m=1600,s=Math.min(1,m/Math.max(img.width,img.height));const c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
+    c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);c.toBlob(b=>res(b||file),"image/jpeg",.82)};
+  img.onerror=()=>{URL.revokeObjectURL(url);res(file)};img.src=url})}
+document.addEventListener("change",async e=>{
+  if(e.target.id!=="f-fotos-in"||!canWrite)return;const files=[...e.target.files];e.target.value="";if(!files.length)return;
+  toast("Enviando fotos…");let fail=0;
+  for(const f of files){const blob=await compressImage(f);const ext=blob.type==="image/jpeg"?"jpg":(f.name.split(".").pop()||"jpg").toLowerCase();
+    const path=`${PROJ.id}/${iso(today)}-${uid()}.${ext}`;
+    const{error}=await sb.storage.from("obra-fotos").upload(path,blob,{contentType:blob.type||"image/jpeg"});
+    if(error){fail++;continue}SHEET_FOTOS.push(path);SHEET_NEW.push(path);renderSheetFotos()}
+  toast(fail?"Não enviou a foto. Tente de novo.":"Fotos adicionadas");
+});
 
 function viewTarefas(){
   const seg=`<div class="seg"><button data-gm="gantt" aria-pressed="${ganttMode==="gantt"}">Gantt</button><button data-gm="lista" aria-pressed="${ganttMode==="lista"}">Lista</button></div>`;
@@ -718,17 +825,22 @@ function weeklyText(){
   L.push(late.length?`• ${W("Atrasadas","Late","Atrasadas")}: ${late.map(t=>`${t.nome} (${W("previsto","due","previsto")} ${fd(t.fim)})`).join("; ")}.`:"• "+W("Nenhuma tarefa atrasada.","No late tasks.","Ninguna tarea atrasada."));
   if(lic.length)L.push(`• ${W("Licenças","Permits","Permisos")}: ${lic.map(l=>`${l.nome} — ${tr(l.status)}`).join("; ")}.`);
   L.push("");
-  L.push(W("2. RISCOS","2. RISKS","2. RIESGOS"));
+  {const ini=addD(sexta,-6);const acts=D.diario.filter(a=>a.status==="Realizada"&&pd(a.data)&&pd(a.data)>=ini&&pd(a.data)<=sexta).sort((a,b)=>((a.data||"")+(a.hora||"")).localeCompare((b.data||"")+(b.hora||"")));
+   L.push(W("2. ATIVIDADES NA OBRA","2. SITE ACTIVITY","2. ACTIVIDADES EN LA OBRA"));
+   acts.length?acts.forEach(a=>L.push(`• ${fd(a.data)} — ${tr(a.tipo)}: ${a.empresa}${a.condicao&&a.condicao!=="OK"?` (${tr(a.condicao)})`:""}${a.descricao?`. ${a.descricao}`:""}`)):L.push("• "+W("Nenhuma atividade registrada na semana.","No activity logged this week.","Ninguna actividad registrada en la semana."));
+   L.push("")}
+  L.push(W("3. RISCOS","3. RISKS","3. RIESGOS"));
   ris.length?ris.forEach(r=>L.push(`• [${r.impacto?tr(r.impacto):"—"}] ${r.risco}${r.mitigacao?` ${W("Mitigação","Mitigation","Mitigación")}: ${r.mitigacao}`:""}`)):L.push("• "+W("Nenhum risco aberto.","No open risks.","Ningún riesgo abierto."));
   L.push("");
-  L.push(W("3. DECISÕES NECESSÁRIAS DO CONTRATANTE","3. DECISIONS NEEDED FROM THE CLIENT","3. DECISIONES REQUERIDAS DEL CONTRATANTE"));
+  L.push(W("4. DECISÕES NECESSÁRIAS DO CONTRATANTE","4. DECISIONS NEEDED FROM THE CLIENT","4. DECISIONES REQUERIDAS DEL CONTRATANTE"));
   openDec.length?openDec.forEach(d=>L.push(`• ${d.pergunta} — ${W("responder até","reply by","responder antes de")} ${fd(d.prazo)}${pd(d.prazo)&&pd(d.prazo)<today?" ("+W("PRAZO VENCIDO","OVERDUE","PLAZO VENCIDO")+")":""}`)):L.push("• "+W("Nenhuma decisão pendente.","No pending decisions.","Ninguna decisión pendiente."));
   if(delay)L.push("• "+W(`Atraso acumulado em respostas do Contratante: ${delay} dia(s), que prorrogam o prazo do bônus (cláusula 6.3).`,`Accumulated delay in the Client's responses: ${delay} day(s), which extend the bonus deadline (clause 6.3).`,`Retraso acumulado en respuestas del Contratante: ${delay} día(s), que prorrogan el plazo del bono (cláusula 6.3).`));
   L.push("");
   const a=fd(iso(seg)),b=fd(iso(addD(seg,5)));
-  L.push(W(`4. ENTREGAS DA PRÓXIMA SEMANA (${a} a ${b})`,`4. NEXT WEEK'S DELIVERABLES (${a} to ${b})`,`4. ENTREGAS DE LA PRÓXIMA SEMANA (${a} al ${b})`));
+  L.push(W(`5. ENTREGAS DA PRÓXIMA SEMANA (${a} a ${b})`,`5. NEXT WEEK'S DELIVERABLES (${a} to ${b})`,`5. ENTREGAS DE LA PRÓXIMA SEMANA (${a} al ${b})`));
   nxt.length?nxt.forEach(t=>L.push(`• ${fd(t.inicio)}–${fd(t.fim)}: ${t.nome}${t.resp?` (${t.resp})`:""}`)):L.push("• "+W("Nenhuma tarefa programada.","No tasks scheduled.","Ninguna tarea programada."));
   ent.forEach(p=>L.push(`• ${W("Entrega prevista","Expected delivery","Entrega prevista")} ${fd(p.previsao)}: ${p.item}`));
+  D.diario.filter(v=>v.status==="Agendada"&&pd(v.data)&&pd(v.data)>=seg&&pd(v.data)<=prox).sort((x,y)=>((x.data||"")+(x.hora||"")).localeCompare((y.data||"")+(y.hora||""))).forEach(v=>L.push(`• ${fd(v.data)}${v.hora?" "+v.hora:""} — ${tr(v.tipo)}: ${v.empresa}`));
   return L.join("\n");
 }
 /* ---------- Histórico de alterações (tabela obra_historico, gravada pelo banco) ---------- */
@@ -818,17 +930,20 @@ async function saveProj(){
     }else{await db.collection("projetos").doc(PROJ.id).update(data);closeSheet();toast("Projeto salvo")}
   }catch(err){toast(err&&err.code==="invalid_argument"?"Você tem acesso só de leitura":"Não salvou. Tente de novo.")}
 }
-function openSheet(k,id){
+function openSheet(k,id,preset){
   const sch=S[k];const r=id?D[k].find(x=>x.id===id):null;if(id&&!r)return;
   editing={k,id};
   $("shTitle").textContent=r?W3("Editar ","Edit ","Editar ")+tr(sch.item):W3("Adicionar ","Add ","Agregar ")+tr(sch.item);
-  const defs={};if(!r){const f=F[k]||{};if(f.pac){defs.pacote=f.pac;defs.cod=f.pac}const st=sch.fields.find(x=>x.k==="status");if(st)defs.status=st.o[0];if(k==="decisoes")defs.pedidoEm=iso(today)}
-  const v=f=>(r?r[f.k]:defs[f.k])??"";
+  const defs={};if(!r){const f=F[k]||{};if(f.pac){defs.pacote=f.pac;defs.cod=f.pac}const st=sch.fields.find(x=>x.k==="status");if(st)defs.status=st.o[0];if(k==="decisoes")defs.pedidoEm=iso(today);if(k==="diario")defs.data=iso(today)}
+  const v=f=>(preset&&preset[f.k]!==undefined?preset[f.k]:(r?r[f.k]:defs[f.k]))??"";
+  SHEET_FOTOS=((r&&r.fotos)||[]).slice();SHEET_NEW=[];SHEET_RM=[];SHEET_SAVED=false;
   const out=[];let pair=[];
   const fieldHTML=f=>{const id="f-"+f.k;let inp;
-    if(f.t==="select")inp=`<select id="${id}" name="${f.k}">${f.k==="status"||f.k==="impacto"||f.k==="marco"?"":'<option value="">—</option>'}${f.o.map(o=>`<option value="${esc(o)}" ${String(v(f))===o?"selected":""}>${esc(f.o===PACOPTS?pacLabel(o):o)}</option>`).join("")}</select>`;
+    if(f.t==="fotos")return `<div class="fld"><label>${f.l}</label><div id="shFotos"></div><label class="btn ghost upl"><input type="file" id="f-fotos-in" accept="image/*" multiple class="vh">+ Adicionar fotos</label></div>`;
+    if(f.t==="pedido")inp=`<select id="${id}" name="${f.k}"><option value="">—</option>${D.pedidos.slice().sort((a,b)=>(a.ordem||0)-(b.ordem||0)).map(p=>`<option value="${esc(p.id)}" ${v(f)===p.id?"selected":""}>${esc(p.item)}</option>`).join("")}</select>`;
+    else if(f.t==="select")inp=`<select id="${id}" name="${f.k}">${f.k==="status"||f.k==="impacto"||f.k==="marco"||f.nb?"":'<option value="">—</option>'}${f.o.map(o=>`<option value="${esc(o)}" ${String(v(f))===o?"selected":""}>${esc(f.o===PACOPTS?pacLabel(o):o)}</option>`).join("")}</select>`;
     else if(f.t==="textarea")inp=`<textarea id="${id}" name="${f.k}">${esc(v(f))}</textarea>`;
-    else inp=`<input id="${id}" name="${f.k}" type="${f.t==="number"?"number":f.t==="date"?"date":"text"}" ${f.t==="number"?'step="0.01"':""} value="${esc(v(f))}" ${f.req?"required":""}>`;
+    else inp=`<input id="${id}" name="${f.k}" type="${f.t==="number"?"number":f.t==="date"?"date":"text"}" ${f.t==="number"?'step="0.01"':""} value="${esc(v(f))}" ${f.req?"required":""} ${f.ph?`placeholder="${esc(f.ph)}"`:""}>`;
     return `<div class="fld"><label for="${id}">${f.l}</label>${inp}</div>`};
   sch.fields.forEach(f=>{if(f.half){pair.push(fieldHTML(f));if(pair.length===2){out.push(`<div class="two">${pair.join("")}</div>`);pair=[]}}else{if(pair.length){out.push(`<div class="two">${pair.join("")}</div>`);pair=[]}out.push(fieldHTML(f))}});
   if(pair.length)out.push(`<div class="two">${pair.join("")}</div>`);
@@ -836,19 +951,21 @@ function openSheet(k,id){
   if(r&&canWrite)out.push(`<div id="shHist"><p class="sec-sub">Carregando histórico…</p></div>`);
   $("shForm").innerHTML=out.join("");
   if(r&&canWrite)loadDocHist(k,id);
+  if(k==="diario")renderSheetFotos();
   $("shForm").querySelectorAll("input,select,textarea").forEach(el=>el.disabled=!canWrite);
   $("shDel").hidden=!r;$("shDel").textContent="Excluir";$("shDel").dataset.armed="";
   $("sheet").hidden=false;$("scrim").hidden=false;
   setTimeout(()=>{const first=$("shForm").querySelector("input,select,textarea");first&&first.focus()},30);
 }
-function closeSheet(){$("sheet").hidden=true;$("scrim").hidden=true;editing=null}
+function closeSheet(){$("sheet").hidden=true;$("scrim").hidden=true;editing=null;
+  if(SHEET_NEW.length&&!SHEET_SAVED){sb.storage.from("obra-fotos").remove(SHEET_NEW).catch(()=>{})}SHEET_NEW=[];SHEET_RM=[]}
 $("shClose").onclick=closeSheet;$("shCancel").onclick=closeSheet;$("scrim").onclick=closeSheet;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&editing)closeSheet()});
 $("shForm").addEventListener("submit",async e=>{
   e.preventDefault();if(!editing||!db||!canWrite)return;
   if(editing.k==="__proj"){saveProj();return}
   const {k,id}=editing;const sch=S[k];const data={};
-  sch.fields.forEach(f=>{const el=$("f-"+f.k);if(!el)return;let val=el.value;if(f.t==="number")val=val===""?null:Number(val);data[f.k]=val});
+  sch.fields.forEach(f=>{if(f.t==="fotos"){data.fotos=SHEET_FOTOS.slice();return}const el=$("f-"+f.k);if(!el)return;let val=el.value;if(f.t==="number")val=val===""?null:Number(val);data[f.k]=val});
   // decisão respondida: preenche a data automaticamente
   if(k==="decisoes"&&data.status==="Respondida"&&!data.respondidoEm)data.respondidoEm=iso(today);
   data.updatedAt=Date.now();
@@ -856,9 +973,19 @@ $("shForm").addEventListener("submit",async e=>{
   try{
     if(id){await c.doc(id).update(data);toast("Salvo")}
     else{data.ordem=Math.max(0,...D[k].map(x=>x.ordem||0))+1;await c.add(data);toast("Adicionado")}
+    SHEET_SAVED=true;if(SHEET_RM.length)sb.storage.from("obra-fotos").remove(SHEET_RM).catch(()=>{});
+    if(k==="diario")await diarioEfeitos(data);
     closeSheet();
   }catch(err){toast(err&&err.code==="invalid_argument"?"Você tem acesso só de leitura":"Não salvou. Tente de novo.")}
 });
+// Diário realizado: atualiza o pedido recebido ou o pacote medido
+async function diarioEfeitos(a){
+  if(a.status!=="Realizada")return;
+  if(a.tipo==="Recebimento"&&a.pedido){const p=D.pedidos.find(x=>x.id===a.pedido);
+    if(p&&(p.status!=="Entregue"||!p.entregueEm)){await db.collection(col("pedidos")).doc(p.id).update({status:"Entregue",entregueEm:p.entregueEm||a.data,updatedAt:Date.now()});toast("Pedido marcado como entregue")}}
+  if(a.tipo==="Medição"&&a.pacote){const k=D.pacotes.find(x=>x.cod===a.pacote);
+    if(k&&!k.medicao){await db.collection(col("pacotes")).doc(k.id).update({medicao:a.data,status:k.status==="Medir"?"Cotando":k.status,updatedAt:Date.now()});toast("Medição registrada no pacote")}}
+}
 $("shDel").onclick=async()=>{
   const b=$("shDel");if(!editing||!editing.id)return;
   if(!b.dataset.armed){b.dataset.armed="1";b.textContent="Confirmar exclusão";setTimeout(()=>{b.dataset.armed="";b.textContent="Excluir"},3500);return}
@@ -878,6 +1005,9 @@ document.addEventListener("click",e=>{
   const pj=e.target.closest("[data-proj]");if(pj){if(!db){toast("Sem conexão com o banco de dados");return}openProjSheet(pj.dataset.proj==="new");return}
   const nw=e.target.closest("[data-new]");if(nw){openSheet(nw.dataset.new,null);return}
   if(e.target.closest(".qc")){const b=e.target.closest("[data-q]");if(b&&canWrite&&db){quickSave(b.dataset.q,{status:b.dataset.v})}return}
+  if(e.target.closest(".dfotos a")){if(!e.target.closest("a").href)e.preventDefault();return}
+  const rm=e.target.closest("[data-rmfoto]");if(rm){const pth=rm.dataset.rmfoto;SHEET_FOTOS=SHEET_FOTOS.filter(x=>x!==pth);if(SHEET_NEW.includes(pth)){SHEET_NEW=SHEET_NEW.filter(x=>x!==pth);sb.storage.from("obra-fotos").remove([pth]).catch(()=>{})}else SHEET_RM.push(pth);renderSheetFotos();return}
+  const dn=e.target.closest("[data-done]");if(dn){openSheet("diario",dn.dataset.done,{status:"Realizada"});return}
   const op=e.target.closest("[data-open]");if(op&&!op.closest(".sheet")){openSheet(op.dataset.open,op.dataset.id);return}
   if(e.target.id==="copyRep"){const txt=weeklyText();(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast("Relatório copiado")).catch(()=>{const r=document.createRange();r.selectNodeContents($("repTxt"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Texto selecionado: copie com Ctrl/Cmd+C")})}
 });
