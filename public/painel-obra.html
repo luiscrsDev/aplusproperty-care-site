@@ -205,6 +205,26 @@ tr.late td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
 .upl{justify-self:start;cursor:pointer;position:relative;display:inline-flex;align-items:center}
 .vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
 .readonly .upl,.readonly .dphx,.readonly .dsm{display:none}
+/* galeria */
+.acount{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.atile{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;display:grid;text-decoration:none;color:inherit;padding:0;text-align:left;font:inherit;min-width:0}
+.atile:hover{border-color:var(--info)}
+.atile img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--sunk)}
+.apdf{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:var(--bad-bg);color:var(--bad);padding:10px;text-align:center}
+.apdf b{font-size:18px;letter-spacing:.08em}.apdf span{font-size:12px;color:var(--fg);word-break:break-all;line-height:1.25}
+.acap{display:block;padding:7px 9px;font-size:12px;color:var(--muted);line-height:1.3;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acap b{display:block;color:var(--fg);font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(5,8,15,.94);display:grid;grid-template-rows:1fr auto;justify-items:center;align-items:center;padding:calc(56px + env(safe-area-inset-top,0px)) max(56px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(56px,env(safe-area-inset-left,0px))}
+#lbImg{max-width:100%;max-height:calc(100vh - 170px);object-fit:contain;border-radius:6px;min-width:0}
+.lbcap{color:#fff;font-size:13px;display:flex;gap:8px 14px;align-items:center;flex-wrap:wrap;justify-content:center;padding-top:12px;text-align:center}
+.lbcap .btn{color:#fff;border-color:rgba(255,255,255,.45)}.lbn-c{opacity:.7;font-variant-numeric:tabular-nums}
+.lbb{position:fixed;width:44px;height:44px;border-radius:99px;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:28px;line-height:1;cursor:pointer;z-index:51}
+.lbb:hover{background:rgba(255,255,255,.26)}
+.lbx{top:calc(10px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px))}
+.lbp{top:50%;transform:translateY(-50%);left:max(6px,env(safe-area-inset-left,0px))}
+.lbnx{top:50%;transform:translateY(-50%);right:max(6px,env(safe-area-inset-right,0px))}
+@media (max-width:640px){.agrid{grid-template-columns:repeat(2,minmax(0,1fr))}.lb{padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}.lbp,.lbnx{top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:none}}
 /* report */
 .report{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;white-space:pre-wrap;font-size:14px;line-height:1.55;max-width:78ch;overflow-wrap:anywhere}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600;z-index:40}
@@ -241,6 +261,7 @@ tr.late td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
     <span style="display:flex;gap:8px"><button class="btn ghost" type="button" id="shCancel">Cancelar</button><button class="btn save" type="submit" form="shForm" id="shSave">Salvar</button></span>
   </footer>
 </aside>
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Foto"><button type="button" class="lbb lbx" id="lbClose" aria-label="Fechar">×</button><button type="button" class="lbb lbp" id="lbPrev" aria-label="Anterior">‹</button><img id="lbImg" alt=""><button type="button" class="lbb lbnx" id="lbNext" aria-label="Próxima">›</button><div class="lbcap" id="lbCap"></div></div>
 <div class="toast" id="toast" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -357,7 +378,11 @@ const I18N={
 "O que aconteceu":["What happened","Qué pasó"],"Fotos":["Photos","Fotos"],"Foto":["Photo","Foto"],"atividade":["activity","actividad"],"Entregue em":["Delivered on","Entregado el"],
 "Próximas visitas":["Upcoming visits","Próximas visitas"],"Nenhuma visita agendada.":["No visits scheduled.","Ninguna visita programada."],
 "Agendadas":["Scheduled","Programadas"],"Registro":["Log","Registro"],"Marcar realizada":["Mark as done","Marcar realizada"],"Todos os tipos":["All types","Todos los tipos"],
-"+ Adicionar fotos":["+ Add photos","+ Agregar fotos"],"+ Adicionar fotos / PDF":["+ Add photos / PDF","+ Agregar fotos / PDF"],"Fotos e documentos":["Photos & documents","Fotos y documentos"],"Enviando arquivos…":["Uploading files…","Subiendo archivos…"],"Arquivos adicionados":["Files added","Archivos agregados"],"Não enviou o arquivo. Tente de novo.":["File not uploaded. Try again.","No se subió el archivo. Inténtalo de nuevo."],"Enviando fotos…":["Uploading photos…","Subiendo fotos…"],"Fotos adicionadas":["Photos added","Fotos agregadas"],
+"+ Adicionar fotos":["+ Add photos","+ Agregar fotos"],"+ Adicionar fotos / PDF":["+ Add photos / PDF","+ Agregar fotos / PDF"],"Fotos e documentos":["Photos & documents","Fotos y documentos"],"Todos os arquivos":["All files","Todos los archivos"],"Só fotos":["Photos only","Solo fotos"],"Só PDFs":["PDFs only","Solo PDF"],
+"+ Adicionar arquivos":["+ Add files","+ Agregar archivos"],"Ver registro":["Open record","Ver registro"],"Nenhum arquivo ainda.":["No files yet.","Ningún archivo todavía."],
+"Fotos e PDFs anexados no Diário de obra aparecem aqui.":["Photos and PDFs attached in the Site log show up here.","Las fotos y PDF adjuntos en la Bitácora de obra aparecen aquí."],
+"Todas as fotos e PDFs do projeto, do mais recente para o mais antigo. Filtre por pacote, tipo de atividade ou palavra.":["Every photo and PDF in the project, newest first. Filter by package, activity type or keyword.","Todas las fotos y PDF del proyecto, del más reciente al más antiguo. Filtra por paquete, tipo de actividad o palabra."],
+"Anterior":["Previous","Anterior"],"Próxima":["Next","Siguiente"],"Enviando arquivos…":["Uploading files…","Subiendo archivos…"],"Arquivos adicionados":["Files added","Archivos agregados"],"Não enviou o arquivo. Tente de novo.":["File not uploaded. Try again.","No se subió el archivo. Inténtalo de nuevo."],"Enviando fotos…":["Uploading photos…","Subiendo fotos…"],"Fotos adicionadas":["Photos added","Fotos agregadas"],
 "Não enviou a foto. Tente de novo.":["Photo not uploaded. Try again.","No se subió la foto. Inténtalo de nuevo."],"Remover":["Remove","Quitar"],
 "Pedido marcado como entregue":["Order marked as delivered","Pedido marcado como entregado"],"Medição registrada no pacote":["Measurement logged on the package","Medición registrada en el paquete"],
 "Visitas, entregas, medições e serviços na casa. Agende antes e marque como realizada depois, com o que aconteceu e fotos.":["Visits, deliveries, measurements and work at the house. Schedule ahead, then mark it done with what happened and photos.","Visitas, entregas, mediciones y trabajos en la casa. Prográmalas antes y márcalas como realizadas después, con lo que pasó y fotos."],
@@ -547,7 +572,7 @@ const S={
     {k:"prazo",l:"Prazo",t:"date",list:1,half:1},
     {k:"obs",l:"Observações",t:"textarea",sub:1}]}
 };
-const TABS=[["geral","Visão geral"],["diario","Diário de obra"],["tarefas","Cronograma"],["pacotes","Pacotes"],["cotacoes","Orçamentos"],["pedidos","Pedidos"],["licencas","Licenças"],["decisoes","Decisões"],["pagamentos","Pagamentos"],["riscos","Riscos"],["punch","Punch list"],["historico","Histórico"],["relatorio","Relatório"]];
+const TABS=[["geral","Visão geral"],["diario","Diário de obra"],["arquivos","Fotos e documentos"],["tarefas","Cronograma"],["pacotes","Pacotes"],["cotacoes","Orçamentos"],["pedidos","Pedidos"],["licencas","Licenças"],["decisoes","Decisões"],["pagamentos","Pagamentos"],["riscos","Riscos"],["punch","Punch list"],["historico","Histórico"],["relatorio","Relatório"]];
 
 /* ---------- Estado ---------- */
 let db=null, canWrite=true, loaded=false;
@@ -618,6 +643,7 @@ function render(){
   else if(tab==="historico")m.innerHTML=viewHistorico();
   else if(tab==="tarefas")m.innerHTML=viewTarefas();
   else if(tab==="diario")m.innerHTML=viewDiario();
+  else if(tab==="arquivos")m.innerHTML=viewArquivos();
   else m.innerHTML=viewTable(tab);
 }
 
@@ -775,6 +801,47 @@ document.addEventListener("change",async e=>{
     if(error){fail++;continue}SHEET_FOTOS.push(path);SHEET_NEW.push(path);renderSheetFotos()}
   toast(fail?"Não enviou o arquivo. Tente de novo.":"Arquivos adicionados");
 });
+
+/* ---------- Fotos e documentos: galeria de todos os anexos do diário ---------- */
+let LB={list:[],i:0};
+function arquivosLista(){
+  const f=F.arquivos||(F.arquivos={q:"",kind:"",pac:"",tipo:""});const q=(f.q||"").toLowerCase();const out=[];
+  D.diario.forEach(a=>(a.fotos||[]).forEach(p=>{const pdf=isPdf(p);
+    if(f.kind==="foto"&&pdf||f.kind==="pdf"&&!pdf)return;if(f.pac&&a.pacote!==f.pac)return;if(f.tipo&&a.tipo!==f.tipo)return;
+    if(q&&![a.empresa,a.descricao,a.tipo,tr(a.tipo),pacLabel(a.pacote),pdf?pdfName(p):""].join(" ").toLowerCase().includes(q))return;
+    out.push({p,a,pdf})}));
+  return out.sort((x,y)=>((y.a.data||"")+(y.a.hora||"")).localeCompare((x.a.data||"")+(x.a.hora||""))||y.p.localeCompare(x.p));
+}
+function viewArquivos(){
+  const f=F.arquivos||(F.arquivos={q:"",kind:"",pac:"",tipo:""});
+  const all=[];D.diario.forEach(a=>(a.fotos||[]).forEach(p=>all.push(p)));const nP=all.filter(isPdf).length,nF=all.length-nP;
+  const bar=`<div class="bar">
+    <input type="search" id="q-arquivos" placeholder="Buscar…" value="${esc(f.q)}" data-f="q">
+    <select id="k-arquivos" data-f="kind"><option value="">Todos os arquivos</option><option value="foto" ${f.kind==="foto"?"selected":""}>Só fotos</option><option value="pdf" ${f.kind==="pdf"?"selected":""}>Só PDFs</option></select>
+    <select id="p-arquivos" data-f="pac"><option value="">Todos os pacotes</option>${PACS.map(([c,n])=>`<option value="${esc(c)}" ${f.pac===c?"selected":""}>${esc(c)} ${esc(n)}</option>`).join("")}</select>
+    <select id="t-arquivos" data-f="tipo"><option value="">Todos os tipos</option>${S.diario.fields.find(x=>x.k==="tipo").o.map(o=>`<option value="${esc(o)}" ${f.tipo===o?"selected":""}>${esc(o)}</option>`).join("")}</select>
+    <button class="btn add" data-addfiles="1">+ Adicionar arquivos</button></div>`;
+  const head=`<div class="head-row"><div><h2 class="sec">Fotos e documentos</h2><p class="sec-sub">Todas as fotos e PDFs do projeto, do mais recente para o mais antigo. Filtre por pacote, tipo de atividade ou palavra.</p></div><span class="acount">${W3(`${nF} foto${nF===1?"":"s"} · ${nP} PDF${nP===1?"":"s"}`,`${nF} photo${nF===1?"":"s"} · ${nP} PDF${nP===1?"":"s"}`,`${nF} foto${nF===1?"":"s"} · ${nP} PDF`)}</span></div>${bar}`;
+  if(!all.length)return `<div class="view">${head}<div class="notice"><strong>Nenhum arquivo ainda.</strong><br>Fotos e PDFs anexados no Diário de obra aparecem aqui.</div></div>`;
+  const list=arquivosLista();LB.list=list.filter(x=>!x.pdf);
+  if(!list.length)return `<div class="view">${head}<div class="notice"><strong>Nada neste filtro.</strong></div></div>`;
+  let html="",last=null,grid="";
+  const flush=()=>{if(grid)html+=`<div class="agrid">${grid}</div>`;grid=""};
+  list.forEach(x=>{if(x.a.data!==last){flush();last=x.a.data;html+=`<div class="dday">${fd(x.a.data)}</div>`}
+    const cap=`<span class="acap"><b>${esc(x.a.empresa||tr(x.a.tipo)||"")}</b>${esc(tr(x.a.tipo)||"")}${x.a.pacote?" · "+esc(x.a.pacote):""}</span>`;
+    grid+=x.pdf?`<a class="atile" target="_blank" rel="noopener" data-foto-a="${esc(x.p)}"><span class="apdf"><b>PDF</b><span>${esc(pdfName(x.p))}</span></span>${cap}</a>`
+      :`<button type="button" class="atile" data-lb="${LB.list.indexOf(x)}"><img data-foto="${esc(x.p)}" alt="${esc(x.a.empresa||"Foto")}" loading="lazy">${cap}</button>`});
+  flush();
+  return `<div class="view">${head}${html}</div>`;
+}
+function showLB(i){
+  if(!LB.list.length)return;LB.i=(i+LB.list.length)%LB.list.length;const x=LB.list[LB.i];
+  const img=$("lbImg");img.removeAttribute("src");img.dataset.foto=x.p;img.alt=x.a.empresa||"Foto";
+  $("lbCap").innerHTML=`<span>${fd(x.a.data)}${x.a.hora?" · "+esc(x.a.hora):""} · ${esc(tr(x.a.tipo)||"")}${x.a.empresa?" · "+esc(x.a.empresa):""}</span><span class="lbn-c">${LB.i+1} / ${LB.list.length}</span><button type="button" class="btn ghost dsm" data-open="diario" data-id="${esc(x.a.id)}">Ver registro</button>`;
+  $("lb").hidden=false;hydratePhotos();
+}
+function closeLB(){$("lb").hidden=true}
+document.addEventListener("keydown",e=>{if($("lb")&&!$("lb").hidden){if(e.key==="Escape"){closeLB();e.stopImmediatePropagation()}else if(e.key==="ArrowRight")showLB(LB.i+1);else if(e.key==="ArrowLeft")showLB(LB.i-1)}},true);
 
 function viewTarefas(){
   const seg=`<div class="seg"><button data-gm="gantt" aria-pressed="${ganttMode==="gantt"}">Gantt</button><button data-gm="lista" aria-pressed="${ganttMode==="lista"}">Lista</button></div>`;
@@ -1014,8 +1081,14 @@ document.addEventListener("click",e=>{
   if(e.target.closest(".qc")){const b=e.target.closest("[data-q]");if(b&&canWrite&&db){quickSave(b.dataset.q,{status:b.dataset.v})}return}
   if(e.target.closest(".dfotos a")){if(!e.target.closest("a").href)e.preventDefault();return}
   const rm=e.target.closest("[data-rmfoto]");if(rm){const pth=rm.dataset.rmfoto;SHEET_FOTOS=SHEET_FOTOS.filter(x=>x!==pth);if(SHEET_NEW.includes(pth)){SHEET_NEW=SHEET_NEW.filter(x=>x!==pth);sb.storage.from("obra-fotos").remove([pth]).catch(()=>{})}else SHEET_RM.push(pth);renderSheetFotos();return}
+  if(e.target.id==="lbClose"||e.target.id==="lb"){closeLB();return}
+  if(e.target.id==="lbPrev"){showLB(LB.i-1);return}if(e.target.id==="lbNext"){showLB(LB.i+1);return}
+  const lb=e.target.closest("[data-lb]");if(lb){showLB(+lb.dataset.lb);return}
+  if(e.target.closest("[data-addfiles]")){openSheet("diario",null,{tipo:"Observação",status:"Realizada"});setTimeout(()=>{const i=$("f-fotos-in");i&&i.click()},80);return}
+  if(e.target.closest("a.atile")){if(!e.target.closest("a").href)e.preventDefault();return}
   const dn=e.target.closest("[data-done]");if(dn){openSheet("diario",dn.dataset.done,{status:"Realizada"});return}
-  const op=e.target.closest("[data-open]");if(op&&!op.closest(".sheet")){openSheet(op.dataset.open,op.dataset.id);return}
+  const op=e.target.closest("[data-open]");if(op&&op.closest("#lb"))closeLB();
+  if(op&&!op.closest(".sheet")){openSheet(op.dataset.open,op.dataset.id);return}
   if(e.target.id==="copyRep"){const txt=weeklyText();(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast("Relatório copiado")).catch(()=>{const r=document.createRange();r.selectNodeContents($("repTxt"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Texto selecionado: copie com Ctrl/Cmd+C")})}
 });
 document.addEventListener("input",e=>{const el=e.target;if(el.dataset&&el.dataset.f){const k=tab;F[k]=F[k]||{q:"",pac:"",st:""};F[k][el.dataset.f]=el.value;
