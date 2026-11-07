@@ -197,6 +197,8 @@ tr.late td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
 .dmeta{font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
 .dfotos{display:flex;gap:6px;flex-wrap:wrap}
 .dph{position:relative;display:block}
+.dpdf{width:76px;height:76px;border-radius:6px;background:var(--bad-bg);color:var(--bad);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;padding:4px;text-align:center}
+.dpdf b{font-size:13px;letter-spacing:.06em}.dpdf span{font-size:10px;line-height:1.15;color:var(--fg);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-all}
 .dfotos img{width:76px;height:76px;object-fit:cover;border-radius:6px;background:var(--sunk);display:block}
 .dphx{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:99px;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:15px;line-height:1;cursor:pointer}
 .dsm{justify-self:start;padding:5px 11px;font-size:12.5px}
@@ -355,7 +357,7 @@ const I18N={
 "O que aconteceu":["What happened","Qué pasó"],"Fotos":["Photos","Fotos"],"Foto":["Photo","Foto"],"atividade":["activity","actividad"],"Entregue em":["Delivered on","Entregado el"],
 "Próximas visitas":["Upcoming visits","Próximas visitas"],"Nenhuma visita agendada.":["No visits scheduled.","Ninguna visita programada."],
 "Agendadas":["Scheduled","Programadas"],"Registro":["Log","Registro"],"Marcar realizada":["Mark as done","Marcar realizada"],"Todos os tipos":["All types","Todos los tipos"],
-"+ Adicionar fotos":["+ Add photos","+ Agregar fotos"],"Enviando fotos…":["Uploading photos…","Subiendo fotos…"],"Fotos adicionadas":["Photos added","Fotos agregadas"],
+"+ Adicionar fotos":["+ Add photos","+ Agregar fotos"],"+ Adicionar fotos / PDF":["+ Add photos / PDF","+ Agregar fotos / PDF"],"Fotos e documentos":["Photos & documents","Fotos y documentos"],"Enviando arquivos…":["Uploading files…","Subiendo archivos…"],"Arquivos adicionados":["Files added","Archivos agregados"],"Não enviou o arquivo. Tente de novo.":["File not uploaded. Try again.","No se subió el archivo. Inténtalo de nuevo."],"Enviando fotos…":["Uploading photos…","Subiendo fotos…"],"Fotos adicionadas":["Photos added","Fotos agregadas"],
 "Não enviou a foto. Tente de novo.":["Photo not uploaded. Try again.","No se subió la foto. Inténtalo de nuevo."],"Remover":["Remove","Quitar"],
 "Pedido marcado como entregue":["Order marked as delivered","Pedido marcado como entregado"],"Medição registrada no pacote":["Measurement logged on the package","Medición registrada en el paquete"],
 "Visitas, entregas, medições e serviços na casa. Agende antes e marque como realizada depois, com o que aconteceu e fotos.":["Visits, deliveries, measurements and work at the house. Schedule ahead, then mark it done with what happened and photos.","Visitas, entregas, mediciones y trabajos en la casa. Prográmalas antes y márcalas como realizadas después, con lo que pasó y fotos."],
@@ -535,7 +537,7 @@ const S={
     {k:"pedido",l:"Pedido",t:"pedido",half:1},
     {k:"condicao",l:"Condição da entrega",t:"select",o:["OK","Com avaria","Faltando item"]},
     {k:"descricao",l:"O que aconteceu",t:"textarea"},
-    {k:"fotos",l:"Fotos",t:"fotos"}]},
+    {k:"fotos",l:"Fotos e documentos",t:"fotos"}]},
   punch:{label:"Punch list",item:"pendência",group:"ambiente",fields:[
     {k:"item",l:"Pendência",t:"text",req:1,list:1,main:1},
     {k:"ambiente",l:"Ambiente / área",t:"text",half:1},
@@ -721,12 +723,15 @@ function viewTable(k){
 /* ---------- Diário de obra (coleção "diario"; fotos no bucket obra-fotos) ---------- */
 const FOTO_URL={};
 async function hydratePhotos(){
-  const imgs=[...document.querySelectorAll("img[data-foto]:not([src])")];if(!imgs.length||typeof sb==="undefined")return;
+  const imgs=[...document.querySelectorAll("img[data-foto]:not([src]),a[data-foto-a]:not([href])")];if(!imgs.length||typeof sb==="undefined")return;
+  imgs.forEach(i=>{if(i.dataset.fotoA)i.dataset.foto=i.dataset.fotoA});
   const need=[...new Set(imgs.map(i=>i.dataset.foto))].filter(p=>!FOTO_URL[p]||FOTO_URL[p].exp<Date.now());
   if(need.length){const{data}=await sb.storage.from("obra-fotos").createSignedUrls(need,3600);(data||[]).forEach(d=>{if(d.signedUrl)FOTO_URL[d.path]={url:d.signedUrl,exp:Date.now()+3300e3}})}
-  imgs.forEach(i=>{const u=FOTO_URL[i.dataset.foto];if(u){i.src=u.url;const a=i.closest("a");if(a)a.href=u.url}});
+  imgs.forEach(i=>{const u=FOTO_URL[i.dataset.foto];if(!u)return;if(i.tagName==="A"){i.href=u.url;return}i.src=u.url;const a=i.closest("a");if(a)a.href=u.url});
 }
-const fotoThumbs=(fotos,removable)=>`<div class="dfotos">${(fotos||[]).map(p=>`<span class="dph"><a target="_blank" rel="noopener"><img data-foto="${esc(p)}" alt="Foto"></a>${removable?`<button type="button" class="dphx" data-rmfoto="${esc(p)}" aria-label="Remover">×</button>`:""}</span>`).join("")}</div>`;
+const isPdf=p=>/\.pdf$/i.test(p);
+const pdfName=p=>{const n=p.split("/").pop().replace(/\.pdf$/i,"");const i=n.indexOf("--");return i>=0?n.slice(i+2):"PDF"};
+const fotoThumbs=(fotos,removable)=>`<div class="dfotos">${(fotos||[]).map(p=>`<span class="dph">${isPdf(p)?`<a target="_blank" rel="noopener" class="dpdf" data-foto-a="${esc(p)}"><b>PDF</b><span>${esc(pdfName(p))}</span></a>`:`<a target="_blank" rel="noopener"><img data-foto="${esc(p)}" alt="Foto"></a>`}${removable?`<button type="button" class="dphx" data-rmfoto="${esc(p)}" aria-label="Remover">×</button>`:""}</span>`).join("")}</div>`;
 function diarioCard(a){
   const ped=a.pedido&&D.pedidos.find(p=>p.id===a.pedido);
   const meta=[a.contato,a.atendente&&`${tr("Atendido por")}: ${a.atendente}`,ped&&`${tr("Pedido")}: ${ped.item}`].filter(Boolean).map(esc).join(" · ");
@@ -761,12 +766,14 @@ function compressImage(file){return new Promise(res=>{const url=URL.createObject
   img.onerror=()=>{URL.revokeObjectURL(url);res(file)};img.src=url})}
 document.addEventListener("change",async e=>{
   if(e.target.id!=="f-fotos-in"||!canWrite)return;const files=[...e.target.files];e.target.value="";if(!files.length)return;
-  toast("Enviando fotos…");let fail=0;
-  for(const f of files){const blob=await compressImage(f);const ext=blob.type==="image/jpeg"?"jpg":(f.name.split(".").pop()||"jpg").toLowerCase();
-    const path=`${PROJ.id}/${iso(today)}-${uid()}.${ext}`;
-    const{error}=await sb.storage.from("obra-fotos").upload(path,blob,{contentType:blob.type||"image/jpeg"});
+  toast("Enviando arquivos…");let fail=0;
+  for(const f of files){const pdf=f.type==="application/pdf"||/\.pdf$/i.test(f.name);
+    const blob=pdf?f:await compressImage(f);const ext=pdf?"pdf":blob.type==="image/jpeg"?"jpg":(f.name.split(".").pop()||"jpg").toLowerCase();
+    const safe=f.name.replace(/\.[^.]+$/,"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9_-]+/g,"_").slice(0,60);
+    const path=`${PROJ.id}/${iso(today)}-${uid()}${pdf?"--"+safe:""}.${ext}`;
+    const{error}=await sb.storage.from("obra-fotos").upload(path,blob,{contentType:pdf?"application/pdf":(blob.type||"image/jpeg")});
     if(error){fail++;continue}SHEET_FOTOS.push(path);SHEET_NEW.push(path);renderSheetFotos()}
-  toast(fail?"Não enviou a foto. Tente de novo.":"Fotos adicionadas");
+  toast(fail?"Não enviou o arquivo. Tente de novo.":"Arquivos adicionados");
 });
 
 function viewTarefas(){
@@ -939,7 +946,7 @@ function openSheet(k,id,preset){
   SHEET_FOTOS=((r&&r.fotos)||[]).slice();SHEET_NEW=[];SHEET_RM=[];SHEET_SAVED=false;
   const out=[];let pair=[];
   const fieldHTML=f=>{const id="f-"+f.k;let inp;
-    if(f.t==="fotos")return `<div class="fld"><label>${f.l}</label><div id="shFotos"></div><label class="btn ghost upl"><input type="file" id="f-fotos-in" accept="image/*" multiple class="vh">+ Adicionar fotos</label></div>`;
+    if(f.t==="fotos")return `<div class="fld"><label>${f.l}</label><div id="shFotos"></div><label class="btn ghost upl"><input type="file" id="f-fotos-in" accept="image/*,application/pdf" multiple class="vh">+ Adicionar fotos / PDF</label></div>`;
     if(f.t==="pedido")inp=`<select id="${id}" name="${f.k}"><option value="">—</option>${D.pedidos.slice().sort((a,b)=>(a.ordem||0)-(b.ordem||0)).map(p=>`<option value="${esc(p.id)}" ${v(f)===p.id?"selected":""}>${esc(p.item)}</option>`).join("")}</select>`;
     else if(f.t==="select")inp=`<select id="${id}" name="${f.k}">${f.k==="status"||f.k==="impacto"||f.k==="marco"||f.nb?"":'<option value="">—</option>'}${f.o.map(o=>`<option value="${esc(o)}" ${String(v(f))===o?"selected":""}>${esc(f.o===PACOPTS?pacLabel(o):o)}</option>`).join("")}</select>`;
     else if(f.t==="textarea")inp=`<textarea id="${id}" name="${f.k}">${esc(v(f))}</textarea>`;
